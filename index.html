@@ -23,14 +23,8 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             margin: 0;
             padding: 0;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-touch-callout: none;
             -webkit-tap-highlight-color: transparent;
             -webkit-text-size-adjust: 100%;
-            -ms-text-size-adjust: 100%;
         }
 
         body {
@@ -41,7 +35,6 @@
             height: 100vh;
             height: 100dvh;
             overflow: hidden;
-            -webkit-overflow-scrolling: touch;
             touch-action: manipulation;
         }
 
@@ -60,7 +53,6 @@
             scroll-behavior: smooth;
         }
 
-        /* Botão Flutuante Mentoria */
         .btn-mentoria-flutuante {
             position: fixed;
             bottom: 20px;
@@ -71,26 +63,27 @@
             border-radius: 50%;
             background: linear-gradient(135deg, #ff0000, #cc0000);
             border: 2px solid #fff;
-            box-shadow: 0 4px 20px rgba(255, 0, 0, 0.6), 0 0 30px rgba(255, 0, 0, 0.3);
+            box-shadow: 0 4px 20px rgba(255, 0, 0, 0.6);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: floatPulse 2s infinite, floatBounce 3s ease-in-out infinite;
+            animation: floatBounce 3s ease-in-out infinite;
             text-decoration: none;
             transition: transform 0.2s;
-            -webkit-tap-highlight-color: transparent;
             outline: none;
         }
+
         .btn-mentoria-flutuante:active {
             transform: scale(0.9);
         }
+
         .btn-mentoria-flutuante .yt-icon {
             font-size: 22px;
             color: #fff;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-            pointer-events: none;
         }
+
         .btn-mentoria-flutuante .badge-mentoria {
             position: absolute;
             top: -10px;
@@ -103,67 +96,16 @@
             border-radius: 10px;
             white-space: nowrap;
             animation: badgePulse 1.5s infinite;
-            pointer-events: none;
-            letter-spacing: 0.5px;
-        }
-        @keyframes floatPulse {
-            0%, 100% {
-                box-shadow: 0 4px 20px rgba(255, 0, 0, 0.6), 0 0 30px rgba(255, 0, 0, 0.3);
-            }
-            50% {
-                box-shadow: 0 4px 30px rgba(255, 0, 0, 0.9), 0 0 50px rgba(255, 0, 0, 0.5);
-            }
-        }
-        @keyframes floatBounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-8px);
-            }
-        }
-        @keyframes badgePulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
         }
 
-        @media (max-width: 380px) {
-            .btn-mentoria-flutuante {
-                width: 44px;
-                height: 44px;
-                bottom: 15px;
-                right: 15px;
-            }
-            .btn-mentoria-flutuante .yt-icon {
-                font-size: 18px;
-            }
-            .btn-mentoria-flutuante .badge-mentoria {
-                font-size: 7px;
-                padding: 2px 6px;
-                top: -8px;
-                right: -12px;
-            }
+        @keyframes floatBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
-        @media (min-width: 768px) {
-            .btn-mentoria-flutuante {
-                width: 60px;
-                height: 60px;
-                bottom: 30px;
-                right: 30px;
-            }
-            .btn-mentoria-flutuante .yt-icon {
-                font-size: 26px;
-            }
-            .btn-mentoria-flutuante .badge-mentoria {
-                font-size: 10px;
-                padding: 4px 10px;
-                top: -12px;
-                right: -18px;
-            }
+
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
 
         .login-screen {
@@ -177,24 +119,29 @@
             padding: 20px;
             text-align: center;
         }
+
         .login-logo {
             font-size: 40px;
             animation: pulse 2s infinite;
         }
+
         @keyframes pulse {
             0%, 100% { box-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
             50% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.8); }
         }
+
         .login-title {
             font-size: clamp(16px, 5vw, 18px);
             font-weight: 900;
             color: var(--accent-red);
             font-style: italic;
         }
+
         .login-subtitle {
             font-size: clamp(9px, 3vw, 10px);
             color: #888;
         }
+
         .login-input {
             width: 100%;
             max-width: 300px;
@@ -207,16 +154,12 @@
             text-align: center;
             outline: none;
             letter-spacing: 2px;
-            -webkit-appearance: none;
-            appearance: none;
         }
+
         .login-input:focus {
             border-color: var(--gold);
         }
-        .login-input::placeholder {
-            color: #555;
-            letter-spacing: 0;
-        }
+
         .btn-login {
             width: 100%;
             max-width: 300px;
@@ -230,12 +173,8 @@
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 1px;
-            -webkit-appearance: none;
-            appearance: none;
         }
-        .btn-login:active {
-            transform: scale(0.97);
-        }
+
         .login-info {
             font-size: clamp(7px, 2.5vw, 8px);
             color: #555;
@@ -253,12 +192,14 @@
             gap: 6px;
             font-size: 8px;
         }
+
         .link-unico-box .link-text {
             flex: 1;
             color: #4caf50;
             word-break: break-all;
             font-size: 7px;
         }
+
         .btn-copiar-link {
             background: #4caf50;
             border: none;
@@ -268,9 +209,8 @@
             font-size: 8px;
             font-weight: bold;
             cursor: pointer;
-            -webkit-appearance: none;
-            appearance: none;
         }
+
         .header {
             display: flex;
             justify-content: space-between;
@@ -278,6 +218,7 @@
             padding: 2px 4px;
             min-height: 28px;
         }
+
         .logo {
             color: var(--accent-red);
             font-weight: 900;
@@ -285,11 +226,13 @@
             font-style: italic;
             cursor: pointer;
         }
+
         .header-right {
             display: flex;
             gap: 4px;
             align-items: center;
         }
+
         .btn-depositar-top {
             background: linear-gradient(135deg, #ffd700, #ff8c00);
             border: none;
@@ -300,11 +243,9 @@
             font-weight: 900;
             cursor: pointer;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
             animation: pulse 2s infinite;
-            -webkit-appearance: none;
-            appearance: none;
         }
+
         .user-numero-badge {
             font-size: 8px;
             color: #aaa;
@@ -312,6 +253,7 @@
             padding: 3px 6px;
             border-radius: 8px;
         }
+
         .saldo-box {
             color: var(--accent-green);
             font-weight: bold;
@@ -321,6 +263,7 @@
             border-radius: 14px;
             border: 1px solid #1c1e22;
         }
+
         .house-stats {
             display: none;
             background: linear-gradient(135deg, #1a1a2e, #0d1b2a);
@@ -329,28 +272,34 @@
             padding: 6px 8px;
             font-size: 8px;
         }
+
         .house-stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 4px;
         }
+
         .stat-item {
             text-align: center;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 6px;
             padding: 3px;
         }
+
         .stat-label {
             color: #888;
             font-size: 7px;
             text-transform: uppercase;
         }
+
         .stat-value {
             font-weight: 900;
             font-size: 11px;
         }
+
         .stat-value.positive { color: var(--accent-green); }
         .stat-value.negative { color: var(--accent-red); }
+
         .deposit-overlay {
             display: none;
             position: fixed;
@@ -364,6 +313,7 @@
             justify-content: center;
             align-items: center;
         }
+
         .deposit-modal {
             background: #1a1a2e;
             border: 2px solid #2a2a4a;
@@ -375,6 +325,7 @@
             overflow-y: auto;
             padding: 0;
         }
+
         .deposit-header {
             background: linear-gradient(135deg, #1a1a2e, #16213e);
             padding: 14px;
@@ -385,8 +336,10 @@
             top: 0;
             z-index: 10;
         }
+
         .deposit-title { font-size: 16px; font-weight: 900; color: var(--gold); margin-bottom: 2px; }
         .deposit-subtitle { font-size: 9px; color: #888; }
+
         .btn-fechar-modal {
             position: absolute;
             top: 10px;
@@ -403,8 +356,16 @@
             align-items: center;
             justify-content: center;
         }
+
         .deposit-body { padding: 12px; }
-        .wallet-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+
+        .wallet-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
         .wallet-option {
             background: rgba(255, 255, 255, 0.03);
             border: 2px solid rgba(255, 255, 255, 0.1);
@@ -414,19 +375,54 @@
             text-align: center;
             transition: all 0.3s ease;
         }
-        .wallet-option.selected { border-color: var(--gold); background: rgba(255, 215, 0, 0.1); }
+
+        .wallet-option.selected {
+            border-color: var(--gold);
+            background: rgba(255, 215, 0, 0.1);
+        }
+
         .wallet-option.mpesa { border-top: 3px solid var(--mpesa-green); }
         .wallet-option.emola { border-top: 3px solid var(--emola-blue); }
+
         .wallet-icon { font-size: 28px; margin-bottom: 4px; }
         .wallet-name { font-size: 13px; font-weight: 900; margin-bottom: 2px; }
+
         .wallet-option.mpesa .wallet-name { color: var(--mpesa-green); }
         .wallet-option.emola .wallet-name { color: var(--emola-blue); }
-        .wallet-number { font-size: 8px; color: #888; background: rgba(0, 0, 0, 0.3); padding: 3px 6px; border-radius: 4px; display: inline-block; margin-top: 4px; }
+
+        .wallet-number {
+            font-size: 8px;
+            color: #888;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 3px 6px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 4px;
+        }
+
         .deposit-form { display: none; }
-        .deposit-form.active { display: block; animation: fadeInUp 0.3s ease; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .deposit-form.active {
+            display: block;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .form-group { margin-bottom: 10px; }
-        .form-label { font-size: 10px; font-weight: 800; color: #aaa; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; display: block; }
+
+        .form-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+            display: block;
+        }
+
         .form-input {
             width: 100%;
             padding: 10px 12px;
@@ -436,13 +432,22 @@
             border-radius: 8px;
             font-size: 13px;
             outline: none;
-            -webkit-appearance: none;
-            appearance: none;
         }
+
         .form-input:focus { border-color: var(--gold); }
+
         .input-with-icon { position: relative; }
         .input-with-icon .form-input { padding-left: 35px; }
-        .input-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 16px; color: #666; }
+
+        .input-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: #666;
+        }
+
         .btn-enviar-deposito {
             width: 100%;
             padding: 12px;
@@ -456,9 +461,8 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-top: 4px;
-            -webkit-appearance: none;
-            appearance: none;
         }
+
         .transfer-info {
             background: rgba(255, 255, 255, 0.03);
             border: 1px dashed rgba(255, 255, 255, 0.15);
@@ -467,9 +471,11 @@
             margin-bottom: 14px;
             text-align: center;
         }
+
         .transfer-info .label { font-size: 8px; color: #888; }
         .transfer-info .number { font-size: 18px; font-weight: 900; color: #fff; letter-spacing: 2px; }
         .transfer-info .note { font-size: 8px; color: #ff9100; margin-top: 4px; }
+
         .deposito-status {
             background: rgba(255, 152, 0, 0.1);
             border: 1px solid rgba(255, 152, 0, 0.3);
@@ -478,10 +484,17 @@
             text-align: center;
             margin-top: 10px;
         }
+
         .deposito-status .status-icon { font-size: 30px; animation: bounce 1s infinite; }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
         .deposito-status .status-text { font-size: 11px; font-weight: bold; color: #ff9800; margin-top: 4px; }
         .deposito-status .status-sub { font-size: 8px; color: #888; margin-top: 2px; }
+
         .pending-badge {
             display: inline-block;
             background: rgba(255, 152, 0, 0.2);
@@ -492,7 +505,12 @@
             font-weight: bold;
             animation: blink 1.5s infinite;
         }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
         .embreve-badge {
             background: rgba(0, 0, 0, 0.7);
             color: #ffd700;
@@ -503,8 +521,21 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        .sistema-selector { background: #111; border: 1px solid #333; border-radius: 8px; padding: 8px; margin-bottom: 8px; }
-        .sistema-options { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+
+        .sistema-selector {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 8px;
+            margin-bottom: 8px;
+        }
+
+        .sistema-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+        }
+
         .sistema-btn {
             padding: 8px;
             border-radius: 8px;
@@ -516,15 +547,32 @@
             font-weight: bold;
             text-align: center;
             transition: all 0.3s;
-            -webkit-appearance: none;
-            appearance: none;
         }
-        .sistema-btn.active { border-color: var(--gold); background: rgba(255, 215, 0, 0.1); color: #fff; }
+
+        .sistema-btn.active {
+            border-color: var(--gold);
+            background: rgba(255, 215, 0, 0.1);
+            color: #fff;
+        }
+
         .sistema-btn.sistema-casa { border-top: 3px solid #4caf50; }
         .sistema-btn.sistema-rosa { border-top: 3px solid #d500f9; }
+
         .sistema-label { font-size: 9px; color: #888; margin-top: 2px; }
-        .cards-container { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
-        .plataforma-row { display: flex; flex-direction: column; gap: 4px; }
+
+        .cards-container {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 2px;
+        }
+
+        .plataforma-row {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
         .card-box {
             border-radius: 12px;
             padding: 8px 10px;
@@ -539,29 +587,53 @@
             transition: transform 0.2s;
             text-align: center;
             width: 100%;
-            -webkit-appearance: none;
-            appearance: none;
         }
+
         .card-box.plataforma-1 {
             background: linear-gradient(135deg, #ffd700, #ff8c00);
             animation: pulse-amarelo 2s infinite;
         }
-        @keyframes pulse-amarelo { 0%, 100% { box-shadow: 0 0 5px rgba(255, 215, 0, 0.5); } 50% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.8); } }
+
+        @keyframes pulse-amarelo {
+            0%, 100% { box-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+            50% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.8); }
+        }
+
         .card-box.plataforma-1 .card-header-title { color: #000; opacity: 0.8; }
         .card-box.plataforma-1 .card-desc-principal { color: #000; }
         .card-box.plataforma-1 .card-bonus { color: #000; font-weight: 900; }
+
         .card-box.plataforma-2 {
             background: linear-gradient(135deg, #e71d36, #ff4757);
             animation: pulse-vermelho 2s infinite;
         }
-        @keyframes pulse-vermelho { 0%, 100% { box-shadow: 0 0 5px rgba(231, 29, 54, 0.5); } 50% { box-shadow: 0 0 15px rgba(255, 71, 87, 0.8); } }
+
+        @keyframes pulse-vermelho {
+            0%, 100% { box-shadow: 0 0 5px rgba(231, 29, 54, 0.5); }
+            50% { box-shadow: 0 0 15px rgba(255, 71, 87, 0.8); }
+        }
+
         .card-box.plataforma-2 .card-header-title { color: #fff; opacity: 0.9; }
         .card-box.plataforma-2 .card-desc-principal { color: #fff; }
         .card-box.plataforma-2 .card-bonus { color: #ffd700; font-weight: 900; }
+
         .card-box:active { transform: scale(0.95); }
-        .card-header-title { font-size: 7px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
-        .card-desc-principal { font-size: 11px; font-weight: 900; text-transform: uppercase; }
+
+        .card-header-title {
+            font-size: 7px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-desc-principal {
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
         .card-bonus { font-size: 8px; margin-top: 1px; }
+
         .caverna-block {
             background: #111;
             border: 2px solid #333;
@@ -571,8 +643,20 @@
             margin-top: 2px;
             position: relative;
         }
-        .caverna-lock { font-size: 24px; animation: lockShake 4s infinite; }
-        @keyframes lockShake { 0%, 85%, 100% { transform: rotate(0); } 87% { transform: rotate(-8deg); } 89% { transform: rotate(8deg); } 91% { transform: rotate(-4deg); } 93% { transform: rotate(4deg); } }
+
+        .caverna-lock {
+            font-size: 24px;
+            animation: lockShake 4s infinite;
+        }
+
+        @keyframes lockShake {
+            0%, 85%, 100% { transform: rotate(0); }
+            87% { transform: rotate(-8deg); }
+            89% { transform: rotate(8deg); }
+            91% { transform: rotate(-4deg); }
+            93% { transform: rotate(4deg); }
+        }
+
         .caverna-msg {
             font-size: 9px;
             font-weight: 900;
@@ -582,6 +666,7 @@
             margin: 4px 0;
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
+
         .caverna-progress-container {
             background: #1a1a1a;
             border-radius: 10px;
@@ -590,6 +675,7 @@
             overflow: hidden;
             border: 1px solid #333;
         }
+
         .caverna-progress-bar {
             background: linear-gradient(90deg, #ffd700, #ff8c00);
             height: 100%;
@@ -597,8 +683,10 @@
             transition: width 0.8s ease;
             width: 0%;
         }
+
         .caverna-counter { font-size: 8px; color: #aaa; margin-top: 2px; }
         .caverna-counter span { color: #ffd700; font-weight: 900; }
+
         .cloud-balance {
             background: rgba(0, 230, 118, 0.1);
             border: 1px solid rgba(0, 230, 118, 0.2);
@@ -608,6 +696,7 @@
             text-align: center;
             color: var(--accent-green);
         }
+
         .historico-wrapper {
             display: flex;
             align-items: center;
@@ -618,11 +707,21 @@
             height: 24px;
             border: 1px solid #1c1e22;
         }
+
         .historico { display: flex; gap: 4px; overflow: hidden; flex: 1; }
-        .badge-vela { padding: 2px 6px; border-radius: 6px; font-size: 9px; font-weight: bold; white-space: nowrap; }
+
+        .badge-vela {
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-size: 9px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
         .v-low { background: var(--v-azul); }
         .v-mid { background: var(--v-roxo); }
         .v-high { background: var(--v-rosa); }
+
         .btn-expandir {
             background: #22252a;
             border: none;
@@ -632,9 +731,8 @@
             border-radius: 50%;
             font-size: 7px;
             cursor: pointer;
-            -webkit-appearance: none;
-            appearance: none;
         }
+
         .historico-expandido {
             display: none;
             background: rgba(20, 21, 23, 0.95);
@@ -645,6 +743,7 @@
             max-height: 70px;
             overflow-y: auto;
         }
+
         .banner-aviso-id {
             background: rgba(231, 29, 54, 0.08);
             border: 1px solid rgba(231, 29, 54, 0.2);
@@ -655,6 +754,7 @@
             color: #ff6b6b;
             text-align: center;
         }
+
         .sinal-ia-top {
             background: linear-gradient(135deg, #121316 0%, #070809 100%);
             border: 1px dashed rgba(213, 0, 249, 0.25);
@@ -665,10 +765,25 @@
             justify-content: space-between;
             min-height: 34px;
         }
+
         .sinal-ia-info .title { font-size: 8px; color: #7f8c8d; font-weight: 800; }
         .sinal-ia-info .status { font-size: 9px; color: var(--accent-green); font-weight: bold; }
-        .sinal-borrado { font-size: 15px; font-weight: 900; color: #d500f9; filter: blur(4px); }
-        .sinal-ia-lock-msg { font-size: 7px; font-weight: bold; color: #ffeb3b; text-align: right; line-height: 10px; }
+
+        .sinal-borrado {
+            font-size: 15px;
+            font-weight: 900;
+            color: #d500f9;
+            filter: blur(4px);
+        }
+
+        .sinal-ia-lock-msg {
+            font-size: 7px;
+            font-weight: bold;
+            color: #ffeb3b;
+            text-align: right;
+            line-height: 10px;
+        }
+
         .game-screen {
             background: radial-gradient(circle, #1f0709 0%, #000000 100%);
             border: 1px solid #290d10;
@@ -680,23 +795,21 @@
             justify-content: center;
             align-items: center;
         }
+
         .multiplicador { font-size: clamp(28px, 8vw, 34px); font-weight: bold; }
         .game-status { font-size: 8px; color: #666; margin-top: 2px; font-weight: 800; }
-        .btn-mentoria-jogo {
-            background: linear-gradient(180deg, #2c3e50 0%, #1a252f 100%);
-            border: 1px solid #4a627a;
-            color: #ecf0f1;
-            padding: 4px 12px;
-            border-radius: 14px;
-            font-size: 9px;
-            font-weight: bold;
-            margin-top: 4px;
-            cursor: pointer;
-            text-decoration: none;
-            display: none;
-        }
+
         .bet-container { background: var(--bg-block); border-radius: 8px; padding: 5px; border: 1px solid #212327; }
-        .bet-tabs { display: flex; background: #0b0c0d; border-radius: 14px; padding: 1px; width: 120px; margin: 0 auto 3px auto; }
+
+        .bet-tabs {
+            display: flex;
+            background: #0b0c0d;
+            border-radius: 14px;
+            padding: 1px;
+            width: 120px;
+            margin: 0 auto 3px auto;
+        }
+
         .tab-btn {
             flex: 1;
             background: transparent;
@@ -707,12 +820,19 @@
             font-size: 9px;
             border-radius: 12px;
             cursor: pointer;
-            -webkit-appearance: none;
-            appearance: none;
         }
+
         .tab-btn.active { background: #212327; color: #fff; }
+
         .bet-main-row { display: flex; gap: 5px; align-items: center; }
-        .numeric-controls { display: flex; flex-direction: column; gap: 3px; width: 48%; }
+
+        .numeric-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            width: 48%;
+        }
+
         .input-stepper {
             display: flex;
             background: #0b0c0d;
@@ -722,6 +842,7 @@
             height: 24px;
             border: 1px solid #1c1e22;
         }
+
         .btn-step {
             background: transparent;
             border: none;
@@ -730,9 +851,8 @@
             font-weight: bold;
             width: 18px;
             cursor: pointer;
-            -webkit-appearance: none;
-            appearance: none;
         }
+
         .input-stepper input {
             width: 100%;
             background: transparent;
@@ -742,10 +862,10 @@
             font-weight: bold;
             font-size: 11px;
             outline: none;
-            -webkit-appearance: none;
-            appearance: none;
         }
+
         .quick-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; }
+
         .btn-quick {
             background: #0b0c0d;
             border: none;
@@ -756,9 +876,8 @@
             border-radius: 5px;
             cursor: pointer;
             border: 1px solid #1c1e22;
-            -webkit-appearance: none;
-            appearance: none;
         }
+
         .btn-action-trigger {
             flex: 1;
             height: 42px;
@@ -771,14 +890,15 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            -webkit-appearance: none;
-            appearance: none;
         }
+
         .btn-style-aposta { background: linear-gradient(180deg, #2ecc71 0%, #27ae60 100%); }
         .btn-style-espera { background: #33353a; color: #7f8c8d; cursor: not-allowed; }
         .btn-style-cashout { background: linear-gradient(180deg, #ff9100 0%, #f39c12 100%); box-shadow: 0 0 10px rgba(243, 156, 18, 0.5); }
+
         .btn-title { font-size: 12px; text-transform: uppercase; font-weight: 800; }
         .btn-sub { font-size: 10px; font-weight: bold; }
+
         .auto-target-row {
             display: none;
             align-items: center;
@@ -790,6 +910,7 @@
             border-radius: 6px;
             margin-bottom: 3px;
         }
+
         .auto-target-row input {
             background: #212327;
             border: none;
@@ -800,9 +921,8 @@
             border-radius: 5px;
             font-weight: bold;
             font-size: 10px;
-            -webkit-appearance: none;
-            appearance: none;
         }
+
         .admin-modal {
             display: none;
             background: #1c1d21;
@@ -812,8 +932,23 @@
             animation: fadeIn 0.2s ease;
             margin-bottom: 2px;
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-3px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .admin-modal h4 { color: #ff9100; font-size: 12px; margin-bottom: 6px; }
-        .admin-modal label { font-size: 9px; color: #aaa; display: block; margin-bottom: 2px; font-weight: bold; text-transform: uppercase; }
+
+        .admin-modal label {
+            font-size: 9px;
+            color: #aaa;
+            display: block;
+            margin-bottom: 2px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
         .admin-modal input, .admin-modal select {
             width: 100%;
             padding: 6px;
@@ -824,13 +959,20 @@
             margin-bottom: 6px;
             font-size: 11px;
             outline: none;
-            -webkit-appearance: none;
-            appearance: none;
         }
-        .admin-modal select { cursor: pointer; }
-        .plataforma-bloco { background: #111215; border-radius: 8px; padding: 6px; margin-bottom: 6px; border-left: 3px solid #ffd700; }
+
+        .plataforma-bloco {
+            background: #111215;
+            border-radius: 8px;
+            padding: 6px;
+            margin-bottom: 6px;
+            border-left: 3px solid #ffd700;
+        }
+
         .plataforma-bloco.plataforma-2-admin { border-left-color: #e71d36; }
+
         .plataforma-titulo { font-weight: 900; font-size: 10px; margin-bottom: 4px; }
+
         .btn-salvar-admin {
             width: 100%;
             background: var(--accent-green);
@@ -841,13 +983,10 @@
             color: #000;
             cursor: pointer;
             font-size: 12px;
-            -webkit-appearance: none;
-            appearance: none;
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: translateY(0); } }
+
         .app-hidden { display: none !important; }
 
-        /* Scrollbar */
         ::-webkit-scrollbar { width: 3px; }
         ::-webkit-scrollbar-track { background: #0b0c0d; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
@@ -855,12 +994,13 @@
 </head>
 <body>
 
-<!-- ============ BOTÃO FLUTUANTE MENTORIA ============ -->
-<a href="https://youtube.com/@seucanal?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-mentoria-flutuante" id="btn-mentoria-yt" title="Acessar Mentoria no YouTube">
+<!-- Botão Flutuante Mentoria -->
+<a href="https://youtube.com/@seucanal?sub_confirmation=1" target="_blank" rel="noopener" class="btn-mentoria-flutuante" id="btn-mentoria-yt">
     <span class="yt-icon">▶</span>
     <span class="badge-mentoria">MENTORIA</span>
 </a>
 
+<!-- Tela de Login -->
 <div class="login-screen" id="login-screen">
     <div class="login-logo">✈️</div>
     <div class="login-title">BOT AVIATOR</div>
@@ -870,838 +1010,1071 @@
     <div class="login-info">Seus dados ficam salvos apenas neste dispositivo.<br>Sem necessidade de criar conta com email ou senha.</div>
 </div>
 
+<!-- App Container -->
 <div class="container app-hidden" id="app-container">
     <div class="header">
         <span class="logo" onclick="registrarCliqueSecret()">✈️ BOT AVIATOR</span>
         <div class="header-right">
             <span class="user-numero-badge" id="user-numero-badge">📱 ...</span>
             <button class="btn-depositar-top" onclick="abrirModalDeposito()">💰 Depositar</button>
-            <div class="saldo-box"><span id="main-saldo">0.00</span> <span style="font-size:9px;background:#222;padding:1px 3px;border-radius:4px;margin-left:2px;">MZN</span></div>
+            <div class="saldo-box">
+                <span id="main-saldo">0.00</span> 
+                <span style="font-size:9px;background:#222;padding:1px 3px;border-radius:4px;margin-left:2px;">MZN</span>
+            </div>
         </div>
     </div>
+
     <div class="house-stats" id="house-stats">
         <div style="font-weight:900;font-size:9px;color:#ffd700;margin-bottom:4px;">🏦 ESTATÍSTICAS DA CASA</div>
         <div class="house-stats-grid">
-            <div class="stat-item"><div class="stat-label">Total Apostado</div><div class="stat-value" id="stat-apostado">0</div></div>
-            <div class="stat-item"><div class="stat-label">Total Pago</div><div class="stat-value" id="stat-pago">0</div></div>
-            <div class="stat-item"><div class="stat-label">Lucro Casa</div><div class="stat-value positive" id="stat-lucro">0</div></div>
-            <div class="stat-item"><div class="stat-label">RTP %</div><div class="stat-value" id="stat-rtp">0%</div></div>
-            <div class="stat-item"><div class="stat-label">Rodadas</div><div class="stat-value" id="stat-rodadas">0</div></div>
-            <div class="stat-item"><div class="stat-label">Margem</div><div class="stat-value positive" id="stat-margem">0%</div></div>
+            <div class="stat-item">
+                <div class="stat-label">Total Apostado</div>
+                <div class="stat-value" id="stat-apostado">0</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Total Pago</div>
+                <div class="stat-value" id="stat-pago">0</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Lucro Casa</div>
+                <div class="stat-value positive" id="stat-lucro">0</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">RTP %</div>
+                <div class="stat-value" id="stat-rtp">0%</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Rodadas</div>
+                <div class="stat-value" id="stat-rodadas">0</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Margem</div>
+                <div class="stat-value positive" id="stat-margem">0%</div>
+            </div>
         </div>
-        <div style="margin-top:4px;font-size:8px;text-align:center;color:#888;">Sistema Ativo: <span id="sistema-ativo-label" style="font-weight:900;color:#ffd700;">🏦 Casa Ganha</span></div>
+        <div style="margin-top:4px;font-size:8px;text-align:center;color:#888;">
+            Sistema Ativo: <span id="sistema-ativo-label" style="font-weight:900;color:#ffd700;">🏦 Casa Ganha</span>
+        </div>
     </div>
-    <div class="cloud-balance">☁️ Saldo em Nuvem: <span id="cloud-balance" style="font-weight:900;">0.00 MZN</span></div>
+
+    <div class="cloud-balance">
+        ☁️ Saldo em Nuvem: <span id="cloud-balance" style="font-weight:900;">0.00 MZN</span>
+    </div>
+
     <div class="link-unico-box" id="link-unico-box">
         <span style="font-size:9px;">🔗 Seu link:</span>
         <span class="link-text" id="link-unico-text">Gerando...</span>
         <button class="btn-copiar-link" onclick="copiarLink()">📋 Copiar</button>
     </div>
+
     <div class="admin-modal" id="admin-panel">
         <h4>⚙️ PAINEL ADMIN</h4>
         <div class="sistema-selector">
             <label style="font-size:10px;color:#ffd700;margin-bottom:6px;display:block;">🎲 SISTEMA DE GERAÇÃO DE NÚMEROS</label>
             <div class="sistema-options">
-                <div class="sistema-btn sistema-casa active" id="sistema-casa-btn" onclick="selecionarSistema('casa')">🏦 CASA GANHA<div class="sistema-label">Margem configurável</div></div>
-                <div class="sistema-btn sistema-rosa" id="sistema-rosa-btn" onclick="selecionarSistema('rosa')">🌹 ROSAS & QUEDAS<div class="sistema-label">Muitas rosas, poucas quedas</div></div>
+                <div class="sistema-btn sistema-casa active" id="sistema-casa-btn" onclick="selecionarSistema('casa')">
+                    🏦 CASA GANHA
+                    <div class="sistema-label">Margem configurável</div>
+                </div>
+                <div class="sistema-btn sistema-rosa" id="sistema-rosa-btn" onclick="selecionarSistema('rosa')">
+                    🌹 ROSAS & QUEDAS
+                    <div class="sistema-label">Muitas rosas, poucas quedas</div>
+                </div>
             </div>
         </div>
-        <div id="admin-depositos-pendentes" style="max-height:120px;overflow-y:auto;margin-bottom:8px;"><p style="color:#888;font-size:10px;">Nenhum depósito pendente</p></div>
+        <div id="admin-depositos-pendentes" style="max-height:120px;overflow-y:auto;margin-bottom:8px;">
+            <p style="color:#888;font-size:10px;">Nenhum depósito pendente</p>
+        </div>
         <div class="plataforma-bloco">
             <div class="plataforma-titulo">🟡 PLATAFORMA 1</div>
-            <label>🔗 Link de Afiliado</label><input type="text" id="adm-plataforma1" placeholder="https://...">
-            <label style="margin-top:4px;">🎁 Bônus</label><input type="text" id="adm-bonus-p1" value="500 MT">
-            <label style="margin-top:4px;">📱 M-Pesa</label><div style="display:flex;gap:4px;"><input type="text" id="adm-mpesa-p1" placeholder="84 123 4567" style="flex:1;"><select id="adm-status-mpesa-p1" style="width:90px;font-size:9px;"><option value="ativo">Ativo</option><option value="embreve">Em Breve</option></select></div>
-            <label style="margin-top:4px;">📲 E-Mola</label><div style="display:flex;gap:4px;"><input type="text" id="adm-emola-p1" placeholder="86 765 4321" style="flex:1;"><select id="adm-status-emola-p1" style="width:90px;font-size:9px;"><option value="ativo">Ativo</option><option value="embreve">Em Breve</option></select></div>
+            <label>🔗 Link de Afiliado</label>
+            <input type="text" id="adm-plataforma1" placeholder="https://...">
+            <label style="margin-top:4px;">🎁 Bônus</label>
+            <input type="text" id="adm-bonus-p1" value="500 MT">
+            <label style="margin-top:4px;">📱 M-Pesa</label>
+            <div style="display:flex;gap:4px;">
+                <input type="text" id="adm-mpesa-p1" placeholder="84 123 4567" style="flex:1;">
+                <select id="adm-status-mpesa-p1" style="width:90px;font-size:9px;">
+                    <option value="ativo">Ativo</option>
+                    <option value="embreve">Em Breve</option>
+                </select>
+            </div>
+            <label style="margin-top:4px;">📲 E-Mola</label>
+            <div style="display:flex;gap:4px;">
+                <input type="text" id="adm-emola-p1" placeholder="86 765 4321" style="flex:1;">
+                <select id="adm-status-emola-p1" style="width:90px;font-size:9px;">
+                    <option value="ativo">Ativo</option>
+                    <option value="embreve">Em Breve</option>
+                </select>
+            </div>
         </div>
         <div class="plataforma-bloco plataforma-2-admin">
             <div class="plataforma-titulo">🔴 PLATAFORMA 2</div>
-            <label>🔗 Link de Afiliado</label><input type="text" id="adm-plataforma2" placeholder="https://...">
-            <label style="margin-top:4px;">🎁 Bônus</label><input type="text" id="adm-bonus-p2" value="750 MT">
-            <label style="margin-top:4px;">📱 M-Pesa</label><div style="display:flex;gap:4px;"><input type="text" id="adm-mpesa-p2" placeholder="84 987 6543" style="flex:1;"><select id="adm-status-mpesa-p2" style="width:90px;font-size:9px;"><option value="ativo">Ativo</option><option value="embreve">Em Breve</option></select></div>
-            <label style="margin-top:4px;">📲 E-Mola</label><div style="display:flex;gap:4px;"><input type="text" id="adm-emola-p2" placeholder="86 987 6543" style="flex:1;"><select id="adm-status-emola-p2" style="width:90px;font-size:9px;"><option value="ativo">Ativo</option><option value="embreve">Em Breve</option></select></div>
+            <label>🔗 Link de Afiliado</label>
+            <input type="text" id="adm-plataforma2" placeholder="https://...">
+            <label style="margin-top:4px;">🎁 Bônus</label>
+            <input type="text" id="adm-bonus-p2" value="750 MT">
+            <label style="margin-top:4px;">📱 M-Pesa</label>
+            <div style="display:flex;gap:4px;">
+                <input type="text" id="adm-mpesa-p2" placeholder="84 987 6543" style="flex:1;">
+                <select id="adm-status-mpesa-p2" style="width:90px;font-size:9px;">
+                    <option value="ativo">Ativo</option>
+                    <option value="embreve">Em Breve</option>
+                </select>
+            </div>
+            <label style="margin-top:4px;">📲 E-Mola</label>
+            <div style="display:flex;gap:4px;">
+                <input type="text" id="adm-emola-p2" placeholder="86 987 6543" style="flex:1;">
+                <select id="adm-status-emola-p2" style="width:90px;font-size:9px;">
+                    <option value="ativo">Ativo</option>
+                    <option value="embreve">Em Breve</option>
+                </select>
+            </div>
         </div>
-        <label>🎥 Link Mentoria YouTube</label><input type="text" id="adm-mentoria-yt" placeholder="https://youtube.com/@seucanal">
-        <label>🏦 Margem da Casa (%)</label><input type="number" id="adm-margem" value="5" min="0" max="30" step="0.5">
-        <label>💵 Saldo Jogo (MZN)</label><input type="number" id="adm-saldo" placeholder="Ex: 5000">
-        <label>☁️ Saldo Nuvem (MZN)</label><input type="number" id="adm-cloud" placeholder="Ex: 10000">
-        <label>🔓 Meta Convites</label><input type="number" id="adm-meta-convites" value="30" min="1" max="500">
-        <label>📝 Mensagem Caverna</label><input type="text" id="adm-msg-caverna" value="CONVIDE 30 PESSOAS PARA LIBERAR O MODO CAVERNA ULTRA">
-        <button onclick="resetarEstatisticas()" style="width:100%;padding:6px;background:#e71d36;border:none;color:#fff;border-radius:6px;font-size:10px;font-weight:bold;cursor:pointer;margin-bottom:6px;">🔄 RESETAR ESTATÍSTICAS</button>
+        <label>🎥 Link Mentoria YouTube</label>
+        <input type="text" id="adm-mentoria-yt" placeholder="https://youtube.com/@seucanal">
+        <label>🏦 Margem da Casa (%)</label>
+        <input type="number" id="adm-margem" value="5" min="0" max="30" step="0.5">
+        <label>💵 Saldo Jogo (MZN)</label>
+        <input type="number" id="adm-saldo" placeholder="Ex: 5000">
+        <label>☁️ Saldo Nuvem (MZN)</label>
+        <input type="number" id="adm-cloud" placeholder="Ex: 10000">
+        <label>🔓 Meta Convites</label>
+        <input type="number" id="adm-meta-convites" value="30" min="1" max="500">
+        <label>📝 Mensagem Caverna</label>
+        <input type="text" id="adm-msg-caverna" value="CONVIDE 30 PESSOAS PARA LIBERAR O MODO CAVERNA ULTRA">
+        <button onclick="resetarEstatisticas()" style="width:100%;padding:6px;background:#e71d36;border:none;color:#fff;border-radius:6px;font-size:10px;font-weight:bold;cursor:pointer;margin-bottom:6px;">
+            🔄 RESETAR ESTATÍSTICAS
+        </button>
         <button class="btn-salvar-admin" onclick="salvarConfigAdmin()">💾 GRAVAR CONFIGURAÇÕES</button>
     </div>
-    <div class="historico-wrapper"><div class="historico" id="historico-velas"></div><button class="btn-expandir" onclick="toggleHistorico()">▼</button></div>
+
+    <div class="historico-wrapper">
+        <div class="historico" id="historico-velas"></div>
+        <button class="btn-expandir" onclick="toggleHistorico()">▼</button>
+    </div>
     <div class="historico-expandido" id="historico-completo"></div>
-    <div class="banner-aviso-id">⚠️ CRIE A CONTA E FAÇA UM DEPÓSITO PARA LIBERAR O BOT PROFISSIONAL</div>
+
+    <div class="banner-aviso-id">
+        ⚠️ CRIE A CONTA E FAÇA UM DEPÓSITO PARA LIBERAR O BOT PROFISSIONAL
+    </div>
+
     <div class="sinal-ia-top">
-        <div class="sinal-ia-info"><span class="title">🎯 PRÓXIMO ALVO IA</span><span class="status">● SINAL GERADO</span></div>
-        <div><div class="sinal-borrado" id="txt-sinal-fake">14.80x</div><div class="sinal-ia-lock-msg">Deposite para liberar</div></div>
-    </div>
-    <div class="game-screen"><div class="multiplicador" id="live-mult">1.00x</div><div class="game-status" id="game-status">ESPERANDO PRÓXIMA RODADA</div></div>
-    <div class="bet-container">
-        <div class="bet-tabs"><button class="tab-btn active" id="t1-manual" onclick="mudarModoAposta(1,'manual')">Aposta</button><button class="tab-btn" id="t1-auto" onclick="mudarModoAposta(1,'auto')">Auto</button></div>
-        <div class="auto-target-row" id="auto-row-1"><span>Auto Cashout</span><input type="number" id="auto-cash-val-1" value="2.00" step="0.10"></div>
-        <div class="bet-main-row">
-            <div class="numeric-controls">
-                <div class="input-stepper"><button class="btn-step" onclick="passoValor(1,-1)">-</button><input type="number" id="input-val-1" value="2.00" min="1" max="75000"><button class="btn-step" onclick="passoValor(1,1)">+</button></div>
-                <div class="quick-grid"><button class="btn-quick" onclick="setValorFixo(1,8)">8</button><button class="btn-quick" onclick="setValorFixo(1,16)">16</button><button class="btn-quick" onclick="setValorFixo(1,24)">24</button><button class="btn-quick" onclick="setValorFixo(1,32)">32</button></div>
-            </div>
-            <button id="btn-bet-1" class="btn-action-trigger btn-style-aposta" onclick="executarApostaBotao(1)"><span class="btn-title" id="lbl-title-1">Aposta</span><span class="btn-sub" id="lbl-sub-1">2.00 MZN</span></button>
+        <div class="sinal-ia-info">
+            <span class="title">🎯 PRÓXIMO ALVO IA</span>
+            <span class="status">● SINAL GERADO</span>
+        </div>
+        <div>
+            <div class="sinal-borrado" id="txt-sinal-fake">14.80x</div>
+            <div class="sinal-ia-lock-msg">Deposite para liberar</div>
         </div>
     </div>
+
+    <div class="game-screen">
+        <div class="multiplicador" id="live-mult">1.00x</div>
+        <div class="game-status" id="game-status">ESPERANDO PRÓXIMA RODADA</div>
+    </div>
+
     <div class="bet-container">
-        <div class="bet-tabs"><button class="tab-btn active" id="t2-manual" onclick="mudarModoAposta(2,'manual')">Aposta</button><button class="tab-btn" id="t2-auto" onclick="mudarModoAposta(2,'auto')">Auto</button></div>
-        <div class="auto-target-row" id="auto-row-2"><span>Auto Cashout</span><input type="number" id="auto-cash-val-2" value="1.00" step="0.10"></div>
+        <div class="bet-tabs">
+            <button class="tab-btn active" id="t1-manual" onclick="mudarModoAposta(1,'manual')">Aposta</button>
+            <button class="tab-btn" id="t1-auto" onclick="mudarModoAposta(1,'auto')">Auto</button>
+        </div>
+        <div class="auto-target-row" id="auto-row-1">
+            <span>Auto Cashout</span>
+            <input type="number" id="auto-cash-val-1" value="2.00" step="0.10">
+        </div>
         <div class="bet-main-row">
             <div class="numeric-controls">
-                <div class="input-stepper"><button class="btn-step" onclick="passoValor(2,-1)">-</button><input type="number" id="input-val-2" value="1.00" min="1" max="75000"><button class="btn-step" onclick="passoValor(2,1)">+</button></div>
-                <div class="quick-grid"><button class="btn-quick" onclick="setValorFixo(2,8)">8</button><button class="btn-quick" onclick="setValorFixo(2,16)">16</button><button class="btn-quick" onclick="setValorFixo(2,24)">24</button><button class="btn-quick" onclick="setValorFixo(2,32)">32</button></div>
+                <div class="input-stepper">
+                    <button class="btn-step" onclick="passoValor(1,-1)">-</button>
+                    <input type="number" id="input-val-1" value="2.00" min="1" max="75000">
+                    <button class="btn-step" onclick="passoValor(1,1)">+</button>
+                </div>
+                <div class="quick-grid">
+                    <button class="btn-quick" onclick="setValorFixo(1,8)">8</button>
+                    <button class="btn-quick" onclick="setValorFixo(1,16)">16</button>
+                    <button class="btn-quick" onclick="setValorFixo(1,24)">24</button>
+                    <button class="btn-quick" onclick="setValorFixo(1,32)">32</button>
+                </div>
             </div>
-            <button id="btn-bet-2" class="btn-action-trigger btn-style-aposta" onclick="executarApostaBotao(2)"><span class="btn-title" id="lbl-title-2">Aposta</span><span class="btn-sub" id="lbl-sub-2">1.00 MZN</span></button>
+            <button id="btn-bet-1" class="btn-action-trigger btn-style-aposta" onclick="executarApostaBotao(1)">
+                <span class="btn-title" id="lbl-title-1">Aposta</span>
+                <span class="btn-sub" id="lbl-sub-1">2.00 MZN</span>
+            </button>
         </div>
     </div>
+
+    <div class="bet-container">
+        <div class="bet-tabs">
+            <button class="tab-btn active" id="t2-manual" onclick="mudarModoAposta(2,'manual')">Aposta</button>
+            <button class="tab-btn" id="t2-auto" onclick="mudarModoAposta(2,'auto')">Auto</button>
+        </div>
+        <div class="auto-target-row" id="auto-row-2">
+            <span>Auto Cashout</span>
+            <input type="number" id="auto-cash-val-2" value="1.00" step="0.10">
+        </div>
+        <div class="bet-main-row">
+            <div class="numeric-controls">
+                <div class="input-stepper">
+                    <button class="btn-step" onclick="passoValor(2,-1)">-</button>
+                    <input type="number" id="input-val-2" value="1.00" min="1" max="75000">
+                    <button class="btn-step" onclick="passoValor(2,1)">+</button>
+                </div>
+                <div class="quick-grid">
+                    <button class="btn-quick" onclick="setValorFixo(2,8)">8</button>
+                    <button class="btn-quick" onclick="setValorFixo(2,16)">16</button>
+                    <button class="btn-quick" onclick="setValorFixo(2,24)">24</button>
+                    <button class="btn-quick" onclick="setValorFixo(2,32)">32</button>
+                </div>
+            </div>
+            <button id="btn-bet-2" class="btn-action-trigger btn-style-aposta" onclick="executarApostaBotao(2)">
+                <span class="btn-title" id="lbl-title-2">Aposta</span>
+                <span class="btn-sub" id="lbl-sub-2">1.00 MZN</span>
+            </button>
+        </div>
+    </div>
+
     <div class="cards-container">
         <div class="plataforma-row">
-            <a href="#" class="card-box plataforma-1" id="card-p1-criar" target="_blank" rel="noopener noreferrer"><div class="card-header-title">🟡 PLATAFORMA 1</div><div class="card-desc-principal">1️⃣ CRIAR CONTA</div><div class="card-bonus" id="bonus-p1-criar">🎁 +500 MT Bônus</div></a>
-            <a href="#" class="card-box plataforma-1" id="card-p1-depositar" target="_blank" rel="noopener noreferrer"><div class="card-header-title">🟡 PLATAFORMA 1</div><div class="card-desc-principal">2️⃣ DEPOSITAR</div><div class="card-bonus" id="bonus-p1-depositar">💰 Receber 500 MT</div></a>
+            <a href="#" class="card-box plataforma-1" id="card-p1-criar" target="_blank" rel="noopener">
+                <div class="card-header-title">🟡 PLATAFORMA 1</div>
+                <div class="card-desc-principal">1️⃣ CRIAR CONTA</div>
+                <div class="card-bonus" id="bonus-p1-criar">🎁 +500 MT Bônus</div>
+            </a>
+            <a href="#" class="card-box plataforma-1" id="card-p1-depositar" target="_blank" rel="noopener">
+                <div class="card-header-title">🟡 PLATAFORMA 1</div>
+                <div class="card-desc-principal">2️⃣ DEPOSITAR</div>
+                <div class="card-bonus" id="bonus-p1-depositar">💰 Receber 500 MT</div>
+            </a>
         </div>
         <div class="plataforma-row">
-            <a href="#" class="card-box plataforma-2" id="card-p2-criar" target="_blank" rel="noopener noreferrer"><div class="card-header-title">🔴 PLATAFORMA 2</div><div class="card-desc-principal">1️⃣ CRIAR CONTA</div><div class="card-bonus" id="bonus-p2-criar">🎁 +750 MT Bônus</div></a>
-            <a href="#" class="card-box plataforma-2" id="card-p2-depositar" target="_blank" rel="noopener noreferrer"><div class="card-header-title">🔴 PLATAFORMA 2</div><div class="card-desc-principal">2️⃣ DEPOSITAR</div><div class="card-bonus" id="bonus-p2-depositar">💰 Receber 750 MT</div></a>
+            <a href="#" class="card-box plataforma-2" id="card-p2-criar" target="_blank" rel="noopener">
+                <div class="card-header-title">🔴 PLATAFORMA 2</div>
+                <div class="card-desc-principal">1️⃣ CRIAR CONTA</div>
+                <div class="card-bonus" id="bonus-p2-criar">🎁 +750 MT Bônus</div>
+            </a>
+            <a href="#" class="card-box plataforma-2" id="card-p2-depositar" target="_blank" rel="noopener">
+                <div class="card-header-title">🔴 PLATAFORMA 2</div>
+                <div class="card-desc-principal">2️⃣ DEPOSITAR</div>
+                <div class="card-bonus" id="bonus-p2-depositar">💰 Receber 750 MT</div>
+            </a>
         </div>
     </div>
+
     <div class="caverna-block" id="caverna-block">
         <div class="caverna-lock">🔒</div>
         <div class="caverna-msg" id="caverna-msg">CONVIDE 30 PESSOAS PARA LIBERAR O MODO CAVERNA ULTRA</div>
-        <div class="caverna-progress-container"><div class="caverna-progress-bar" id="caverna-progress-bar"></div></div>
-        <div class="caverna-counter">👥 <span id="caverna-counter-text">0</span> / <span id="caverna-meta-text">30</span> convidados</div>
+        <div class="caverna-progress-container">
+            <div class="caverna-progress-bar" id="caverna-progress-bar"></div>
+        </div>
+        <div class="caverna-counter">
+            👥 <span id="caverna-counter-text">0</span> / <span id="caverna-meta-text">30</span> convidados
+        </div>
     </div>
 </div>
 
+<!-- Modal de Depósito -->
 <div class="deposit-overlay" id="deposit-overlay">
     <div class="deposit-modal">
-        <div class="deposit-header"><button class="btn-fechar-modal" onclick="fecharModalDeposito()">✕</button><div class="deposit-title">💰 FAZER DEPÓSITO</div><div class="deposit-subtitle">Escolha sua carteira móvel</div></div>
+        <div class="deposit-header">
+            <button class="btn-fechar-modal" onclick="fecharModalDeposito()">✕</button>
+            <div class="deposit-title">💰 FAZER DEPÓSITO</div>
+            <div class="deposit-subtitle">Escolha sua carteira móvel</div>
+        </div>
         <div class="deposit-body">
             <div class="wallet-options" id="wallet-options">
-                <div class="wallet-option mpesa" id="opt-mpesa" onclick="selecionarCarteira('mpesa')"><div class="wallet-icon">📱</div><div class="wallet-name">M-PESA</div><div style="font-size:8px;color:#888;">Vodacom</div><div class="wallet-number" id="disp-mpesa-num">Enviar para:<br><strong>84 123 4567</strong></div><div id="disp-mpesa-status"></div></div>
-                <div class="wallet-option emola" id="opt-emola" onclick="selecionarCarteira('emola')"><div class="wallet-icon">📲</div><div class="wallet-name">E-MOLA</div><div style="font-size:8px;color:#888;">Movitel</div><div class="wallet-number" id="disp-emola-num">Enviar para:<br><strong>86 765 4321</strong></div><div id="disp-emola-status"></div></div>
+                <div class="wallet-option mpesa" id="opt-mpesa" onclick="selecionarCarteira('mpesa')">
+                    <div class="wallet-icon">📱</div>
+                    <div class="wallet-name">M-PESA</div>
+                    <div style="font-size:8px;color:#888;">Vodacom</div>
+                    <div class="wallet-number" id="disp-mpesa-num">
+                        Enviar para:<br><strong>84 123 4567</strong>
+                    </div>
+                    <div id="disp-mpesa-status"></div>
+                </div>
+                <div class="wallet-option emola" id="opt-emola" onclick="selecionarCarteira('emola')">
+                    <div class="wallet-icon">📲</div>
+                    <div class="wallet-name">E-MOLA</div>
+                    <div style="font-size:8px;color:#888;">Movitel</div>
+                    <div class="wallet-number" id="disp-emola-num">
+                        Enviar para:<br><strong>86 765 4321</strong>
+                    </div>
+                    <div id="disp-emola-status"></div>
+                </div>
             </div>
             <div class="deposit-form" id="form-mpesa">
-                <div class="transfer-info"><div class="label">📱 TRANSFIRA PARA M-PESA</div><div class="number" id="form-mpesa-num">84 123 4567</div><div class="note">⚠️ Guarde o comprovativo!</div></div>
-                <div class="form-group"><label class="form-label">👤 Seu Nome Completo</label><input type="text" class="form-input" id="mpesa-nome" placeholder="Ex: João da Silva"></div>
-                <div class="form-group"><label class="form-label">📱 Seu Número M-Pesa</label><div class="input-with-icon"><span class="input-icon">📱</span><input type="tel" class="form-input" id="mpesa-numero" placeholder="Ex: 84 123 4567"></div></div>
-                <div class="form-group"><label class="form-label">💵 Valor Transferido (MZN)</label><div class="input-with-icon"><span class="input-icon">💰</span><input type="number" class="form-input" id="mpesa-valor" placeholder="Ex: 500" min="50" max="50000"></div></div>
+                <div class="transfer-info">
+                    <div class="label">📱 TRANSFIRA PARA M-PESA</div>
+                    <div class="number" id="form-mpesa-num">84 123 4567</div>
+                    <div class="note">⚠️ Guarde o comprovativo!</div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">👤 Seu Nome Completo</label>
+                    <input type="text" class="form-input" id="mpesa-nome" placeholder="Ex: João da Silva">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">📱 Seu Número M-Pesa</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">📱</span>
+                        <input type="tel" class="form-input" id="mpesa-numero" placeholder="Ex: 84 123 4567">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">💵 Valor Transferido (MZN)</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">💰</span>
+                        <input type="number" class="form-input" id="mpesa-valor" placeholder="Ex: 500" min="50" max="50000">
+                    </div>
+                </div>
                 <button class="btn-enviar-deposito" onclick="enviarDeposito('mpesa')">📤 ENVIAR COMPROVATIVO</button>
             </div>
             <div class="deposit-form" id="form-emola">
-                <div class="transfer-info"><div class="label">📲 TRANSFIRA PARA E-MOLA</div><div class="number" id="form-emola-num">86 765 4321</div><div class="note">⚠️ Guarde o comprovativo!</div></div>
-                <div class="form-group"><label class="form-label">👤 Seu Nome Completo</label><input type="text" class="form-input" id="emola-nome" placeholder="Ex: Maria Santos"></div>
-                <div class="form-group"><label class="form-label">📱 Seu Número E-Mola</label><div class="input-with-icon"><span class="input-icon">📲</span><input type="tel" class="form-input" id="emola-numero" placeholder="Ex: 86 765 4321"></div></div>
-                <div class="form-group"><label class="form-label">💵 Valor Transferido (MZN)</label><div class="input-with-icon"><span class="input-icon">💰</span><input type="number" class="form-input" id="emola-valor" placeholder="Ex: 500" min="50" max="50000"></div></div>
+                <div class="transfer-info">
+                    <div class="label">📲 TRANSFIRA PARA E-MOLA</div>
+                    <div class="number" id="form-emola-num">86 765 4321</div>
+                    <div class="note">⚠️ Guarde o comprovativo!</div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">👤 Seu Nome Completo</label>
+                    <input type="text" class="form-input" id="emola-nome" placeholder="Ex: Maria Santos">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">📱 Seu Número E-Mola</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">📲</span>
+                        <input type="tel" class="form-input" id="emola-numero" placeholder="Ex: 86 765 4321">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">💵 Valor Transferido (MZN)</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">💰</span>
+                        <input type="number" class="form-input" id="emola-valor" placeholder="Ex: 500" min="50" max="50000">
+                    </div>
+                </div>
                 <button class="btn-enviar-deposito" onclick="enviarDeposito('emola')">📤 ENVIAR COMPROVATIVO</button>
             </div>
-            <div class="deposito-status" id="deposito-status" style="display:none;"><div class="status-icon">⏳</div><div class="status-text">Depósito Enviado com Sucesso!</div><div class="status-sub">Aguardando aprovação do administrador...</div><div style="margin-top:6px;"><span class="pending-badge">⏳ PENDENTE</span></div><button style="width:100%;padding:8px;background:transparent;border:1px solid #444;color:#ccc;border-radius:8px;margin-top:8px;cursor:pointer;font-size:11px;" onclick="fecharModalDeposito()">Fechar</button></div>
+            <div class="deposito-status" id="deposito-status" style="display:none;">
+                <div class="status-icon">⏳</div>
+                <div class="status-text">Depósito Enviado com Sucesso!</div>
+                <div class="status-sub">Aguardando aprovação do administrador...</div>
+                <div style="margin-top:6px;">
+                    <span class="pending-badge">⏳ PENDENTE</span>
+                </div>
+                <button style="width:100%;padding:8px;background:transparent;border:1px solid #444;color:#ccc;border-radius:8px;margin-top:8px;cursor:pointer;font-size:11px;" onclick="fecharModalDeposito()">
+                    Fechar
+                </button>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
-    // ============ BLOQUEIO DE SEGURANÇA ============
-    (function() {
-        'use strict';
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'F12' ||
-                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
-                (e.ctrlKey && e.key === 'U') ||
-                (e.ctrlKey && e.shiftKey && e.key === 'C') ||
-                (e.ctrlKey && e.key === 's') ||
-                (e.ctrlKey && e.key === 'p')) {
-                e.preventDefault();
-                return false;
-            }
-        });
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-            return false;
-        });
-        var devtoolsOpen = false;
-        var threshold = 160;
-        setInterval(function() {
-            if (window.outerWidth - window.innerWidth > threshold ||
-                window.outerHeight - window.innerHeight > threshold) {
-                if (!devtoolsOpen) {
-                    devtoolsOpen = true;
-                    document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;color:#fff;background:#000;font-size:20px;">🚫 Acesso não autorizado!</div>';
-                }
-            } else {
-                devtoolsOpen = false;
-            }
-        }, 1000);
-    })();
+// ============ SISTEMA COMPLETO SEM BLOQUEIOS ============
+console.log('🚀 Bot Aviator iniciando...');
 
-    console.log('🚀 Bot Aviator iniciando...');
+// Variáveis globais
+var usuarioNumero = localStorage.getItem('usuarioNumero') || '';
+var usuarioId = localStorage.getItem('usuarioId') || '';
 
-    var usuarioNumero = localStorage.getItem('usuarioNumero') || '';
-    var usuarioId = localStorage.getItem('usuarioId') || '';
+// Funções de utilidade
+function gerarIdUnico() {
+    return 'usr_' + Date.now().toString(36) + '_' + Math.random().toString(36).substr(2, 6);
+}
 
-    function gerarIdUnico() {
-        return 'usr_' + Date.now().toString(36) + '_' + Math.random().toString(36).substr(2, 6);
+function gerarLinkUnico() {
+    return window.location.href.split('?')[0] + '?ref=' + usuarioId;
+}
+
+// Login
+function fazerLogin() {
+    var numero = document.getElementById('login-numero').value.trim();
+    if (!numero || numero.replace(/\D/g, '').length < 9) {
+        alert('Digite um número de telefone válido (mínimo 9 dígitos).');
+        return;
     }
+    usuarioNumero = numero;
+    if (!usuarioId) usuarioId = gerarIdUnico();
+    localStorage.setItem('usuarioNumero', usuarioNumero);
+    localStorage.setItem('usuarioId', usuarioId);
+    console.log('✅ Login feito:', usuarioNumero, usuarioId);
+    mostrarApp();
+}
 
-    function gerarLinkUnico() {
-        return window.location.origin + window.location.pathname + '?ref=' + usuarioId;
+function mostrarApp() {
+    document.getElementById('login-screen').classList.add('app-hidden');
+    document.getElementById('app-container').classList.remove('app-hidden');
+    document.getElementById('user-numero-badge').textContent = '📱 ' + usuarioNumero.slice(-4);
+    document.getElementById('link-unico-text').textContent = gerarLinkUnico();
+    if (!window._appIniciado) {
+        window._appIniciado = true;
+        inicializarApp();
     }
+}
 
-    function fazerLogin() {
-        var numero = document.getElementById('login-numero').value.trim();
-        if (!numero || numero.replace(/\D/g, '').length < 9) {
-            alert('Digite um número de telefone válido (mínimo 9 dígitos).');
-            return;
-        }
-        usuarioNumero = numero;
-        if (!usuarioId) usuarioId = gerarIdUnico();
-        localStorage.setItem('usuarioNumero', usuarioNumero);
-        localStorage.setItem('usuarioId', usuarioId);
-        console.log('✅ Login feito:', usuarioNumero, usuarioId);
-        mostrarApp();
-    }
-
-    function mostrarApp() {
-        document.getElementById('login-screen').classList.add('app-hidden');
-        document.getElementById('app-container').classList.remove('app-hidden');
-        document.getElementById('user-numero-badge').textContent = '📱 ' + usuarioNumero.slice(-4);
-        document.getElementById('link-unico-text').textContent = gerarLinkUnico();
-        if (!window._appIniciado) {
-            window._appIniciado = true;
-            inicializarApp();
-        }
-    }
-
-    function copiarLink() {
-        var link = document.getElementById('link-unico-text').textContent;
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(link).then(function() {
-                alert('✅ Link copiado!');
-            }).catch(function() {
-                prompt('Copie o link:', link);
-            });
-        } else {
+function copiarLink() {
+    var link = document.getElementById('link-unico-text').textContent;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(link).then(function() {
+            alert('✅ Link copiado!');
+        }).catch(function() {
             prompt('Copie o link:', link);
+        });
+    } else {
+        prompt('Copie o link:', link);
+    }
+}
+
+// Auto-login se já tiver sessão
+if (usuarioNumero && usuarioId) {
+    document.getElementById('login-numero').value = usuarioNumero;
+    setTimeout(mostrarApp, 100);
+}
+
+// Referência
+var urlParams = new URLSearchParams(window.location.search);
+var refParam = urlParams.get('ref');
+if (refParam) localStorage.setItem('referencia', refParam);
+
+// Inicialização do App
+function inicializarApp() {
+    console.log('🎮 Inicializando app...');
+    window._saldoMZN = parseFloat(localStorage.getItem('saldoMZN_' + usuarioId) || '0');
+    window._saldoNuvem = parseFloat(localStorage.getItem('saldoNuvem_' + usuarioId) || '0');
+    window._depositosPendentes = JSON.parse(localStorage.getItem('depositosPendentes') || '[]');
+    window._margemCasa = parseFloat(localStorage.getItem('margemCasa') || '5');
+    window._sistemaAtivo = localStorage.getItem('sistemaAtivo') || 'casa';
+    window._bonusP1 = localStorage.getItem('bonusP1') || '500 MT';
+    window._bonusP2 = localStorage.getItem('bonusP2') || '750 MT';
+    window._metaConvites = parseInt(localStorage.getItem('metaConvites') || '30');
+    window._msgCaverna = localStorage.getItem('msgCaverna') || 'CONVIDE 30 PESSOAS PARA LIBERAR O MODO CAVERNA ULTRA';
+    window._convitesFeitos = parseInt(localStorage.getItem('convitesFeitos_' + usuarioId) || '0');
+    window._linkP1 = localStorage.getItem('linkPlataforma1') || '#';
+    window._linkP2 = localStorage.getItem('linkPlataforma2') || '#';
+    window._linkMentoriaYT = localStorage.getItem('linkMentoriaYT') || 'https://youtube.com/@seucanal?sub_confirmation=1';
+    window._numerosDeposito = JSON.parse(localStorage.getItem('numerosDeposito') || '{"mpesa":{"numero":"84 123 4567","status":"ativo"},"emola":{"numero":"86 765 4321","status":"ativo"}}');
+    window._stats = JSON.parse(localStorage.getItem('houseStats') || '{"totalApostado":0,"totalPago":0,"totalRodadas":0}');
+    window._cliquesAdmin = 0;
+    window._memoriaHistorico = [];
+    window._motorJogo = { multiplicador: 1.00, crashAlvo: 2.00, ativo: false, speed: 0.01 };
+    window._apostaModo1 = "manual";
+    window._apostaModo2 = "manual";
+    window._statusMecanica1 = "apostar";
+    window._statusMecanica2 = "apostar";
+    window._valorAposta1 = 0;
+    window._valorAposta2 = 0;
+    window._seedAleatoriaGlobal = Date.now();
+    window._carteiraSelecionada = null;
+
+    document.getElementById('btn-mentoria-yt').href = window._linkMentoriaYT;
+    inicializarHistorico();
+    renderizarHistoricoSuperior();
+    atualizarSaldoNuvem();
+    atualizarPainelSaldo();
+    vincularTodosLinks();
+    atualizarTextosBonus();
+    atualizarDisplayNumeros();
+    atualizarCavernaBlock();
+    atualizarLabelSistema();
+    setTimeout(processarLoopVoo, 1500);
+    console.log('✅ App iniciado!');
+}
+
+// Geradores de números
+function gerarNumeroAleatorio() {
+    window._seedAleatoriaGlobal = (window._seedAleatoriaGlobal * 16807 + 0) % 2147483647;
+    var s = window._seedAleatoriaGlobal / 2147483647;
+    return window._sistemaAtivo === 'casa' ? gerarCrashSistemaCasa(s) : gerarCrashSistemaRosa(s);
+}
+
+function gerarCrashSistemaCasa(seed) {
+    var m = window._margemCasa / 100;
+    var pb = 0.25 + (m * 1.5), pm = 0.30 - (m * 0.5), pa = 0.25 - (m * 0.5), pma = 0.15 - (m * 0.3);
+    var c;
+    if (seed < pb) c = 1.00 + (seed / pb) * 0.60;
+    else if (seed < pb + pm) c = 1.60 + ((seed - pb) / pm) * 1.90;
+    else if (seed < pb + pm + pa) c = 3.50 + ((seed - pb - pm) / pa) * 4.50;
+    else if (seed < pb + pm + pa + pma) c = 8.00 + ((seed - pb - pm - pa) / pma) * 17.00;
+    else c = 25.00 + ((seed - pb - pm - pa - pma) / (1 - pb - pm - pa - pma)) * 75.00;
+    return parseFloat(c.toFixed(2));
+}
+
+function gerarCrashSistemaRosa(seed) {
+    var pq = 0.10, pb = 0.15, pm = 0.20, pa = 0.25, pr = 0.20, ps = 0.10;
+    var c;
+    if (seed < pq) c = 1.00 + (seed / pq) * 0.50;
+    else if (seed < pq + pb) c = 1.50 + ((seed - pq) / pb) * 1.50;
+    else if (seed < pq + pb + pm) c = 3.00 + ((seed - pq - pb) / pm) * 5.00;
+    else if (seed < pq + pb + pm + pa) c = 8.00 + ((seed - pq - pb - pm) / pa) * 17.00;
+    else if (seed < pq + pb + pm + pa + pr) c = 25.00 + ((seed - pq - pb - pm - pa) / pr) * 55.00;
+    else c = 80.00 + ((seed - pq - pb - pm - pa - pr) / ps) * 420.00;
+    return parseFloat(c.toFixed(2));
+}
+
+// Sistema
+function selecionarSistema(tipo) {
+    window._sistemaAtivo = tipo;
+    localStorage.setItem('sistemaAtivo', tipo);
+    document.getElementById('sistema-casa-btn').classList.toggle('active', tipo === 'casa');
+    document.getElementById('sistema-rosa-btn').classList.toggle('active', tipo === 'rosa');
+    atualizarLabelSistema();
+    window._seedAleatoriaGlobal = Date.now();
+}
+
+function atualizarLabelSistema() {
+    var label = document.getElementById('sistema-ativo-label');
+    if (window._sistemaAtivo === 'casa') {
+        label.textContent = '🏦 Casa Ganha (Margem ' + window._margemCasa + '%)';
+        label.style.color = '#4caf50';
+    } else {
+        label.textContent = '🌹 Rosas & Quedas (Muitas Rosas)';
+        label.style.color = '#d500f9';
+    }
+}
+
+// Histórico
+function inicializarHistorico() {
+    var padrao = [];
+    for (var i = 0; i < 15; i++) padrao.push(gerarNumeroAleatorio());
+    window._memoriaHistorico = padrao;
+}
+
+function renderizarHistoricoSuperior() {
+    var c = document.getElementById('historico-velas');
+    c.innerHTML = "";
+    [].concat(window._memoriaHistorico).reverse().slice(0, 7).forEach(function(v) {
+        var b = document.createElement('span');
+        b.className = 'badge-vela ' + (v >= 10 ? 'v-high' : (v >= 2 ? 'v-mid' : 'v-low'));
+        b.innerText = v.toFixed(2) + "x";
+        c.appendChild(b);
+    });
+}
+
+function renderizarTabelaExpandida() {
+    var c = document.getElementById('historico-completo');
+    c.innerHTML = "";
+    [].concat(window._memoriaHistorico).reverse().slice(0, 16).forEach(function(v) {
+        var b = document.createElement('span');
+        b.className = 'badge-vela ' + (v >= 10 ? 'v-high' : (v >= 2 ? 'v-mid' : 'v-low'));
+        b.innerText = v.toFixed(2) + "x";
+        c.appendChild(b);
+    });
+}
+
+function toggleHistorico() {
+    var p = document.getElementById('historico-completo');
+    p.style.display = p.style.display === "grid" ? "none" : "grid";
+    if (p.style.display === "grid") renderizarTabelaExpandida();
+}
+
+function atualizarListasDeVelas() {
+    var mh = window._memoriaHistorico;
+    if (mh.length > 30) mh.shift();
+    renderizarHistoricoSuperior();
+    if (document.getElementById('historico-completo').style.display === "grid") renderizarTabelaExpandida();
+}
+
+// Apostas
+function passoValor(id, dir) {
+    var input = document.getElementById('input-val-' + id);
+    var v = parseFloat(input.value) || 0;
+    v += dir;
+    if (v < 1) v = 1;
+    if (v > 75000) v = 75000;
+    input.value = v.toFixed(2);
+    sincronizarLabelsSub(id);
+}
+
+function setValorFixo(id, val) {
+    document.getElementById('input-val-' + id).value = val.toFixed(2);
+    sincronizarLabelsSub(id);
+}
+
+function sincronizarLabelsSub(id) {
+    var val = parseFloat(document.getElementById('input-val-' + id).value) || 1;
+    var status = id === 1 ? window._statusMecanica1 : window._statusMecanica2;
+    if (status === "apostar") document.getElementById('lbl-sub-' + id).innerText = val.toFixed(2) + " MZN";
+}
+
+function mudarModoAposta(id, modo) {
+    if (id === 1) {
+        window._apostaModo1 = modo;
+        document.getElementById('t1-manual').className = modo === 'manual' ? 'tab-btn active' : 'tab-btn';
+        document.getElementById('t1-auto').className = modo === 'auto' ? 'tab-btn active' : 'tab-btn';
+        document.getElementById('auto-row-1').style.display = modo === 'auto' ? 'flex' : 'none';
+    } else {
+        window._apostaModo2 = modo;
+        document.getElementById('t2-manual').className = modo === 'manual' ? 'tab-btn active' : 'tab-btn';
+        document.getElementById('t2-auto').className = modo === 'auto' ? 'tab-btn active' : 'tab-btn';
+        document.getElementById('auto-row-2').style.display = modo === 'auto' ? 'flex' : 'none';
+    }
+}
+
+function executarApostaBotao(id) {
+    var iv = parseFloat(document.getElementById('input-val-' + id).value) || 1;
+    var btn = document.getElementById('btn-bet-' + id);
+    var motor = window._motorJogo;
+    
+    if (id === 1) {
+        if (window._statusMecanica1 === "apostar" && !motor.ativo) {
+            if (window._saldoMZN < iv) { alert("Saldo Insuficiente!"); return; }
+            window._saldoMZN -= iv;
+            window._valorAposta1 = iv;
+            var s = window._stats;
+            s.totalApostado += iv;
+            window._stats = s;
+            localStorage.setItem('houseStats', JSON.stringify(s));
+            atualizarPainelSaldo();
+            window._statusMecanica1 = "esperando";
+            btn.className = "btn-action-trigger btn-style-espera";
+            document.getElementById('lbl-title-1').innerText = "CANCELAR";
+        } else if (window._statusMecanica1 === "em_jogo" && motor.ativo) {
+            recolherPremioFicticio(1);
+        }
+    } else {
+        if (window._statusMecanica2 === "apostar" && !motor.ativo) {
+            if (window._saldoMZN < iv) { alert("Saldo Insuficiente!"); return; }
+            window._saldoMZN -= iv;
+            window._valorAposta2 = iv;
+            var s = window._stats;
+            s.totalApostado += iv;
+            window._stats = s;
+            localStorage.setItem('houseStats', JSON.stringify(s));
+            atualizarPainelSaldo();
+            window._statusMecanica2 = "esperando";
+            btn.className = "btn-action-trigger btn-style-espera";
+            document.getElementById('lbl-title-2').innerText = "CANCELAR";
+        } else if (window._statusMecanica2 === "em_jogo" && motor.ativo) {
+            recolherPremioFicticio(2);
         }
     }
+}
 
-    if (usuarioNumero && usuarioId) {
-        document.getElementById('login-numero').value = usuarioNumero;
-        setTimeout(mostrarApp, 100);
+function recolherPremioFicticio(id) {
+    var vb = id === 1 ? window._valorAposta1 : window._valorAposta2;
+    var fat = vb * window._motorJogo.multiplicador;
+    window._saldoMZN += fat;
+    var s = window._stats;
+    s.totalPago += fat;
+    window._stats = s;
+    localStorage.setItem('saldoMZN_' + usuarioId, window._saldoMZN.toString());
+    localStorage.setItem('houseStats', JSON.stringify(s));
+    atualizarPainelSaldo();
+    if (id === 1) window._statusMecanica1 = "ganhou";
+    else window._statusMecanica2 = "ganhou";
+    var btn = document.getElementById('btn-bet-' + id);
+    btn.className = "btn-action-trigger btn-style-espera";
+    document.getElementById('lbl-title-' + id).innerText = "Venceu!";
+    document.getElementById('lbl-sub-' + id).innerText = "+" + fat.toFixed(2) + " MZN";
+}
+
+function atualizarPainelSaldo() {
+    document.getElementById('main-saldo').textContent = window._saldoMZN.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    localStorage.setItem('saldoMZN_' + usuarioId, window._saldoMZN.toString());
+}
+
+function atualizarSaldoNuvem() {
+    document.getElementById('cloud-balance').textContent = window._saldoNuvem.toFixed(2) + ' MZN';
+}
+
+// Motor do Jogo
+function processarLoopVoo() {
+    var motor = window._motorJogo;
+    motor.multiplicador = 1.00;
+    motor.ativo = true;
+    motor.crashAlvo = gerarNumeroAleatorio();
+    var s = window._stats;
+    s.totalRodadas++;
+    window._stats = s;
+    localStorage.setItem('houseStats', JSON.stringify(s));
+    
+    document.getElementById('game-status').innerText = "";
+    document.getElementById('txt-sinal-fake').innerText = (motor.crashAlvo * (0.85 + Math.random() * 0.3)).toFixed(2) + "x";
+    
+    if (motor.crashAlvo <= 1.00) { executarCrashImediato(); return; }
+    
+    if (window._statusMecanica1 === "esperando") {
+        window._statusMecanica1 = "em_jogo";
+        document.getElementById('btn-bet-1').className = "btn-action-trigger btn-style-cashout";
+        document.getElementById('lbl-title-1').innerText = "CASHOUT";
     }
+    if (window._statusMecanica2 === "esperando") {
+        window._statusMecanica2 = "em_jogo";
+        document.getElementById('btn-bet-2').className = "btn-action-trigger btn-style-cashout";
+        document.getElementById('lbl-title-2').innerText = "CASHOUT";
+    }
+    
+    var loopVoo = setInterval(function() {
+        if (motor.multiplicador > 20) motor.speed = 0.50;
+        else if (motor.multiplicador > 10) motor.speed = 0.28;
+        else if (motor.multiplicador > 4) motor.speed = 0.10;
+        else motor.speed = 0.022;
+        motor.multiplicador += motor.speed;
+        document.getElementById('live-mult').innerText = motor.multiplicador.toFixed(2) + "x";
+        verificarMotoresDeCashout();
+        if (motor.multiplicador >= motor.crashAlvo) {
+            clearInterval(loopVoo);
+            finalizarRodadaMecanica();
+        }
+    }, 75);
+}
 
-    var urlParams = new URLSearchParams(window.location.search);
-    var refParam = urlParams.get('ref');
-    if (refParam) localStorage.setItem('referencia', refParam);
+function executarCrashImediato() {
+    var motor = window._motorJogo;
+    motor.ativo = false;
+    document.getElementById('live-mult').innerText = "1.00x";
+    document.getElementById('game-status').innerText = "FLEW AWAY EM 1.00x (QUEDA)";
+    if (window._statusMecanica1 === "esperando") { window._statusMecanica1 = "apostar"; window._valorAposta1 = 0; }
+    if (window._statusMecanica2 === "esperando") { window._statusMecanica2 = "apostar"; window._valorAposta2 = 0; }
+    window._memoriaHistorico.push(1.00);
+    atualizarListasDeVelas();
+    resetarBotoesPosRodada();
+    setTimeout(processarLoopVoo, 4000);
+}
 
-    function inicializarApp() {
-        console.log('🎮 Inicializando app...');
-        window._saldoMZN = parseFloat(localStorage.getItem('saldoMZN_' + usuarioId) || '0');
-        window._saldoNuvem = parseFloat(localStorage.getItem('saldoNuvem_' + usuarioId) || '0');
-        window._depositosPendentes = JSON.parse(localStorage.getItem('depositosPendentes') || '[]');
-        window._margemCasa = parseFloat(localStorage.getItem('margemCasa') || '5');
-        window._sistemaAtivo = localStorage.getItem('sistemaAtivo') || 'casa';
-        window._bonusP1 = localStorage.getItem('bonusP1') || '500 MT';
-        window._bonusP2 = localStorage.getItem('bonusP2') || '750 MT';
-        window._metaConvites = parseInt(localStorage.getItem('metaConvites') || '30');
-        window._msgCaverna = localStorage.getItem('msgCaverna') || 'CONVIDE 30 PESSOAS PARA LIBERAR O MODO CAVERNA ULTRA';
-        window._convitesFeitos = parseInt(localStorage.getItem('convitesFeitos_' + usuarioId) || '0');
-        window._linkP1 = localStorage.getItem('linkPlataforma1') || '#';
-        window._linkP2 = localStorage.getItem('linkPlataforma2') || '#';
-        window._linkMentoriaYT = localStorage.getItem('linkMentoriaYT') || 'https://youtube.com/@seucanal?sub_confirmation=1';
-        window._numerosDeposito = JSON.parse(localStorage.getItem('numerosDeposito') || '{"mpesa":{"numero":"84 123 4567","status":"ativo"},"emola":{"numero":"86 765 4321","status":"ativo"}}');
-        window._stats = JSON.parse(localStorage.getItem('houseStats') || '{"totalApostado":0,"totalPago":0,"totalRodadas":0}');
+function finalizarRodadaMecanica() {
+    var motor = window._motorJogo;
+    motor.ativo = false;
+    document.getElementById('live-mult').innerText = "Flew Away! 👋";
+    document.getElementById('game-status').innerText = "FLEW AWAY EM " + motor.crashAlvo.toFixed(2) + "x";
+    if (window._statusMecanica1 === "em_jogo") { window._statusMecanica1 = "apostar"; window._valorAposta1 = 0; }
+    if (window._statusMecanica2 === "em_jogo") { window._statusMecanica2 = "apostar"; window._valorAposta2 = 0; }
+    window._memoriaHistorico.push(motor.crashAlvo);
+    atualizarListasDeVelas();
+    resetarBotoesPosRodada();
+    if (document.getElementById('house-stats').style.display === 'block') atualizarStatsDisplay();
+    setTimeout(processarLoopVoo, 4000);
+}
+
+function verificarMotoresDeCashout() {
+    var motor = window._motorJogo;
+    if (window._statusMecanica1 === "em_jogo") {
+        if (window._apostaModo1 === "manual") {
+            document.getElementById('lbl-sub-1').innerText = (window._valorAposta1 * motor.multiplicador).toFixed(2) + " MZN";
+        } else {
+            var aa = parseFloat(document.getElementById('auto-cash-val-1').value) || 2.0;
+            if (motor.multiplicador >= aa) recolherPremioFicticio(1);
+        }
+    }
+    if (window._statusMecanica2 === "em_jogo") {
+        if (window._apostaModo2 === "manual") {
+            document.getElementById('lbl-sub-2').innerText = (window._valorAposta2 * motor.multiplicador).toFixed(2) + " MZN";
+        } else {
+            var aa = parseFloat(document.getElementById('auto-cash-val-2').value) || 2.0;
+            if (motor.multiplicador >= aa) recolherPremioFicticio(2);
+        }
+    }
+}
+
+function resetarBotoesPosRodada() {
+    window._statusMecanica1 = "apostar";
+    document.getElementById('btn-bet-1').className = "btn-action-trigger btn-style-aposta";
+    document.getElementById('lbl-title-1').innerText = "Aposta";
+    sincronizarLabelsSub(1);
+    window._valorAposta1 = 0;
+    window._statusMecanica2 = "apostar";
+    document.getElementById('btn-bet-2').className = "btn-action-trigger btn-style-aposta";
+    document.getElementById('lbl-title-2').innerText = "Aposta";
+    sincronizarLabelsSub(2);
+    window._valorAposta2 = 0;
+}
+
+// Depósitos
+function abrirModalDeposito() {
+    document.getElementById('deposit-overlay').style.display = 'flex';
+    document.getElementById('wallet-options').style.display = 'grid';
+    document.getElementById('form-mpesa').classList.remove('active');
+    document.getElementById('form-emola').classList.remove('active');
+    document.getElementById('deposito-status').style.display = 'none';
+    window._carteiraSelecionada = null;
+    document.querySelectorAll('.wallet-option').forEach(function(el) { el.classList.remove('selected'); });
+    ['mpesa-nome', 'mpesa-numero', 'mpesa-valor', 'emola-nome', 'emola-numero', 'emola-valor'].forEach(function(id) {
+        document.getElementById(id).value = '';
+    });
+    atualizarDisplayNumeros();
+}
+
+function fecharModalDeposito() {
+    document.getElementById('deposit-overlay').style.display = 'none';
+}
+
+function selecionarCarteira(tipo) {
+    var nd = window._numerosDeposito;
+    if (tipo === 'mpesa' && nd.mpesa.status === 'embreve') { alert('🚧 M-Pesa EM BREVE!'); return; }
+    if (tipo === 'emola' && nd.emola.status === 'embreve') { alert('🚧 E-Mola EM BREVE!'); return; }
+    window._carteiraSelecionada = tipo;
+    document.querySelectorAll('.wallet-option').forEach(function(el) { el.classList.remove('selected'); });
+    document.querySelector('.wallet-option.' + tipo).classList.add('selected');
+    document.getElementById('form-mpesa').classList.remove('active');
+    document.getElementById('form-emola').classList.remove('active');
+    document.getElementById('deposito-status').style.display = 'none';
+    document.getElementById('form-' + tipo).classList.add('active');
+}
+
+function enviarDeposito(tipo) {
+    var nd = window._numerosDeposito;
+    if (tipo === 'mpesa' && nd.mpesa.status === 'embreve') { alert('🚧 M-Pesa EM BREVE!'); return; }
+    if (tipo === 'emola' && nd.emola.status === 'embreve') { alert('🚧 E-Mola EM BREVE!'); return; }
+    
+    var prefixo = tipo;
+    var nome = document.getElementById(prefixo + '-nome').value.trim();
+    var numero = document.getElementById(prefixo + '-numero').value.trim();
+    var valorStr = document.getElementById(prefixo + '-valor').value;
+    var valor = parseFloat(valorStr);
+    
+    if (!nome || nome.length < 3) { alert('Digite seu nome completo.'); return; }
+    if (!numero || numero.replace(/\D/g, '').length < 9) { alert('Número inválido.'); return; }
+    if (!valorStr || isNaN(valor)) { alert('Digite o valor transferido.'); return; }
+    if (valor < 50) { alert('Valor mínimo: 50 MZN'); return; }
+    if (valor > 50000) { alert('Valor máximo: 50.000 MZN'); return; }
+    
+    var deposito = {
+        id: Date.now(),
+        tipo: tipo.toUpperCase(),
+        nome: nome,
+        numero: numero,
+        valor: valor,
+        data: new Date().toLocaleString('pt-BR'),
+        status: 'pendente',
+        usuarioId: usuarioId,
+        usuarioNumero: usuarioNumero
+    };
+    
+    var dp = window._depositosPendentes;
+    dp.push(deposito);
+    localStorage.setItem('depositosPendentes', JSON.stringify(dp));
+    
+    document.getElementById('form-mpesa').classList.remove('active');
+    document.getElementById('form-emola').classList.remove('active');
+    document.getElementById('wallet-options').style.display = 'none';
+    document.getElementById('deposito-status').style.display = 'block';
+    document.querySelector('.deposito-status .status-sub').textContent = tipo.toUpperCase() + ' • ' + valor.toFixed(2) + ' MZN • Aguardando aprovação';
+}
+
+// Admin
+function registrarCliqueSecret() {
+    window._cliquesAdmin = (window._cliquesAdmin || 0) + 1;
+    if (window._cliquesAdmin >= 10) {
         window._cliquesAdmin = 0;
-        window._memoriaHistorico = [];
-        window._motorJogo = { multiplicador: 1.00, crashAlvo: 2.00, ativo: false, speed: 0.01 };
-        window._apostaModo1 = "manual";
-        window._apostaModo2 = "manual";
-        window._statusMecanica1 = "apostar";
-        window._statusMecanica2 = "apostar";
-        window._valorAposta1 = 0;
-        window._valorAposta2 = 0;
-        window._seedAleatoriaGlobal = Date.now();
-        window._carteiraSelecionada = null;
-
-        document.getElementById('btn-mentoria-yt').href = window._linkMentoriaYT;
-        inicializarHistorico();
-        renderizarHistoricoSuperior();
-        atualizarSaldoNuvem();
-        atualizarPainelSaldo();
-        vincularTodosLinks();
-        atualizarTextosBonus();
-        atualizarDisplayNumeros();
-        atualizarCavernaBlock();
-        atualizarLabelSistema();
-        setTimeout(processarLoopVoo, 1500);
-        console.log('✅ App iniciado!');
+        var psw = prompt("🔐 Introduza a Chave Mestra de Acesso:");
+        if (psw === "admin111000") abrirPainelAdmin();
+        else alert("❌ Chave incorreta!");
     }
+}
 
-    function getS(k) { return window['_' + k]; }
+function abrirPainelAdmin() {
+    document.getElementById('admin-panel').style.display = 'block';
+    document.getElementById('house-stats').style.display = 'block';
+    document.getElementById('adm-saldo').value = window._saldoMZN;
+    document.getElementById('adm-cloud').value = window._saldoNuvem;
+    document.getElementById('adm-margem').value = window._margemCasa;
+    document.getElementById('adm-plataforma1').value = window._linkP1;
+    document.getElementById('adm-plataforma2').value = window._linkP2;
+    document.getElementById('adm-mentoria-yt').value = window._linkMentoriaYT;
+    document.getElementById('adm-bonus-p1').value = window._bonusP1;
+    document.getElementById('adm-bonus-p2').value = window._bonusP2;
+    
+    var nd = window._numerosDeposito;
+    document.getElementById('adm-mpesa-p1').value = nd.mpesa.numero;
+    document.getElementById('adm-status-mpesa-p1').value = nd.mpesa.status;
+    document.getElementById('adm-emola-p1').value = nd.emola.numero;
+    document.getElementById('adm-status-emola-p1').value = nd.emola.status;
+    document.getElementById('adm-mpesa-p2').value = nd.mpesa.numero;
+    document.getElementById('adm-status-mpesa-p2').value = nd.mpesa.status;
+    document.getElementById('adm-emola-p2').value = nd.emola.numero;
+    document.getElementById('adm-status-emola-p2').value = nd.emola.status;
+    document.getElementById('adm-meta-convites').value = window._metaConvites;
+    document.getElementById('adm-msg-caverna').value = window._msgCaverna;
+    
+    document.getElementById('sistema-casa-btn').classList.toggle('active', window._sistemaAtivo === 'casa');
+    document.getElementById('sistema-rosa-btn').classList.toggle('active', window._sistemaAtivo === 'rosa');
+    renderizarAdminDepositos();
+    atualizarStatsDisplay();
+}
 
-    function setS(k, v) { window['_' + k] = v; }
-
-    function inicializarHistorico() {
-        var padrao = [];
-        for (var i = 0; i < 15; i++) padrao.push(gerarNumeroAleatorio());
-        setS('memoriaHistorico', padrao);
+function renderizarAdminDepositos() {
+    var container = document.getElementById('admin-depositos-pendentes');
+    var pendentes = window._depositosPendentes.filter(function(d) { return d.status === 'pendente'; });
+    if (pendentes.length === 0) {
+        container.innerHTML = '<p style="color:#888;font-size:10px;">✅ Nenhum depósito pendente</p>';
+        return;
     }
+    container.innerHTML = pendentes.map(function(d) {
+        return '<div style="background:#111;border:1px solid #333;border-radius:8px;padding:8px;margin-bottom:6px;">' +
+            '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">' +
+            '<span style="font-weight:900;font-size:11px;">' + d.tipo + '</span>' +
+            '<span style="color:#ff9800;font-size:9px;">⏳ Pendente</span></div>' +
+            '<div style="font-size:9px;color:#ccc;">' +
+            '<div>👤 ' + d.nome + '</div><div>📱 ' + d.numero + '</div>' +
+            '<div>💰 ' + d.valor.toFixed(2) + ' MZN</div><div>📅 ' + d.data + '</div></div>' +
+            '<div style="display:flex;gap:4px;margin-top:6px;">' +
+            '<button onclick="aprovarDeposito(\'' + d.id + '\')" style="flex:1;padding:5px;background:#4caf50;border:none;color:#fff;border-radius:5px;font-size:9px;font-weight:bold;cursor:pointer;">✅ APROVAR</button>' +
+            '<button onclick="rejeitarDeposito(\'' + d.id + '\')" style="flex:1;padding:5px;background:#e71d36;border:none;color:#fff;border-radius:5px;font-size:9px;font-weight:bold;cursor:pointer;">❌ REJEITAR</button></div></div>';
+    }).join('');
+}
 
-    function gerarNumeroAleatorio() {
-        var seed = getS('seedAleatoriaGlobal');
-        seed = (seed * 16807 + 0) % 2147483647;
-        setS('seedAleatoriaGlobal', seed);
-        var s = seed / 2147483647;
-        return getS('sistemaAtivo') === 'casa' ? gerarCrashSistemaCasa(s) : gerarCrashSistemaRosa(s);
+function aprovarDeposito(id) {
+    var dp = window._depositosPendentes;
+    var index = dp.findIndex(function(d) { return d.id.toString() === id.toString(); });
+    if (index === -1) return;
+    dp[index].status = 'aprovado';
+    window._depositosPendentes = dp;
+    if (dp[index].usuarioId === usuarioId) {
+        window._saldoMZN += dp[index].valor;
+        window._saldoNuvem += dp[index].valor;
+        localStorage.setItem('saldoMZN_' + usuarioId, window._saldoMZN.toString());
+        localStorage.setItem('saldoNuvem_' + usuarioId, window._saldoNuvem.toString());
     }
+    window._convitesFeitos += 1;
+    localStorage.setItem('convitesFeitos_' + usuarioId, window._convitesFeitos.toString());
+    localStorage.setItem('depositosPendentes', JSON.stringify(dp));
+    atualizarPainelSaldo();
+    atualizarSaldoNuvem();
+    renderizarAdminDepositos();
+    atualizarCavernaBlock();
+    alert('✅ Depósito aprovado! Convites: ' + window._convitesFeitos + '/' + window._metaConvites);
+}
 
-    function gerarCrashSistemaCasa(seed) {
-        var m = getS('margemCasa') / 100;
-        var pb = 0.25 + (m * 1.5),
-            pm = 0.30 - (m * 0.5),
-            pa = 0.25 - (m * 0.5),
-            pma = 0.15 - (m * 0.3);
-        var c;
-        if (seed < pb) c = 1.00 + (seed / pb) * 0.60;
-        else if (seed < pb + pm) c = 1.60 + ((seed - pb) / pm) * 1.90;
-        else if (seed < pb + pm + pa) c = 3.50 + ((seed - pb - pm) / pa) * 4.50;
-        else if (seed < pb + pm + pa + pma) c = 8.00 + ((seed - pb - pm - pa) / pma) * 17.00;
-        else c = 25.00 + ((seed - pb - pm - pa - pma) / (1 - pb - pm - pa - pma)) * 75.00;
-        return parseFloat(c.toFixed(2));
+function rejeitarDeposito(id) {
+    if (!confirm('Tem certeza que deseja rejeitar?')) return;
+    var dp = window._depositosPendentes;
+    var index = dp.findIndex(function(d) { return d.id.toString() === id.toString(); });
+    if (index === -1) return;
+    dp[index].status = 'rejeitado';
+    window._depositosPendentes = dp;
+    localStorage.setItem('depositosPendentes', JSON.stringify(dp));
+    renderizarAdminDepositos();
+    alert('❌ Depósito rejeitado.');
+}
+
+function resetarEstatisticas() {
+    if (!confirm('Resetar todas as estatísticas?')) return;
+    window._stats = { totalApostado: 0, totalPago: 0, totalRodadas: 0 };
+    window._convitesFeitos = 0;
+    localStorage.setItem('houseStats', JSON.stringify(window._stats));
+    localStorage.setItem('convitesFeitos_' + usuarioId, '0');
+    atualizarStatsDisplay();
+    atualizarCavernaBlock();
+    alert('✅ Estatísticas resetadas!');
+}
+
+function salvarConfigAdmin() {
+    var ns = parseFloat(document.getElementById('adm-saldo').value);
+    var nc = parseFloat(document.getElementById('adm-cloud').value);
+    var nm = parseFloat(document.getElementById('adm-margem').value);
+    var lp1 = document.getElementById('adm-plataforma1').value.trim();
+    var lp2 = document.getElementById('adm-plataforma2').value.trim();
+    var lyt = document.getElementById('adm-mentoria-yt').value.trim();
+    var bp1 = document.getElementById('adm-bonus-p1').value.trim();
+    var bp2 = document.getElementById('adm-bonus-p2').value.trim();
+    var mm = parseInt(document.getElementById('adm-meta-convites').value) || 30;
+    var msg = document.getElementById('adm-msg-caverna').value.trim();
+    var mn = document.getElementById('adm-mpesa-p1').value.trim();
+    var ms = document.getElementById('adm-status-mpesa-p1').value;
+    var en = document.getElementById('adm-emola-p1').value.trim();
+    var es = document.getElementById('adm-status-emola-p1').value;
+
+    if (!isNaN(ns)) { window._saldoMZN = ns; localStorage.setItem('saldoMZN_' + usuarioId, ns.toString()); }
+    if (!isNaN(nc)) { window._saldoNuvem = nc; localStorage.setItem('saldoNuvem_' + usuarioId, nc.toString()); }
+    if (!isNaN(nm) && nm >= 0 && nm <= 30) { window._margemCasa = nm; localStorage.setItem('margemCasa', nm.toString()); }
+    if (lp1) { window._linkP1 = lp1; localStorage.setItem('linkPlataforma1', lp1); }
+    if (lp2) { window._linkP2 = lp2; localStorage.setItem('linkPlataforma2', lp2); }
+    if (lyt) { window._linkMentoriaYT = lyt; localStorage.setItem('linkMentoriaYT', lyt); document.getElementById('btn-mentoria-yt').href = lyt; }
+    if (bp1) { window._bonusP1 = bp1; localStorage.setItem('bonusP1', bp1); }
+    if (bp2) { window._bonusP2 = bp2; localStorage.setItem('bonusP2', bp2); }
+    if (msg) { window._msgCaverna = msg; localStorage.setItem('msgCaverna', msg); }
+    window._metaConvites = mm;
+    localStorage.setItem('metaConvites', mm.toString());
+    
+    var nd = window._numerosDeposito;
+    if (mn) nd.mpesa.numero = mn;
+    nd.mpesa.status = ms;
+    if (en) nd.emola.numero = en;
+    nd.emola.status = es;
+    window._numerosDeposito = nd;
+    localStorage.setItem('numerosDeposito', JSON.stringify(nd));
+
+    vincularTodosLinks();
+    atualizarTextosBonus();
+    atualizarDisplayNumeros();
+    atualizarCavernaBlock();
+    atualizarPainelSaldo();
+    atualizarSaldoNuvem();
+    atualizarLabelSistema();
+    document.getElementById('admin-panel').style.display = 'none';
+    document.getElementById('house-stats').style.display = 'none';
+}
+
+// Utilitários
+function vincularTodosLinks() {
+    document.getElementById('card-p1-criar').href = window._linkP1 || '#';
+    document.getElementById('card-p1-depositar').href = window._linkP1 || '#';
+    document.getElementById('card-p2-criar').href = window._linkP2 || '#';
+    document.getElementById('card-p2-depositar').href = window._linkP2 || '#';
+}
+
+function atualizarTextosBonus() {
+    document.getElementById('bonus-p1-criar').textContent = '🎁 +' + window._bonusP1 + ' Bônus';
+    document.getElementById('bonus-p1-depositar').textContent = '💰 Receber ' + window._bonusP1;
+    document.getElementById('bonus-p2-criar').textContent = '🎁 +' + window._bonusP2 + ' Bônus';
+    document.getElementById('bonus-p2-depositar').textContent = '💰 Receber ' + window._bonusP2;
+}
+
+function atualizarDisplayNumeros() {
+    var nd = window._numerosDeposito;
+    ['mpesa', 'emola'].forEach(function(t) {
+        var n = nd[t].numero, st = nd[t].status;
+        document.getElementById('disp-' + t + '-num').innerHTML = st === 'embreve' ? 
+            '<span style="color:#ff9800;">EM BREVE</span>' : 'Enviar para:<br><strong>' + n + '</strong>';
+        document.getElementById('disp-' + t + '-status').innerHTML = st === 'embreve' ? 
+            '<span class="embreve-badge">EM BREVE</span>' : '';
+        document.getElementById('form-' + t + '-num').textContent = st === 'embreve' ? 'EM BREVE' : n;
+        document.getElementById('opt-' + t).style.opacity = st === 'embreve' ? '0.5' : '1';
+        document.getElementById('opt-' + t).style.pointerEvents = st === 'embreve' ? 'none' : 'auto';
+    });
+}
+
+function atualizarCavernaBlock() {
+    var cf = window._convitesFeitos, mc = window._metaConvites;
+    var p = Math.min((cf / mc) * 100, 100);
+    document.getElementById('caverna-progress-bar').style.width = p + '%';
+    document.getElementById('caverna-counter-text').textContent = cf;
+    document.getElementById('caverna-meta-text').textContent = mc;
+    document.getElementById('caverna-msg').textContent = window._msgCaverna;
+    var lockEl = document.querySelector('.caverna-lock');
+    if (cf >= mc) {
+        if (lockEl) lockEl.textContent = '🔓';
+        document.getElementById('caverna-msg').textContent = '✅ MODO CAVERNA ULTRA LIBERADO!';
+        document.getElementById('caverna-msg').style.color = '#00e676';
+        document.getElementById('caverna-progress-bar').style.background = 'linear-gradient(90deg, #00e676, #4caf50)';
+    } else {
+        if (lockEl) lockEl.textContent = '🔒';
+        document.getElementById('caverna-msg').style.color = '#ffd700';
+        document.getElementById('caverna-progress-bar').style.background = 'linear-gradient(90deg, #ffd700, #ff8c00)';
     }
+}
 
-    function gerarCrashSistemaRosa(seed) {
-        var pq = 0.10,
-            pb = 0.15,
-            pm = 0.20,
-            pa = 0.25,
-            pr = 0.20,
-            ps = 0.10;
-        var c;
-        if (seed < pq) c = 1.00 + (seed / pq) * 0.50;
-        else if (seed < pq + pb) c = 1.50 + ((seed - pq) / pb) * 1.50;
-        else if (seed < pq + pb + pm) c = 3.00 + ((seed - pq - pb) / pm) * 5.00;
-        else if (seed < pq + pb + pm + pa) c = 8.00 + ((seed - pq - pb - pm) / pa) * 17.00;
-        else if (seed < pq + pb + pm + pa + pr) c = 25.00 + ((seed - pq - pb - pm - pa) / pr) * 55.00;
-        else c = 80.00 + ((seed - pq - pb - pm - pa - pr) / ps) * 420.00;
-        return parseFloat(c.toFixed(2));
-    }
+function atualizarStatsDisplay() {
+    var s = window._stats, ta = s.totalApostado || 0, tp = s.totalPago || 0;
+    var lucro = ta - tp, rtp = ta > 0 ? (tp / ta * 100) : 0, me = ta > 0 ? (lucro / ta * 100) : 0;
+    document.getElementById('stat-apostado').textContent = ta.toFixed(2);
+    document.getElementById('stat-pago').textContent = tp.toFixed(2);
+    document.getElementById('stat-lucro').textContent = lucro.toFixed(2);
+    document.getElementById('stat-lucro').className = 'stat-value ' + (lucro >= 0 ? 'positive' : 'negative');
+    document.getElementById('stat-rtp').textContent = rtp.toFixed(1) + '%';
+    document.getElementById('stat-rodadas').textContent = s.totalRodadas;
+    document.getElementById('stat-margem').textContent = me.toFixed(2) + '%';
+    document.getElementById('stat-margem').className = 'stat-value ' + (me >= 0 ? 'positive' : 'negative');
+}
 
-    function selecionarSistema(tipo) {
-        setS('sistemaAtivo', tipo);
-        localStorage.setItem('sistemaAtivo', tipo);
-        document.getElementById('sistema-casa-btn').classList.toggle('active', tipo === 'casa');
-        document.getElementById('sistema-rosa-btn').classList.toggle('active', tipo === 'rosa');
-        atualizarLabelSistema();
-        setS('seedAleatoriaGlobal', Date.now());
-    }
+// Event listener para fechar modal clicando fora
+document.getElementById('deposit-overlay').addEventListener('click', function(e) {
+    if (e.target === this) fecharModalDeposito();
+});
 
-    function atualizarLabelSistema() {
-        var label = document.getElementById('sistema-ativo-label');
-        if (getS('sistemaAtivo') === 'casa') {
-            label.textContent = '🏦 Casa Ganha (Margem ' + getS('margemCasa') + '%)';
-            label.style.color = '#4caf50';
-        } else {
-            label.textContent = '🌹 Rosas & Quedas (Muitas Rosas)';
-            label.style.color = '#d500f9';
-        }
-    }
-
-    function atualizarTextosBonus() {
-        document.getElementById('bonus-p1-criar').textContent = '🎁 +' + getS('bonusP1') + ' Bônus';
-        document.getElementById('bonus-p1-depositar').textContent = '💰 Receber ' + getS('bonusP1');
-        document.getElementById('bonus-p2-criar').textContent = '🎁 +' + getS('bonusP2') + ' Bônus';
-        document.getElementById('bonus-p2-depositar').textContent = '💰 Receber ' + getS('bonusP2');
-    }
-
-    function atualizarDisplayNumeros() {
-        var nd = getS('numerosDeposito');
-        ['mpesa', 'emola'].forEach(function(t) {
-            var n = nd[t].numero,
-                st = nd[t].status;
-            document.getElementById('disp-' + t + '-num').innerHTML = st === 'embreve' ? '<span style="color:#ff9800;">EM BREVE</span>' : 'Enviar para:<br><strong>' + n + '</strong>';
-            document.getElementById('disp-' + t + '-status').innerHTML = st === 'embreve' ? '<span class="embreve-badge">EM BREVE</span>' : '';
-            document.getElementById('form-' + t + '-num').textContent = st === 'embreve' ? 'EM BREVE' : n;
-            document.getElementById('opt-' + t).style.opacity = st === 'embreve' ? '0.5' : '1';
-            document.getElementById('opt-' + t).style.pointerEvents = st === 'embreve' ? 'none' : 'auto';
-        });
-    }
-
-    function atualizarCavernaBlock() {
-        var cf = getS('convitesFeitos'),
-            mc = getS('metaConvites');
-        var p = Math.min((cf / mc) * 100, 100);
-        document.getElementById('caverna-progress-bar').style.width = p + '%';
-        document.getElementById('caverna-counter-text').textContent = cf;
-        document.getElementById('caverna-meta-text').textContent = mc;
-        document.getElementById('caverna-msg').textContent = getS('msgCaverna');
-        var lockEl = document.querySelector('.caverna-lock');
-        if (cf >= mc) {
-            if (lockEl) lockEl.textContent = '🔓';
-            document.getElementById('caverna-msg').textContent = '✅ MODO CAVERNA ULTRA LIBERADO!';
-            document.getElementById('caverna-msg').style.color = '#00e676';
-            document.getElementById('caverna-progress-bar').style.background = 'linear-gradient(90deg, #00e676, #4caf50)';
-        } else {
-            if (lockEl) lockEl.textContent = '🔒';
-            document.getElementById('caverna-msg').style.color = '#ffd700';
-            document.getElementById('caverna-progress-bar').style.background = 'linear-gradient(90deg, #ffd700, #ff8c00)';
-        }
-    }
-
-    function abrirModalDeposito() {
-        document.getElementById('deposit-overlay').style.display = 'flex';
-        document.getElementById('wallet-options').style.display = 'grid';
-        document.getElementById('form-mpesa').classList.remove('active');
-        document.getElementById('form-emola').classList.remove('active');
-        document.getElementById('deposito-status').style.display = 'none';
-        setS('carteiraSelecionada', null);
-        document.querySelectorAll('.wallet-option').forEach(function(el) { el.classList.remove('selected'); });
-        ['mpesa-nome', 'mpesa-numero', 'mpesa-valor', 'emola-nome', 'emola-numero', 'emola-valor'].forEach(function(id) { document.getElementById(id).value = ''; });
-        atualizarDisplayNumeros();
-    }
-
-    function fecharModalDeposito() { document.getElementById('deposit-overlay').style.display = 'none'; }
-
-    function selecionarCarteira(tipo) {
-        var nd = getS('numerosDeposito');
-        if (tipo === 'mpesa' && nd.mpesa.status === 'embreve') { alert('🚧 M-Pesa EM BREVE!'); return; }
-        if (tipo === 'emola' && nd.emola.status === 'embreve') { alert('🚧 E-Mola EM BREVE!'); return; }
-        setS('carteiraSelecionada', tipo);
-        document.querySelectorAll('.wallet-option').forEach(function(el) { el.classList.remove('selected'); });
-        document.querySelector('.wallet-option.' + tipo).classList.add('selected');
-        document.getElementById('form-mpesa').classList.remove('active');
-        document.getElementById('form-emola').classList.remove('active');
-        document.getElementById('deposito-status').style.display = 'none';
-        document.getElementById('form-' + tipo).classList.add('active');
-    }
-
-    function enviarDeposito(tipo) {
-        var nd = getS('numerosDeposito');
-        if (tipo === 'mpesa' && nd.mpesa.status === 'embreve') { alert('🚧 M-Pesa EM BREVE!'); return; }
-        if (tipo === 'emola' && nd.emola.status === 'embreve') { alert('🚧 E-Mola EM BREVE!'); return; }
-        var prefixo = tipo;
-        var nome = document.getElementById(prefixo + '-nome').value.trim();
-        var numero = document.getElementById(prefixo + '-numero').value.trim();
-        var valorStr = document.getElementById(prefixo + '-valor').value;
-        var valor = parseFloat(valorStr);
-        if (!nome || nome.length < 3) { alert('Digite seu nome completo.'); return; }
-        if (!numero || numero.replace(/\D/g, '').length < 9) { alert('Número inválido.'); return; }
-        if (!valorStr || isNaN(valor)) { alert('Digite o valor transferido.'); return; }
-        if (valor < 50) { alert('Valor mínimo: 50 MZN'); return; }
-        if (valor > 50000) { alert('Valor máximo: 50.000 MZN'); return; }
-        var deposito = { id: Date.now(), tipo: tipo.toUpperCase(), nome: nome, numero: numero, valor: valor, data: new Date().toLocaleString('pt-BR'), status: 'pendente', usuarioId: usuarioId, usuarioNumero: usuarioNumero };
-        var dp = getS('depositosPendentes');
-        dp.push(deposito);
-        localStorage.setItem('depositosPendentes', JSON.stringify(dp));
-        document.getElementById('form-mpesa').classList.remove('active');
-        document.getElementById('form-emola').classList.remove('active');
-        document.getElementById('wallet-options').style.display = 'none';
-        document.getElementById('deposito-status').style.display = 'block';
-        document.querySelector('.deposito-status .status-sub').textContent = tipo.toUpperCase() + ' • ' + valor.toFixed(2) + ' MZN • Aguardando aprovação';
-    }
-
-    function registrarCliqueSecret() {
-        var cc = getS('cliquesAdmin') + 1;
-        setS('cliquesAdmin', cc);
-        if (cc >= 10) {
-            setS('cliquesAdmin', 0);
-            var psw = prompt("🔐 Introduza a Chave Mestra de Acesso:");
-            if (psw === "admin111000") abrirPainelAdmin();
-            else alert("❌ Chave incorreta!");
-        }
-    }
-
-    function abrirPainelAdmin() {
-        document.getElementById('admin-panel').style.display = 'block';
-        document.getElementById('house-stats').style.display = 'block';
-        document.getElementById('adm-saldo').value = getS('saldoMZN');
-        document.getElementById('adm-cloud').value = getS('saldoNuvem');
-        document.getElementById('adm-margem').value = getS('margemCasa');
-        document.getElementById('adm-plataforma1').value = getS('linkP1');
-        document.getElementById('adm-plataforma2').value = getS('linkP2');
-        document.getElementById('adm-mentoria-yt').value = getS('linkMentoriaYT');
-        document.getElementById('adm-bonus-p1').value = getS('bonusP1');
-        document.getElementById('adm-bonus-p2').value = getS('bonusP2');
-        var nd = getS('numerosDeposito');
-        document.getElementById('adm-mpesa-p1').value = nd.mpesa.numero;
-        document.getElementById('adm-status-mpesa-p1').value = nd.mpesa.status;
-        document.getElementById('adm-emola-p1').value = nd.emola.numero;
-        document.getElementById('adm-status-emola-p1').value = nd.emola.status;
-        document.getElementById('adm-mpesa-p2').value = nd.mpesa.numero;
-        document.getElementById('adm-status-mpesa-p2').value = nd.mpesa.status;
-        document.getElementById('adm-emola-p2').value = nd.emola.numero;
-        document.getElementById('adm-status-emola-p2').value = nd.emola.status;
-        document.getElementById('adm-meta-convites').value = getS('metaConvites');
-        document.getElementById('adm-msg-caverna').value = getS('msgCaverna');
-        document.getElementById('sistema-casa-btn').classList.toggle('active', getS('sistemaAtivo') === 'casa');
-        document.getElementById('sistema-rosa-btn').classList.toggle('active', getS('sistemaAtivo') === 'rosa');
-        renderizarAdminDepositos();
-        atualizarStatsDisplay();
-    }
-
-    function renderizarAdminDepositos() {
-        var container = document.getElementById('admin-depositos-pendentes');
-        var pendentes = getS('depositosPendentes').filter(function(d) { return d.status === 'pendente'; });
-        if (pendentes.length === 0) { container.innerHTML = '<p style="color:#888;font-size:10px;">✅ Nenhum depósito pendente</p>'; return; }
-        container.innerHTML = pendentes.map(function(d) {
-            return '<div style="background:#111;border:1px solid #333;border-radius:8px;padding:8px;margin-bottom:6px;">' +
-                '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">' +
-                '<span style="font-weight:900;font-size:11px;">' + d.tipo + '</span><span style="color:#ff9800;font-size:9px;">⏳ Pendente</span></div>' +
-                '<div style="font-size:9px;color:#ccc;"><div>👤 ' + d.nome + '</div><div>📱 ' + d.numero + '</div><div>💰 ' + d.valor.toFixed(2) + ' MZN</div><div>📅 ' + d.data + '</div></div>' +
-                '<div style="display:flex;gap:4px;margin-top:6px;">' +
-                '<button onclick="aprovarDeposito(\'' + d.id + '\')" style="flex:1;padding:5px;background:#4caf50;border:none;color:#fff;border-radius:5px;font-size:9px;font-weight:bold;cursor:pointer;">✅ APROVAR</button>' +
-                '<button onclick="rejeitarDeposito(\'' + d.id + '\')" style="flex:1;padding:5px;background:#e71d36;border:none;color:#fff;border-radius:5px;font-size:9px;font-weight:bold;cursor:pointer;">❌ REJEITAR</button></div></div>';
-        }).join('');
-    }
-
-    function aprovarDeposito(id) {
-        var dp = getS('depositosPendentes');
-        var index = dp.findIndex(function(d) { return d.id.toString() === id.toString(); });
-        if (index === -1) return;
-        dp[index].status = 'aprovado';
-        setS('depositosPendentes', dp);
-        if (dp[index].usuarioId === usuarioId) {
-            setS('saldoMZN', getS('saldoMZN') + dp[index].valor);
-            setS('saldoNuvem', getS('saldoNuvem') + dp[index].valor);
-            localStorage.setItem('saldoMZN_' + usuarioId, getS('saldoMZN').toString());
-            localStorage.setItem('saldoNuvem_' + usuarioId, getS('saldoNuvem').toString());
-        }
-        setS('convitesFeitos', getS('convitesFeitos') + 1);
-        localStorage.setItem('convitesFeitos_' + usuarioId, getS('convitesFeitos').toString());
-        localStorage.setItem('depositosPendentes', JSON.stringify(dp));
-        atualizarPainelSaldo();
-        atualizarSaldoNuvem();
-        renderizarAdminDepositos();
-        atualizarCavernaBlock();
-        alert('✅ Depósito aprovado! Convites: ' + getS('convitesFeitos') + '/' + getS('metaConvites'));
-    }
-
-    function rejeitarDeposito(id) {
-        if (!confirm('Tem certeza que deseja rejeitar?')) return;
-        var dp = getS('depositosPendentes');
-        var index = dp.findIndex(function(d) { return d.id.toString() === id.toString(); });
-        if (index === -1) return;
-        dp[index].status = 'rejeitado';
-        setS('depositosPendentes', dp);
-        localStorage.setItem('depositosPendentes', JSON.stringify(dp));
-        renderizarAdminDepositos();
-        alert('❌ Depósito rejeitado.');
-    }
-
-    function resetarEstatisticas() {
-        if (!confirm('Resetar todas as estatísticas?')) return;
-        setS('stats', { totalApostado: 0, totalPago: 0, totalRodadas: 0 });
-        setS('convitesFeitos', 0);
-        localStorage.setItem('houseStats', JSON.stringify(getS('stats')));
-        localStorage.setItem('convitesFeitos_' + usuarioId, '0');
-        atualizarStatsDisplay();
-        atualizarCavernaBlock();
-        alert('✅ Estatísticas resetadas!');
-    }
-
-    function salvarConfigAdmin() {
-        var ns = parseFloat(document.getElementById('adm-saldo').value);
-        var nc = parseFloat(document.getElementById('adm-cloud').value);
-        var nm = parseFloat(document.getElementById('adm-margem').value);
-        var lp1 = document.getElementById('adm-plataforma1').value.trim();
-        var lp2 = document.getElementById('adm-plataforma2').value.trim();
-        var lyt = document.getElementById('adm-mentoria-yt').value.trim();
-        var bp1 = document.getElementById('adm-bonus-p1').value.trim();
-        var bp2 = document.getElementById('adm-bonus-p2').value.trim();
-        var mm = parseInt(document.getElementById('adm-meta-convites').value) || 30;
-        var msg = document.getElementById('adm-msg-caverna').value.trim();
-        var mn = document.getElementById('adm-mpesa-p1').value.trim();
-        var ms = document.getElementById('adm-status-mpesa-p1').value;
-        var en = document.getElementById('adm-emola-p1').value.trim();
-        var es = document.getElementById('adm-status-emola-p1').value;
-
-        if (!isNaN(ns)) { setS('saldoMZN', ns);
-            localStorage.setItem('saldoMZN_' + usuarioId, ns.toString()); }
-        if (!isNaN(nc)) { setS('saldoNuvem', nc);
-            localStorage.setItem('saldoNuvem_' + usuarioId, nc.toString()); }
-        if (!isNaN(nm) && nm >= 0 && nm <= 30) { setS('margemCasa', nm);
-            localStorage.setItem('margemCasa', nm.toString()); }
-        if (lp1) { setS('linkP1', lp1);
-            localStorage.setItem('linkPlataforma1', lp1); }
-        if (lp2) { setS('linkP2', lp2);
-            localStorage.setItem('linkPlataforma2', lp2); }
-        if (lyt) { setS('linkMentoriaYT', lyt);
-            localStorage.setItem('linkMentoriaYT', lyt);
-            document.getElementById('btn-mentoria-yt').href = lyt; }
-        if (bp1) { setS('bonusP1', bp1);
-            localStorage.setItem('bonusP1', bp1); }
-        if (bp2) { setS('bonusP2', bp2);
-            localStorage.setItem('bonusP2', bp2); }
-        if (msg) { setS('msgCaverna', msg);
-            localStorage.setItem('msgCaverna', msg); }
-        setS('metaConvites', mm);
-        localStorage.setItem('metaConvites', mm.toString());
-        var nd = getS('numerosDeposito');
-        if (mn) nd.mpesa.numero = mn;
-        nd.mpesa.status = ms;
-        if (en) nd.emola.numero = en;
-        nd.emola.status = es;
-        setS('numerosDeposito', nd);
-        localStorage.setItem('numerosDeposito', JSON.stringify(nd));
-
-        vincularTodosLinks();
-        atualizarTextosBonus();
-        atualizarDisplayNumeros();
-        atualizarCavernaBlock();
-        atualizarPainelSaldo();
-        atualizarSaldoNuvem();
-        atualizarLabelSistema();
-        document.getElementById('admin-panel').style.display = 'none';
-        document.getElementById('house-stats').style.display = 'none';
-    }
-
-    function vincularTodosLinks() {
-        document.getElementById('card-p1-criar').href = getS('linkP1') || '#';
-        document.getElementById('card-p1-depositar').href = getS('linkP1') || '#';
-        document.getElementById('card-p2-criar').href = getS('linkP2') || '#';
-        document.getElementById('card-p2-depositar').href = getS('linkP2') || '#';
-    }
-
-    function atualizarSaldoNuvem() { document.getElementById('cloud-balance').textContent = getS('saldoNuvem').toFixed(2) + ' MZN'; }
-
-    function atualizarStatsDisplay() {
-        var s = getS('stats'),
-            ta = s.totalApostado || 0,
-            tp = s.totalPago || 0;
-        var lucro = ta - tp,
-            rtp = ta > 0 ? (tp / ta * 100) : 0,
-            me = ta > 0 ? (lucro / ta * 100) : 0;
-        document.getElementById('stat-apostado').textContent = ta.toFixed(2);
-        document.getElementById('stat-pago').textContent = tp.toFixed(2);
-        document.getElementById('stat-lucro').textContent = lucro.toFixed(2);
-        document.getElementById('stat-lucro').className = 'stat-value ' + (lucro >= 0 ? 'positive' : 'negative');
-        document.getElementById('stat-rtp').textContent = rtp.toFixed(1) + '%';
-        document.getElementById('stat-rodadas').textContent = s.totalRodadas;
-        document.getElementById('stat-margem').textContent = me.toFixed(2) + '%';
-        document.getElementById('stat-margem').className = 'stat-value ' + (me >= 0 ? 'positive' : 'negative');
-    }
-
-    function toggleHistorico() {
-        var p = document.getElementById('historico-completo');
-        p.style.display = p.style.display === "grid" ? "none" : "grid";
-        if (p.style.display === "grid") renderizarTabelaExpandida();
-    }
-
-    function renderizarHistoricoSuperior() {
-        var c = document.getElementById('historico-velas');
-        c.innerHTML = "";
-        [].concat(getS('memoriaHistorico')).reverse().slice(0, 7).forEach(function(v) {
-            var b = document.createElement('span');
-            b.className = 'badge-vela ' + (v >= 10 ? 'v-high' : (v >= 2 ? 'v-mid' : 'v-low'));
-            b.innerText = v.toFixed(2) + "x";
-            c.appendChild(b);
-        });
-    }
-
-    function renderizarTabelaExpandida() {
-        var c = document.getElementById('historico-completo');
-        c.innerHTML = "";
-        [].concat(getS('memoriaHistorico')).reverse().slice(0, 16).forEach(function(v) {
-            var b = document.createElement('span');
-            b.className = 'badge-vela ' + (v >= 10 ? 'v-high' : (v >= 2 ? 'v-mid' : 'v-low'));
-            b.innerText = v.toFixed(2) + "x";
-            c.appendChild(b);
-        });
-    }
-
-    function atualizarListasDeVelas() {
-        var mh = getS('memoriaHistorico');
-        if (mh.length > 30) mh.shift();
-        renderizarHistoricoSuperior();
-        if (document.getElementById('historico-completo').style.display === "grid") renderizarTabelaExpandida();
-    }
-
-    function passoValor(id, dir) {
-        var input = document.getElementById('input-val-' + id);
-        var v = parseFloat(input.value) || 0;
-        v += dir;
-        if (v < 1) v = 1;
-        if (v > 75000) v = 75000;
-        input.value = v.toFixed(2);
-        sincronizarLabelsSub(id);
-    }
-
-    function setValorFixo(id, val) { document.getElementById('input-val-' + id).value = val.toFixed(2);
-        sincronizarLabelsSub(id); }
-
-    function sincronizarLabelsSub(id) {
-        var val = parseFloat(document.getElementById('input-val-' + id).value) || 1;
-        var status = id === 1 ? getS('statusMecanica1') : getS('statusMecanica2');
-        if (status === "apostar") document.getElementById('lbl-sub-' + id).innerText = val.toFixed(2) + " MZN";
-    }
-
-    function mudarModoAposta(id, modo) {
-        if (id === 1) {
-            setS('apostaModo1', modo);
-            document.getElementById('t1-manual').className = modo === 'manual' ? 'tab-btn active' : 'tab-btn';
-            document.getElementById('t1-auto').className = modo === 'auto' ? 'tab-btn active' : 'tab-btn';
-            document.getElementById('auto-row-1').style.display = modo === 'auto' ? 'flex' : 'none';
-        } else {
-            setS('apostaModo2', modo);
-            document.getElementById('t2-manual').className = modo === 'manual' ? 'tab-btn active' : 'tab-btn';
-            document.getElementById('t2-auto').className = modo === 'auto' ? 'tab-btn active' : 'tab-btn';
-            document.getElementById('auto-row-2').style.display = modo === 'auto' ? 'flex' : 'none';
-        }
-    }
-
-    function executarApostaBotao(id) {
-        var iv = parseFloat(document.getElementById('input-val-' + id).value) || 1;
-        var btn = document.getElementById('btn-bet-' + id);
-        var motor = getS('motorJogo');
-        if (id === 1) {
-            if (getS('statusMecanica1') === "apostar" && !motor.ativo) {
-                if (getS('saldoMZN') < iv) { alert("Saldo Insuficiente!"); return; }
-                setS('saldoMZN', getS('saldoMZN') - iv);
-                setS('valorAposta1', iv);
-                var s = getS('stats');
-                s.totalApostado += iv;
-                setS('stats', s);
-                localStorage.setItem('houseStats', JSON.stringify(s));
-                atualizarPainelSaldo();
-                setS('statusMecanica1', "esperando");
-                btn.className = "btn-action-trigger btn-style-espera";
-                document.getElementById('lbl-title-1').innerText = "CANCELAR";
-            } else if (getS('statusMecanica1') === "em_jogo" && motor.ativo) { recolherPremioFicticio(1); }
-        } else {
-            if (getS('statusMecanica2') === "apostar" && !motor.ativo) {
-                if (getS('saldoMZN') < iv) { alert("Saldo Insuficiente!"); return; }
-                setS('saldoMZN', getS('saldoMZN') - iv);
-                setS('valorAposta2', iv);
-                var s = getS('stats');
-                s.totalApostado += iv;
-                setS('stats', s);
-                localStorage.setItem('houseStats', JSON.stringify(s));
-                atualizarPainelSaldo();
-                setS('statusMecanica2', "esperando");
-                btn.className = "btn-action-trigger btn-style-espera";
-                document.getElementById('lbl-title-2').innerText = "CANCELAR";
-            } else if (getS('statusMecanica2') === "em_jogo" && motor.ativo) { recolherPremioFicticio(2); }
-        }
-    }
-
-    function recolherPremioFicticio(id) {
-        var vb = id === 1 ? getS('valorAposta1') : getS('valorAposta2');
-        var fat = vb * getS('motorJogo').multiplicador;
-        setS('saldoMZN', getS('saldoMZN') + fat);
-        var s = getS('stats');
-        s.totalPago += fat;
-        setS('stats', s);
-        localStorage.setItem('saldoMZN_' + usuarioId, getS('saldoMZN').toString());
-        localStorage.setItem('houseStats', JSON.stringify(s));
-        atualizarPainelSaldo();
-        if (id === 1) setS('statusMecanica1', "ganhou");
-        else setS('statusMecanica2', "ganhou");
-        var btn = document.getElementById('btn-bet-' + id);
-        btn.className = "btn-action-trigger btn-style-espera";
-        document.getElementById('lbl-title-' + id).innerText = "Venceu!";
-        document.getElementById('lbl-sub-' + id).innerText = "+" + fat.toFixed(2) + " MZN";
-    }
-
-    function atualizarPainelSaldo() {
-        document.getElementById('main-saldo').innerText = getS('saldoMZN').toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        localStorage.setItem('saldoMZN_' + usuarioId, getS('saldoMZN').toString());
-    }
-
-    function processarLoopVoo() {
-        var motor = getS('motorJogo');
-        motor.multiplicador = 1.00;
-        motor.ativo = true;
-        motor.crashAlvo = gerarNumeroAleatorio();
-        var s = getS('stats');
-        s.totalRodadas++;
-        setS('stats', s);
-        localStorage.setItem('houseStats', JSON.stringify(s));
-        document.getElementById('game-status').innerText = "";
-        document.getElementById('txt-sinal-fake').innerText = (motor.crashAlvo * (0.85 + Math.random() * 0.3)).toFixed(2) + "x";
-        if (motor.crashAlvo <= 1.00) { executarCrashImediato(); return; }
-        if (getS('statusMecanica1') === "esperando") { setS('statusMecanica1', "em_jogo");
-            document.getElementById('btn-bet-1').className = "btn-action-trigger btn-style-cashout";
-            document.getElementById('lbl-title-1').innerText = "CASHOUT"; }
-        if (getS('statusMecanica2') === "esperando") { setS('statusMecanica2', "em_jogo");
-            document.getElementById('btn-bet-2').className = "btn-action-trigger btn-style-cashout";
-            document.getElementById('lbl-title-2').innerText = "CASHOUT"; }
-        var loopVoo = setInterval(function() {
-            if (motor.multiplicador > 20) motor.speed = 0.50;
-            else if (motor.multiplicador > 10) motor.speed = 0.28;
-            else if (motor.multiplicador > 4) motor.speed = 0.10;
-            else motor.speed = 0.022;
-            motor.multiplicador += motor.speed;
-            document.getElementById('live-mult').innerText = motor.multiplicador.toFixed(2) + "x";
-            verificarMotoresDeCashout();
-            if (motor.multiplicador >= motor.crashAlvo) { clearInterval(loopVoo);
-                finalizarRodadaMecanica(); }
-        }, 75);
-    }
-
-    function executarCrashImediato() {
-        var motor = getS('motorJogo');
-        motor.ativo = false;
-        document.getElementById('live-mult').innerText = "1.00x";
-        document.getElementById('game-status').innerText = "FLEW AWAY EM 1.00x (QUEDA)";
-        if (getS('statusMecanica1') === "esperando") { setS('statusMecanica1', "apostar");
-            setS('valorAposta1', 0); }
-        if (getS('statusMecanica2') === "esperando") { setS('statusMecanica2', "apostar");
-            setS('valorAposta2', 0); }
-        getS('memoriaHistorico').push(1.00);
-        atualizarListasDeVelas();
-        resetarBotoesPosRodada();
-        setTimeout(processarLoopVoo, 4000);
-    }
-
-    function finalizarRodadaMecanica() {
-        var motor = getS('motorJogo');
-        motor.ativo = false;
-        document.getElementById('live-mult').innerText = "Flew Away! 👋";
-        document.getElementById('game-status').innerText = "FLEW AWAY EM " + motor.crashAlvo.toFixed(2) + "x";
-        if (getS('statusMecanica1') === "em_jogo") { setS('statusMecanica1', "apostar");
-            setS('valorAposta1', 0); }
-        if (getS('statusMecanica2') === "em_jogo") { setS('statusMecanica2', "apostar");
-            setS('valorAposta2', 0); }
-        getS('memoriaHistorico').push(motor.crashAlvo);
-        atualizarListasDeVelas();
-        resetarBotoesPosRodada();
-        if (document.getElementById('house-stats').style.display === 'block') atualizarStatsDisplay();
-        setTimeout(processarLoopVoo, 4000);
-    }
-
-    function verificarMotoresDeCashout() {
-        var motor = getS('motorJogo');
-        if (getS('statusMecanica1') === "em_jogo") {
-            if (getS('apostaModo1') === "manual") document.getElementById('lbl-sub-1').innerText = (getS('valorAposta1') * motor.multiplicador).toFixed(2) + " MZN";
-            else { var aa = parseFloat(document.getElementById('auto-cash-val-1').value) || 2.0; if (motor.multiplicador >= aa) recolherPremioFicticio(1); }
-        }
-        if (getS('statusMecanica2') === "em_jogo") {
-            if (getS('apostaModo2') === "manual") document.getElementById('lbl-sub-2').innerText = (getS('valorAposta2') * motor.multiplicador).toFixed(2) + " MZN";
-            else { var aa = parseFloat(document.getElementById('auto-cash-val-2').value) || 2.0; if (motor.multiplicador >= aa) recolherPremioFicticio(2); }
-        }
-    }
-
-    function resetarBotoesPosRodada() {
-        setS('statusMecanica1', "apostar");
-        document.getElementById('btn-bet-1').className = "btn-action-trigger btn-style-aposta";
-        document.getElementById('lbl-title-1').innerText = "Aposta";
-        sincronizarLabelsSub(1);
-        setS('valorAposta1', 0);
-        setS('statusMecanica2', "apostar");
-        document.getElementById('btn-bet-2').className = "btn-action-trigger btn-style-aposta";
-        document.getElementById('lbl-title-2').innerText = "Aposta";
-        sincronizarLabelsSub(2);
-        setS('valorAposta2', 0);
-    }
-
-    document.getElementById('deposit-overlay').addEventListener('click', function(e) { if (e.target === this) fecharModalDeposito(); });
-
-    console.log('📦 Script carregado com sucesso!');
+console.log('📦 Sistema completo carregado com sucesso!');
+console.log('🔑 Painel Admin: Clique 10x no logo "BOT AVIATOR" e use a senha: admin111000');
 </script>
 </body>
 </html>
