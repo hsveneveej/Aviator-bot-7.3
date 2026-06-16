@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>BOT AVIATOR • MODO CAVERNA ULTRA</title>
+    <title>BOT AVIATOR</title>
     <style>
         :root {
             --bg-main: #0b0c0d;
@@ -20,10 +20,17 @@
 
         * {
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             margin: 0;
             padding: 0;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
             user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
         }
 
         body {
@@ -32,29 +39,140 @@
             display: flex;
             justify-content: center;
             height: 100vh;
+            height: 100dvh;
             overflow: hidden;
+            -webkit-overflow-scrolling: touch;
+            touch-action: manipulation;
         }
 
         .container {
             width: 100%;
             max-width: 440px;
             height: 100vh;
+            height: 100dvh;
             background: var(--bg-main);
-            padding: 4px 6px;
+            padding: 4px 6px 8px 6px;
             display: flex;
             flex-direction: column;
             gap: 3px;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
         }
 
-        /* Tela de Login */
+        /* Botão Flutuante Mentoria */
+        .btn-mentoria-flutuante {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+            border: 2px solid #fff;
+            box-shadow: 0 4px 20px rgba(255, 0, 0, 0.6), 0 0 30px rgba(255, 0, 0, 0.3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: floatPulse 2s infinite, floatBounce 3s ease-in-out infinite;
+            text-decoration: none;
+            transition: transform 0.2s;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
+        .btn-mentoria-flutuante:active {
+            transform: scale(0.9);
+        }
+        .btn-mentoria-flutuante .yt-icon {
+            font-size: 22px;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+        }
+        .btn-mentoria-flutuante .badge-mentoria {
+            position: absolute;
+            top: -10px;
+            right: -15px;
+            background: #fff;
+            color: #ff0000;
+            font-size: 8px;
+            font-weight: 900;
+            padding: 3px 8px;
+            border-radius: 10px;
+            white-space: nowrap;
+            animation: badgePulse 1.5s infinite;
+            pointer-events: none;
+            letter-spacing: 0.5px;
+        }
+        @keyframes floatPulse {
+            0%, 100% {
+                box-shadow: 0 4px 20px rgba(255, 0, 0, 0.6), 0 0 30px rgba(255, 0, 0, 0.3);
+            }
+            50% {
+                box-shadow: 0 4px 30px rgba(255, 0, 0, 0.9), 0 0 50px rgba(255, 0, 0, 0.5);
+            }
+        }
+        @keyframes floatBounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+        @keyframes badgePulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @media (max-width: 380px) {
+            .btn-mentoria-flutuante {
+                width: 44px;
+                height: 44px;
+                bottom: 15px;
+                right: 15px;
+            }
+            .btn-mentoria-flutuante .yt-icon {
+                font-size: 18px;
+            }
+            .btn-mentoria-flutuante .badge-mentoria {
+                font-size: 7px;
+                padding: 2px 6px;
+                top: -8px;
+                right: -12px;
+            }
+        }
+        @media (min-width: 768px) {
+            .btn-mentoria-flutuante {
+                width: 60px;
+                height: 60px;
+                bottom: 30px;
+                right: 30px;
+            }
+            .btn-mentoria-flutuante .yt-icon {
+                font-size: 26px;
+            }
+            .btn-mentoria-flutuante .badge-mentoria {
+                font-size: 10px;
+                padding: 4px 10px;
+                top: -12px;
+                right: -18px;
+            }
+        }
+
         .login-screen {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
+            height: 100dvh;
             gap: 12px;
             padding: 20px;
             text-align: center;
@@ -68,13 +186,13 @@
             50% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.8); }
         }
         .login-title {
-            font-size: 18px;
+            font-size: clamp(16px, 5vw, 18px);
             font-weight: 900;
             color: var(--accent-red);
             font-style: italic;
         }
         .login-subtitle {
-            font-size: 10px;
+            font-size: clamp(9px, 3vw, 10px);
             color: #888;
         }
         .login-input {
@@ -89,6 +207,8 @@
             text-align: center;
             outline: none;
             letter-spacing: 2px;
+            -webkit-appearance: none;
+            appearance: none;
         }
         .login-input:focus {
             border-color: var(--gold);
@@ -110,18 +230,19 @@
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 1px;
+            -webkit-appearance: none;
+            appearance: none;
         }
         .btn-login:active {
             transform: scale(0.97);
         }
         .login-info {
-            font-size: 8px;
+            font-size: clamp(7px, 2.5vw, 8px);
             color: #555;
             max-width: 280px;
             line-height: 12px;
         }
 
-        /* Link Único */
         .link-unico-box {
             background: #111;
             border: 1px solid #333;
@@ -147,19 +268,9 @@
             font-size: 8px;
             font-weight: bold;
             cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
         }
-        .btn-gerar-link {
-            background: #ff9100;
-            border: none;
-            color: #000;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 8px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        /* Header */
         .header {
             display: flex;
             justify-content: space-between;
@@ -170,7 +281,7 @@
         .logo {
             color: var(--accent-red);
             font-weight: 900;
-            font-size: 16px;
+            font-size: clamp(14px, 4vw, 16px);
             font-style: italic;
             cursor: pointer;
         }
@@ -185,12 +296,14 @@
             color: #000;
             padding: 5px 12px;
             border-radius: 14px;
-            font-size: 10px;
+            font-size: clamp(9px, 3vw, 10px);
             font-weight: 900;
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             animation: pulse 2s infinite;
+            -webkit-appearance: none;
+            appearance: none;
         }
         .user-numero-badge {
             font-size: 8px;
@@ -202,13 +315,12 @@
         .saldo-box {
             color: var(--accent-green);
             font-weight: bold;
-            font-size: 13px;
+            font-size: clamp(11px, 3.5vw, 13px);
             background: #111214;
             padding: 3px 8px;
             border-radius: 14px;
             border: 1px solid #1c1e22;
         }
-
         .house-stats {
             display: none;
             background: linear-gradient(135deg, #1a1a2e, #0d1b2a);
@@ -239,7 +351,6 @@
         }
         .stat-value.positive { color: var(--accent-green); }
         .stat-value.negative { color: var(--accent-red); }
-
         .deposit-overlay {
             display: none;
             position: fixed;
@@ -247,6 +358,7 @@
             left: 0;
             width: 100%;
             height: 100%;
+            height: 100dvh;
             background: rgba(0, 0, 0, 0.95);
             z-index: 2000;
             justify-content: center;
@@ -259,6 +371,7 @@
             width: 92%;
             max-width: 400px;
             max-height: 85vh;
+            max-height: 85dvh;
             overflow-y: auto;
             padding: 0;
         }
@@ -311,13 +424,21 @@
         .wallet-number { font-size: 8px; color: #888; background: rgba(0, 0, 0, 0.3); padding: 3px 6px; border-radius: 4px; display: inline-block; margin-top: 4px; }
         .deposit-form { display: none; }
         .deposit-form.active { display: block; animation: fadeInUp 0.3s ease; }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .form-group { margin-bottom: 10px; }
         .form-label { font-size: 10px; font-weight: 800; color: #aaa; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; display: block; }
-        .form-input { width: 100%; padding: 10px 12px; background: #0b0c0d; border: 1px solid #2a2a4a; color: #fff; border-radius: 8px; font-size: 13px; outline: none; }
+        .form-input {
+            width: 100%;
+            padding: 10px 12px;
+            background: #0b0c0d;
+            border: 1px solid #2a2a4a;
+            color: #fff;
+            border-radius: 8px;
+            font-size: 13px;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
         .form-input:focus { border-color: var(--gold); }
         .input-with-icon { position: relative; }
         .input-with-icon .form-input { padding-left: 35px; }
@@ -335,6 +456,8 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-top: 4px;
+            -webkit-appearance: none;
+            appearance: none;
         }
         .transfer-info {
             background: rgba(255, 255, 255, 0.03);
@@ -356,10 +479,7 @@
             margin-top: 10px;
         }
         .deposito-status .status-icon { font-size: 30px; animation: bounce 1s infinite; }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         .deposito-status .status-text { font-size: 11px; font-weight: bold; color: #ff9800; margin-top: 4px; }
         .deposito-status .status-sub { font-size: 8px; color: #888; margin-top: 2px; }
         .pending-badge {
@@ -372,11 +492,7 @@
             font-weight: bold;
             animation: blink 1.5s infinite;
         }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
         .embreve-badge {
             background: rgba(0, 0, 0, 0.7);
             color: #ffd700;
@@ -387,7 +503,6 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-
         .sistema-selector { background: #111; border: 1px solid #333; border-radius: 8px; padding: 8px; margin-bottom: 8px; }
         .sistema-options { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
         .sistema-btn {
@@ -401,24 +516,15 @@
             font-weight: bold;
             text-align: center;
             transition: all 0.3s;
+            -webkit-appearance: none;
+            appearance: none;
         }
         .sistema-btn.active { border-color: var(--gold); background: rgba(255, 215, 0, 0.1); color: #fff; }
         .sistema-btn.sistema-casa { border-top: 3px solid #4caf50; }
         .sistema-btn.sistema-rosa { border-top: 3px solid #d500f9; }
         .sistema-label { font-size: 9px; color: #888; margin-top: 2px; }
-
-        /* Cards Verticais */
-        .cards-container {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            margin-top: 2px;
-        }
-        .plataforma-row {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
+        .cards-container { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
+        .plataforma-row { display: flex; flex-direction: column; gap: 4px; }
         .card-box {
             border-radius: 12px;
             padding: 8px 10px;
@@ -433,37 +539,29 @@
             transition: transform 0.2s;
             text-align: center;
             width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
         }
         .card-box.plataforma-1 {
             background: linear-gradient(135deg, #ffd700, #ff8c00);
             animation: pulse-amarelo 2s infinite;
         }
-        @keyframes pulse-amarelo {
-            0%, 100% { box-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
-            50% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.8); }
-        }
+        @keyframes pulse-amarelo { 0%, 100% { box-shadow: 0 0 5px rgba(255, 215, 0, 0.5); } 50% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.8); } }
         .card-box.plataforma-1 .card-header-title { color: #000; opacity: 0.8; }
         .card-box.plataforma-1 .card-desc-principal { color: #000; }
         .card-box.plataforma-1 .card-bonus { color: #000; font-weight: 900; }
-
         .card-box.plataforma-2 {
             background: linear-gradient(135deg, #e71d36, #ff4757);
             animation: pulse-vermelho 2s infinite;
         }
-        @keyframes pulse-vermelho {
-            0%, 100% { box-shadow: 0 0 5px rgba(231, 29, 54, 0.5); }
-            50% { box-shadow: 0 0 15px rgba(255, 71, 87, 0.8); }
-        }
+        @keyframes pulse-vermelho { 0%, 100% { box-shadow: 0 0 5px rgba(231, 29, 54, 0.5); } 50% { box-shadow: 0 0 15px rgba(255, 71, 87, 0.8); } }
         .card-box.plataforma-2 .card-header-title { color: #fff; opacity: 0.9; }
         .card-box.plataforma-2 .card-desc-principal { color: #fff; }
         .card-box.plataforma-2 .card-bonus { color: #ffd700; font-weight: 900; }
-
         .card-box:active { transform: scale(0.95); }
         .card-header-title { font-size: 7px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
         .card-desc-principal { font-size: 11px; font-weight: 900; text-transform: uppercase; }
         .card-bonus { font-size: 8px; margin-top: 1px; }
-
-        /* Bloco Modo Caverna Ultra */
         .caverna-block {
             background: #111;
             border: 2px solid #333;
@@ -473,17 +571,8 @@
             margin-top: 2px;
             position: relative;
         }
-        .caverna-lock {
-            font-size: 24px;
-            animation: lockShake 4s infinite;
-        }
-        @keyframes lockShake {
-            0%, 85%, 100% { transform: rotate(0); }
-            87% { transform: rotate(-8deg); }
-            89% { transform: rotate(8deg); }
-            91% { transform: rotate(-4deg); }
-            93% { transform: rotate(4deg); }
-        }
+        .caverna-lock { font-size: 24px; animation: lockShake 4s infinite; }
+        @keyframes lockShake { 0%, 85%, 100% { transform: rotate(0); } 87% { transform: rotate(-8deg); } 89% { transform: rotate(8deg); } 91% { transform: rotate(-4deg); } 93% { transform: rotate(4deg); } }
         .caverna-msg {
             font-size: 9px;
             font-weight: 900;
@@ -508,16 +597,8 @@
             transition: width 0.8s ease;
             width: 0%;
         }
-        .caverna-counter {
-            font-size: 8px;
-            color: #aaa;
-            margin-top: 2px;
-        }
-        .caverna-counter span {
-            color: #ffd700;
-            font-weight: 900;
-        }
-
+        .caverna-counter { font-size: 8px; color: #aaa; margin-top: 2px; }
+        .caverna-counter span { color: #ffd700; font-weight: 900; }
         .cloud-balance {
             background: rgba(0, 230, 118, 0.1);
             border: 1px solid rgba(0, 230, 118, 0.2);
@@ -542,7 +623,18 @@
         .v-low { background: var(--v-azul); }
         .v-mid { background: var(--v-roxo); }
         .v-high { background: var(--v-rosa); }
-        .btn-expandir { background: #22252a; border: none; color: #fff; width: 16px; height: 16px; border-radius: 50%; font-size: 7px; cursor: pointer; }
+        .btn-expandir {
+            background: #22252a;
+            border: none;
+            color: #fff;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            font-size: 7px;
+            cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
+        }
         .historico-expandido {
             display: none;
             background: rgba(20, 21, 23, 0.95);
@@ -588,7 +680,7 @@
             justify-content: center;
             align-items: center;
         }
-        .multiplicador { font-size: 34px; font-weight: bold; }
+        .multiplicador { font-size: clamp(28px, 8vw, 34px); font-weight: bold; }
         .game-status { font-size: 8px; color: #666; margin-top: 2px; font-weight: 800; }
         .btn-mentoria-jogo {
             background: linear-gradient(180deg, #2c3e50 0%, #1a252f 100%);
@@ -615,6 +707,8 @@
             font-size: 9px;
             border-radius: 12px;
             cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
         }
         .tab-btn.active { background: #212327; color: #fff; }
         .bet-main-row { display: flex; gap: 5px; align-items: center; }
@@ -628,7 +722,17 @@
             height: 24px;
             border: 1px solid #1c1e22;
         }
-        .btn-step { background: transparent; border: none; color: #7f8c8d; font-size: 16px; font-weight: bold; width: 18px; cursor: pointer; }
+        .btn-step {
+            background: transparent;
+            border: none;
+            color: #7f8c8d;
+            font-size: 16px;
+            font-weight: bold;
+            width: 18px;
+            cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
+        }
         .input-stepper input {
             width: 100%;
             background: transparent;
@@ -638,6 +742,8 @@
             font-weight: bold;
             font-size: 11px;
             outline: none;
+            -webkit-appearance: none;
+            appearance: none;
         }
         .quick-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; }
         .btn-quick {
@@ -650,6 +756,8 @@
             border-radius: 5px;
             cursor: pointer;
             border: 1px solid #1c1e22;
+            -webkit-appearance: none;
+            appearance: none;
         }
         .btn-action-trigger {
             flex: 1;
@@ -663,6 +771,8 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            -webkit-appearance: none;
+            appearance: none;
         }
         .btn-style-aposta { background: linear-gradient(180deg, #2ecc71 0%, #27ae60 100%); }
         .btn-style-espera { background: #33353a; color: #7f8c8d; cursor: not-allowed; }
@@ -690,6 +800,8 @@
             border-radius: 5px;
             font-weight: bold;
             font-size: 10px;
+            -webkit-appearance: none;
+            appearance: none;
         }
         .admin-modal {
             display: none;
@@ -712,15 +824,11 @@
             margin-bottom: 6px;
             font-size: 11px;
             outline: none;
+            -webkit-appearance: none;
+            appearance: none;
         }
         .admin-modal select { cursor: pointer; }
-        .plataforma-bloco {
-            background: #111215;
-            border-radius: 8px;
-            padding: 6px;
-            margin-bottom: 6px;
-            border-left: 3px solid #ffd700;
-        }
+        .plataforma-bloco { background: #111215; border-radius: 8px; padding: 6px; margin-bottom: 6px; border-left: 3px solid #ffd700; }
         .plataforma-bloco.plataforma-2-admin { border-left-color: #e71d36; }
         .plataforma-titulo { font-weight: 900; font-size: 10px; margin-bottom: 4px; }
         .btn-salvar-admin {
@@ -733,43 +841,44 @@
             color: #000;
             cursor: pointer;
             font-size: 12px;
+            -webkit-appearance: none;
+            appearance: none;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-3px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: translateY(0); } }
         .app-hidden { display: none !important; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 3px; }
+        ::-webkit-scrollbar-track { background: #0b0c0d; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
     </style>
 </head>
 <body>
 
-<!-- ============ TELA DE LOGIN ============ -->
+<!-- ============ BOTÃO FLUTUANTE MENTORIA ============ -->
+<a href="https://youtube.com/@seucanal?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-mentoria-flutuante" id="btn-mentoria-yt" title="Acessar Mentoria no YouTube">
+    <span class="yt-icon">▶</span>
+    <span class="badge-mentoria">MENTORIA</span>
+</a>
+
 <div class="login-screen" id="login-screen">
     <div class="login-logo">✈️</div>
     <div class="login-title">BOT AVIATOR</div>
     <div class="login-subtitle">Digite seu número para acessar</div>
-    <input type="tel" class="login-input" id="login-numero" placeholder="84 123 4567" maxlength="15">
+    <input type="tel" class="login-input" id="login-numero" placeholder="84 123 4567" maxlength="15" autocomplete="off" inputmode="tel">
     <button class="btn-login" onclick="fazerLogin()">🔓 ENTRAR</button>
-    <div class="login-info">
-        Seus dados ficam salvos apenas neste dispositivo.<br>
-        Sem necessidade de criar conta com email ou senha.
-    </div>
+    <div class="login-info">Seus dados ficam salvos apenas neste dispositivo.<br>Sem necessidade de criar conta com email ou senha.</div>
 </div>
 
-<!-- ============ APP PRINCIPAL ============ -->
 <div class="container app-hidden" id="app-container">
     <div class="header">
         <span class="logo" onclick="registrarCliqueSecret()">✈️ BOT AVIATOR</span>
         <div class="header-right">
-            <span class="user-numero-badge" id="user-numero-badge">📱 84...</span>
+            <span class="user-numero-badge" id="user-numero-badge">📱 ...</span>
             <button class="btn-depositar-top" onclick="abrirModalDeposito()">💰 Depositar</button>
-            <div class="saldo-box">
-                <span id="main-saldo">0.00</span> <span style="font-size:9px;background:#222;padding:1px 3px;border-radius:4px;margin-left:2px;">MZN</span>
-            </div>
+            <div class="saldo-box"><span id="main-saldo">0.00</span> <span style="font-size:9px;background:#222;padding:1px 3px;border-radius:4px;margin-left:2px;">MZN</span></div>
         </div>
     </div>
-
     <div class="house-stats" id="house-stats">
         <div style="font-weight:900;font-size:9px;color:#ffd700;margin-bottom:4px;">🏦 ESTATÍSTICAS DA CASA</div>
         <div class="house-stats-grid">
@@ -780,127 +889,87 @@
             <div class="stat-item"><div class="stat-label">Rodadas</div><div class="stat-value" id="stat-rodadas">0</div></div>
             <div class="stat-item"><div class="stat-label">Margem</div><div class="stat-value positive" id="stat-margem">0%</div></div>
         </div>
-        <div style="margin-top:4px;font-size:8px;text-align:center;color:#888;">
-            Sistema Ativo: <span id="sistema-ativo-label" style="font-weight:900;color:#ffd700;">🏦 Casa Ganha</span>
-        </div>
+        <div style="margin-top:4px;font-size:8px;text-align:center;color:#888;">Sistema Ativo: <span id="sistema-ativo-label" style="font-weight:900;color:#ffd700;">🏦 Casa Ganha</span></div>
     </div>
-
-    <div class="cloud-balance">
-        ☁️ Saldo em Nuvem: <span id="cloud-balance" style="font-weight:900;">0.00 MZN</span>
-    </div>
-
-    <!-- Link Único -->
+    <div class="cloud-balance">☁️ Saldo em Nuvem: <span id="cloud-balance" style="font-weight:900;">0.00 MZN</span></div>
     <div class="link-unico-box" id="link-unico-box">
         <span style="font-size:9px;">🔗 Seu link:</span>
         <span class="link-text" id="link-unico-text">Gerando...</span>
         <button class="btn-copiar-link" onclick="copiarLink()">📋 Copiar</button>
     </div>
-
     <div class="admin-modal" id="admin-panel">
         <h4>⚙️ PAINEL ADMIN</h4>
         <div class="sistema-selector">
             <label style="font-size:10px;color:#ffd700;margin-bottom:6px;display:block;">🎲 SISTEMA DE GERAÇÃO DE NÚMEROS</label>
             <div class="sistema-options">
-                <div class="sistema-btn sistema-casa active" id="sistema-casa-btn" onclick="selecionarSistema('casa')">
-                    🏦 CASA GANHA
-                    <div class="sistema-label">Margem configurável</div>
-                </div>
-                <div class="sistema-btn sistema-rosa" id="sistema-rosa-btn" onclick="selecionarSistema('rosa')">
-                    🌹 ROSAS & QUEDAS
-                    <div class="sistema-label">Muitas rosas, poucas quedas</div>
-                </div>
+                <div class="sistema-btn sistema-casa active" id="sistema-casa-btn" onclick="selecionarSistema('casa')">🏦 CASA GANHA<div class="sistema-label">Margem configurável</div></div>
+                <div class="sistema-btn sistema-rosa" id="sistema-rosa-btn" onclick="selecionarSistema('rosa')">🌹 ROSAS & QUEDAS<div class="sistema-label">Muitas rosas, poucas quedas</div></div>
             </div>
         </div>
-        <div id="admin-depositos-pendentes" style="max-height:120px;overflow-y:auto;margin-bottom:8px;">
-            <p style="color:#888;font-size:10px;">Nenhum depósito pendente</p>
-        </div>
+        <div id="admin-depositos-pendentes" style="max-height:120px;overflow-y:auto;margin-bottom:8px;"><p style="color:#888;font-size:10px;">Nenhum depósito pendente</p></div>
         <div class="plataforma-bloco">
-            <div class="plataforma-titulo">🟡 PLATAFORMA 1 (Amarelo)</div>
-            <label>🔗 Link de Afiliado</label>
-            <input type="text" id="adm-plataforma1" placeholder="https://afiliado-plataforma1.com/...">
-            <label style="margin-top:4px;">🎁 Bônus no Card</label>
-            <input type="text" id="adm-bonus-p1" placeholder="Ex: 500 MT" value="500 MT">
-            <label style="margin-top:4px;">📱 Número M-Pesa</label>
-            <div style="display:flex;gap:4px;"><input type="text" id="adm-mpesa-p1" placeholder="84 123 4567" style="flex:1;"><select id="adm-status-mpesa-p1" style="width:90px;font-size:9px;"><option value="ativo">Ativo</option><option value="embreve">Em Breve</option></select></div>
-            <label style="margin-top:4px;">📲 Número E-Mola</label>
-            <div style="display:flex;gap:4px;"><input type="text" id="adm-emola-p1" placeholder="86 765 4321" style="flex:1;"><select id="adm-status-emola-p1" style="width:90px;font-size:9px;"><option value="ativo">Ativo</option><option value="embreve">Em Breve</option></select></div>
+            <div class="plataforma-titulo">🟡 PLATAFORMA 1</div>
+            <label>🔗 Link de Afiliado</label><input type="text" id="adm-plataforma1" placeholder="https://...">
+            <label style="margin-top:4px;">🎁 Bônus</label><input type="text" id="adm-bonus-p1" value="500 MT">
+            <label style="margin-top:4px;">📱 M-Pesa</label><div style="display:flex;gap:4px;"><input type="text" id="adm-mpesa-p1" placeholder="84 123 4567" style="flex:1;"><select id="adm-status-mpesa-p1" style="width:90px;font-size:9px;"><option value="ativo">Ativo</option><option value="embreve">Em Breve</option></select></div>
+            <label style="margin-top:4px;">📲 E-Mola</label><div style="display:flex;gap:4px;"><input type="text" id="adm-emola-p1" placeholder="86 765 4321" style="flex:1;"><select id="adm-status-emola-p1" style="width:90px;font-size:9px;"><option value="ativo">Ativo</option><option value="embreve">Em Breve</option></select></div>
         </div>
         <div class="plataforma-bloco plataforma-2-admin">
-            <div class="plataforma-titulo">🔴 PLATAFORMA 2 (Vermelho)</div>
-            <label>🔗 Link de Afiliado</label>
-            <input type="text" id="adm-plataforma2" placeholder="https://afiliado-plataforma2.com/...">
-            <label style="margin-top:4px;">🎁 Bônus no Card</label>
-            <input type="text" id="adm-bonus-p2" placeholder="Ex: 750 MT" value="750 MT">
-            <label style="margin-top:4px;">📱 Número M-Pesa</label>
-            <div style="display:flex;gap:4px;"><input type="text" id="adm-mpesa-p2" placeholder="84 987 6543" style="flex:1;"><select id="adm-status-mpesa-p2" style="width:90px;font-size:9px;"><option value="ativo">Ativo</option><option value="embreve">Em Breve</option></select></div>
-            <label style="margin-top:4px;">📲 Número E-Mola</label>
-            <div style="display:flex;gap:4px;"><input type="text" id="adm-emola-p2" placeholder="86 987 6543" style="flex:1;"><select id="adm-status-emola-p2" style="width:90px;font-size:9px;"><option value="ativo">Ativo</option><option value="embreve">Em Breve</option></select></div>
+            <div class="plataforma-titulo">🔴 PLATAFORMA 2</div>
+            <label>🔗 Link de Afiliado</label><input type="text" id="adm-plataforma2" placeholder="https://...">
+            <label style="margin-top:4px;">🎁 Bônus</label><input type="text" id="adm-bonus-p2" value="750 MT">
+            <label style="margin-top:4px;">📱 M-Pesa</label><div style="display:flex;gap:4px;"><input type="text" id="adm-mpesa-p2" placeholder="84 987 6543" style="flex:1;"><select id="adm-status-mpesa-p2" style="width:90px;font-size:9px;"><option value="ativo">Ativo</option><option value="embreve">Em Breve</option></select></div>
+            <label style="margin-top:4px;">📲 E-Mola</label><div style="display:flex;gap:4px;"><input type="text" id="adm-emola-p2" placeholder="86 987 6543" style="flex:1;"><select id="adm-status-emola-p2" style="width:90px;font-size:9px;"><option value="ativo">Ativo</option><option value="embreve">Em Breve</option></select></div>
         </div>
-        <label>🎥 Link Mentoria (YouTube)</label>
-        <input type="text" id="adm-mentoria" placeholder="https://youtube.com/...">
-        <label>🏦 Margem da Casa (%)</label>
-        <input type="number" id="adm-margem" placeholder="Ex: 5" value="5" min="0" max="30" step="0.5">
-        <label>💵 Saldo Jogo (MZN)</label>
-        <input type="number" id="adm-saldo" placeholder="Ex: 5000">
-        <label>☁️ Saldo Nuvem (MZN)</label>
-        <input type="number" id="adm-cloud" placeholder="Ex: 10000">
-        <label>🔓 Meta Convites Modo Caverna</label>
-        <input type="number" id="adm-meta-convites" placeholder="Ex: 30" value="30" min="1" max="500">
-        <label>📝 Mensagem Bloqueio Caverna</label>
-        <input type="text" id="adm-msg-caverna" placeholder="Mensagem do cadeado" value="CONVIDE 30 PESSOAS PARA LIBERAR O MODO CAVERNA ULTRA">
+        <label>🎥 Link Mentoria YouTube</label><input type="text" id="adm-mentoria-yt" placeholder="https://youtube.com/@seucanal">
+        <label>🏦 Margem da Casa (%)</label><input type="number" id="adm-margem" value="5" min="0" max="30" step="0.5">
+        <label>💵 Saldo Jogo (MZN)</label><input type="number" id="adm-saldo" placeholder="Ex: 5000">
+        <label>☁️ Saldo Nuvem (MZN)</label><input type="number" id="adm-cloud" placeholder="Ex: 10000">
+        <label>🔓 Meta Convites</label><input type="number" id="adm-meta-convites" value="30" min="1" max="500">
+        <label>📝 Mensagem Caverna</label><input type="text" id="adm-msg-caverna" value="CONVIDE 30 PESSOAS PARA LIBERAR O MODO CAVERNA ULTRA">
         <button onclick="resetarEstatisticas()" style="width:100%;padding:6px;background:#e71d36;border:none;color:#fff;border-radius:6px;font-size:10px;font-weight:bold;cursor:pointer;margin-bottom:6px;">🔄 RESETAR ESTATÍSTICAS</button>
         <button class="btn-salvar-admin" onclick="salvarConfigAdmin()">💾 GRAVAR CONFIGURAÇÕES</button>
     </div>
-
-    <div class="historico-wrapper">
-        <div class="historico" id="historico-velas"></div>
-        <button class="btn-expandir" onclick="toggleHistorico()">▼</button>
-    </div>
+    <div class="historico-wrapper"><div class="historico" id="historico-velas"></div><button class="btn-expandir" onclick="toggleHistorico()">▼</button></div>
     <div class="historico-expandido" id="historico-completo"></div>
     <div class="banner-aviso-id">⚠️ CRIE A CONTA E FAÇA UM DEPÓSITO PARA LIBERAR O BOT PROFISSIONAL</div>
     <div class="sinal-ia-top">
         <div class="sinal-ia-info"><span class="title">🎯 PRÓXIMO ALVO IA</span><span class="status">● SINAL GERADO</span></div>
         <div><div class="sinal-borrado" id="txt-sinal-fake">14.80x</div><div class="sinal-ia-lock-msg">Deposite para liberar</div></div>
     </div>
-    <div class="game-screen">
-        <div class="multiplicador" id="live-mult">1.00x</div>
-        <div class="game-status" id="game-status">ESPERANDO PRÓXIMA RODADA</div>
-        <a href="#" id="btn-mentoria-link" class="btn-mentoria-jogo" target="_blank">📚 ACESSAR MENTORIA</a>
-    </div>
+    <div class="game-screen"><div class="multiplicador" id="live-mult">1.00x</div><div class="game-status" id="game-status">ESPERANDO PRÓXIMA RODADA</div></div>
     <div class="bet-container">
-        <div class="bet-tabs"><button class="tab-btn active" id="t1-manual" onclick="mudarModoAposta(1, 'manual')">Aposta</button><button class="tab-btn" id="t1-auto" onclick="mudarModoAposta(1, 'auto')">Auto</button></div>
+        <div class="bet-tabs"><button class="tab-btn active" id="t1-manual" onclick="mudarModoAposta(1,'manual')">Aposta</button><button class="tab-btn" id="t1-auto" onclick="mudarModoAposta(1,'auto')">Auto</button></div>
         <div class="auto-target-row" id="auto-row-1"><span>Auto Cashout</span><input type="number" id="auto-cash-val-1" value="2.00" step="0.10"></div>
         <div class="bet-main-row">
             <div class="numeric-controls">
-                <div class="input-stepper"><button class="btn-step" onclick="passoValor(1, -1)">-</button><input type="number" id="input-val-1" value="2.00" min="1" max="75000"><button class="btn-step" onclick="passoValor(1, 1)">+</button></div>
-                <div class="quick-grid"><button class="btn-quick" onclick="setValorFixo(1, 8)">8</button><button class="btn-quick" onclick="setValorFixo(1, 16)">16</button><button class="btn-quick" onclick="setValorFixo(1, 24)">24</button><button class="btn-quick" onclick="setValorFixo(1, 32)">32</button></div>
+                <div class="input-stepper"><button class="btn-step" onclick="passoValor(1,-1)">-</button><input type="number" id="input-val-1" value="2.00" min="1" max="75000"><button class="btn-step" onclick="passoValor(1,1)">+</button></div>
+                <div class="quick-grid"><button class="btn-quick" onclick="setValorFixo(1,8)">8</button><button class="btn-quick" onclick="setValorFixo(1,16)">16</button><button class="btn-quick" onclick="setValorFixo(1,24)">24</button><button class="btn-quick" onclick="setValorFixo(1,32)">32</button></div>
             </div>
             <button id="btn-bet-1" class="btn-action-trigger btn-style-aposta" onclick="executarApostaBotao(1)"><span class="btn-title" id="lbl-title-1">Aposta</span><span class="btn-sub" id="lbl-sub-1">2.00 MZN</span></button>
         </div>
     </div>
     <div class="bet-container">
-        <div class="bet-tabs"><button class="tab-btn active" id="t2-manual" onclick="mudarModoAposta(2, 'manual')">Aposta</button><button class="tab-btn" id="t2-auto" onclick="mudarModoAposta(2, 'auto')">Auto</button></div>
+        <div class="bet-tabs"><button class="tab-btn active" id="t2-manual" onclick="mudarModoAposta(2,'manual')">Aposta</button><button class="tab-btn" id="t2-auto" onclick="mudarModoAposta(2,'auto')">Auto</button></div>
         <div class="auto-target-row" id="auto-row-2"><span>Auto Cashout</span><input type="number" id="auto-cash-val-2" value="1.00" step="0.10"></div>
         <div class="bet-main-row">
             <div class="numeric-controls">
-                <div class="input-stepper"><button class="btn-step" onclick="passoValor(2, -1)">-</button><input type="number" id="input-val-2" value="1.00" min="1" max="75000"><button class="btn-step" onclick="passoValor(2, 1)">+</button></div>
-                <div class="quick-grid"><button class="btn-quick" onclick="setValorFixo(2, 8)">8</button><button class="btn-quick" onclick="setValorFixo(2, 16)">16</button><button class="btn-quick" onclick="setValorFixo(2, 24)">24</button><button class="btn-quick" onclick="setValorFixo(2, 32)">32</button></div>
+                <div class="input-stepper"><button class="btn-step" onclick="passoValor(2,-1)">-</button><input type="number" id="input-val-2" value="1.00" min="1" max="75000"><button class="btn-step" onclick="passoValor(2,1)">+</button></div>
+                <div class="quick-grid"><button class="btn-quick" onclick="setValorFixo(2,8)">8</button><button class="btn-quick" onclick="setValorFixo(2,16)">16</button><button class="btn-quick" onclick="setValorFixo(2,24)">24</button><button class="btn-quick" onclick="setValorFixo(2,32)">32</button></div>
             </div>
             <button id="btn-bet-2" class="btn-action-trigger btn-style-aposta" onclick="executarApostaBotao(2)"><span class="btn-title" id="lbl-title-2">Aposta</span><span class="btn-sub" id="lbl-sub-2">1.00 MZN</span></button>
         </div>
     </div>
-
     <div class="cards-container">
         <div class="plataforma-row">
-            <a href="#" class="card-box plataforma-1" id="card-p1-criar" target="_blank"><div class="card-header-title">🟡 PLATAFORMA 1</div><div class="card-desc-principal">1️⃣ CRIAR CONTA</div><div class="card-bonus" id="bonus-p1-criar">🎁 +500 MT Bônus</div></a>
-            <a href="#" class="card-box plataforma-1" id="card-p1-depositar" target="_blank"><div class="card-header-title">🟡 PLATAFORMA 1</div><div class="card-desc-principal">2️⃣ DEPOSITAR</div><div class="card-bonus" id="bonus-p1-depositar">💰 Receber 500 MT</div></a>
+            <a href="#" class="card-box plataforma-1" id="card-p1-criar" target="_blank" rel="noopener noreferrer"><div class="card-header-title">🟡 PLATAFORMA 1</div><div class="card-desc-principal">1️⃣ CRIAR CONTA</div><div class="card-bonus" id="bonus-p1-criar">🎁 +500 MT Bônus</div></a>
+            <a href="#" class="card-box plataforma-1" id="card-p1-depositar" target="_blank" rel="noopener noreferrer"><div class="card-header-title">🟡 PLATAFORMA 1</div><div class="card-desc-principal">2️⃣ DEPOSITAR</div><div class="card-bonus" id="bonus-p1-depositar">💰 Receber 500 MT</div></a>
         </div>
         <div class="plataforma-row">
-            <a href="#" class="card-box plataforma-2" id="card-p2-criar" target="_blank"><div class="card-header-title">🔴 PLATAFORMA 2</div><div class="card-desc-principal">1️⃣ CRIAR CONTA</div><div class="card-bonus" id="bonus-p2-criar">🎁 +750 MT Bônus</div></a>
-            <a href="#" class="card-box plataforma-2" id="card-p2-depositar" target="_blank"><div class="card-header-title">🔴 PLATAFORMA 2</div><div class="card-desc-principal">2️⃣ DEPOSITAR</div><div class="card-bonus" id="bonus-p2-depositar">💰 Receber 750 MT</div></a>
+            <a href="#" class="card-box plataforma-2" id="card-p2-criar" target="_blank" rel="noopener noreferrer"><div class="card-header-title">🔴 PLATAFORMA 2</div><div class="card-desc-principal">1️⃣ CRIAR CONTA</div><div class="card-bonus" id="bonus-p2-criar">🎁 +750 MT Bônus</div></a>
+            <a href="#" class="card-box plataforma-2" id="card-p2-depositar" target="_blank" rel="noopener noreferrer"><div class="card-header-title">🔴 PLATAFORMA 2</div><div class="card-desc-principal">2️⃣ DEPOSITAR</div><div class="card-bonus" id="bonus-p2-depositar">💰 Receber 750 MT</div></a>
         </div>
     </div>
-
     <div class="caverna-block" id="caverna-block">
         <div class="caverna-lock">🔒</div>
         <div class="caverna-msg" id="caverna-msg">CONVIDE 30 PESSOAS PARA LIBERAR O MODO CAVERNA ULTRA</div>
@@ -909,7 +978,6 @@
     </div>
 </div>
 
-<!-- Modal de Depósito -->
 <div class="deposit-overlay" id="deposit-overlay">
     <div class="deposit-modal">
         <div class="deposit-header"><button class="btn-fechar-modal" onclick="fecharModalDeposito()">✕</button><div class="deposit-title">💰 FAZER DEPÓSITO</div><div class="deposit-subtitle">Escolha sua carteira móvel</div></div>
@@ -938,31 +1006,63 @@
 </div>
 
 <script>
-    // ============ SISTEMA DE LOGIN ============
-    let usuarioNumero = localStorage.getItem('usuarioNumero') || '';
-    let usuarioId = localStorage.getItem('usuarioId') || '';
+    // ============ BLOQUEIO DE SEGURANÇA ============
+    (function() {
+        'use strict';
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' ||
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
+                (e.ctrlKey && e.key === 'U') ||
+                (e.ctrlKey && e.shiftKey && e.key === 'C') ||
+                (e.ctrlKey && e.key === 's') ||
+                (e.ctrlKey && e.key === 'p')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        var devtoolsOpen = false;
+        var threshold = 160;
+        setInterval(function() {
+            if (window.outerWidth - window.innerWidth > threshold ||
+                window.outerHeight - window.innerHeight > threshold) {
+                if (!devtoolsOpen) {
+                    devtoolsOpen = true;
+                    document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;color:#fff;background:#000;font-size:20px;">🚫 Acesso não autorizado!</div>';
+                }
+            } else {
+                devtoolsOpen = false;
+            }
+        }, 1000);
+    })();
+
+    console.log('🚀 Bot Aviator iniciando...');
+
+    var usuarioNumero = localStorage.getItem('usuarioNumero') || '';
+    var usuarioId = localStorage.getItem('usuarioId') || '';
 
     function gerarIdUnico() {
         return 'usr_' + Date.now().toString(36) + '_' + Math.random().toString(36).substr(2, 6);
     }
 
     function gerarLinkUnico() {
-        const base = window.location.origin + window.location.pathname;
-        return base + '?ref=' + usuarioId;
+        return window.location.origin + window.location.pathname + '?ref=' + usuarioId;
     }
 
     function fazerLogin() {
-        const numero = document.getElementById('login-numero').value.trim();
+        var numero = document.getElementById('login-numero').value.trim();
         if (!numero || numero.replace(/\D/g, '').length < 9) {
             alert('Digite um número de telefone válido (mínimo 9 dígitos).');
             return;
         }
         usuarioNumero = numero;
-        if (!usuarioId) {
-            usuarioId = gerarIdUnico();
-        }
+        if (!usuarioId) usuarioId = gerarIdUnico();
         localStorage.setItem('usuarioNumero', usuarioNumero);
         localStorage.setItem('usuarioId', usuarioId);
+        console.log('✅ Login feito:', usuarioNumero, usuarioId);
         mostrarApp();
     }
 
@@ -970,71 +1070,65 @@
         document.getElementById('login-screen').classList.add('app-hidden');
         document.getElementById('app-container').classList.remove('app-hidden');
         document.getElementById('user-numero-badge').textContent = '📱 ' + usuarioNumero.slice(-4);
-        atualizarLinkUnico();
-        inicializarSistemas();
-    }
-
-    function atualizarLinkUnico() {
-        const link = gerarLinkUnico();
-        document.getElementById('link-unico-text').textContent = link;
+        document.getElementById('link-unico-text').textContent = gerarLinkUnico();
+        if (!window._appIniciado) {
+            window._appIniciado = true;
+            inicializarApp();
+        }
     }
 
     function copiarLink() {
-        const link = document.getElementById('link-unico-text').textContent;
-        navigator.clipboard.writeText(link).then(() => {
-            alert('✅ Link copiado! Compartilhe com seus amigos.');
-        }).catch(() => {
+        var link = document.getElementById('link-unico-text').textContent;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(link).then(function() {
+                alert('✅ Link copiado!');
+            }).catch(function() {
+                prompt('Copie o link:', link);
+            });
+        } else {
             prompt('Copie o link:', link);
-        });
+        }
     }
 
-    // Verificar se já está logado
     if (usuarioNumero && usuarioId) {
         document.getElementById('login-numero').value = usuarioNumero;
-        mostrarApp();
+        setTimeout(mostrarApp, 100);
     }
 
-    // Verificar link de referência
-    const urlParams = new URLSearchParams(window.location.search);
-    const refParam = urlParams.get('ref');
-    if (refParam && !usuarioNumero) {
-        localStorage.setItem('referencia', refParam);
-    }
+    var urlParams = new URLSearchParams(window.location.search);
+    var refParam = urlParams.get('ref');
+    if (refParam) localStorage.setItem('referencia', refParam);
 
-    // ============ VARIÁVEIS GLOBAIS ============
-    let saldoMZN = parseFloat(localStorage.getItem('saldoMZN_' + usuarioId) || '0');
-    let saldoNuvem = parseFloat(localStorage.getItem('saldoNuvem_' + usuarioId) || '0');
-    let depositosPendentes = JSON.parse(localStorage.getItem('depositosPendentes') || '[]');
-    let margemCasa = parseFloat(localStorage.getItem('margemCasa') || '5');
-    let sistemaAtivo = localStorage.getItem('sistemaAtivo') || 'casa';
-    let bonusP1 = localStorage.getItem('bonusP1') || '500 MT';
-    let bonusP2 = localStorage.getItem('bonusP2') || '750 MT';
-    let metaConvites = parseInt(localStorage.getItem('metaConvites') || '30');
-    let msgCaverna = localStorage.getItem('msgCaverna') || 'CONVIDE 30 PESSOAS PARA LIBERAR O MODO CAVERNA ULTRA';
-    let convitesFeitos = parseInt(localStorage.getItem('convitesFeitos_' + usuarioId) || '0');
-    let linkP1 = localStorage.getItem('linkPlataforma1') || '#';
-    let linkP2 = localStorage.getItem('linkPlataforma2') || '#';
-    let linkMentoriaCustom = localStorage.getItem('linkMentoriaCustom') || '';
+    function inicializarApp() {
+        console.log('🎮 Inicializando app...');
+        window._saldoMZN = parseFloat(localStorage.getItem('saldoMZN_' + usuarioId) || '0');
+        window._saldoNuvem = parseFloat(localStorage.getItem('saldoNuvem_' + usuarioId) || '0');
+        window._depositosPendentes = JSON.parse(localStorage.getItem('depositosPendentes') || '[]');
+        window._margemCasa = parseFloat(localStorage.getItem('margemCasa') || '5');
+        window._sistemaAtivo = localStorage.getItem('sistemaAtivo') || 'casa';
+        window._bonusP1 = localStorage.getItem('bonusP1') || '500 MT';
+        window._bonusP2 = localStorage.getItem('bonusP2') || '750 MT';
+        window._metaConvites = parseInt(localStorage.getItem('metaConvites') || '30');
+        window._msgCaverna = localStorage.getItem('msgCaverna') || 'CONVIDE 30 PESSOAS PARA LIBERAR O MODO CAVERNA ULTRA';
+        window._convitesFeitos = parseInt(localStorage.getItem('convitesFeitos_' + usuarioId) || '0');
+        window._linkP1 = localStorage.getItem('linkPlataforma1') || '#';
+        window._linkP2 = localStorage.getItem('linkPlataforma2') || '#';
+        window._linkMentoriaYT = localStorage.getItem('linkMentoriaYT') || 'https://youtube.com/@seucanal?sub_confirmation=1';
+        window._numerosDeposito = JSON.parse(localStorage.getItem('numerosDeposito') || '{"mpesa":{"numero":"84 123 4567","status":"ativo"},"emola":{"numero":"86 765 4321","status":"ativo"}}');
+        window._stats = JSON.parse(localStorage.getItem('houseStats') || '{"totalApostado":0,"totalPago":0,"totalRodadas":0}');
+        window._cliquesAdmin = 0;
+        window._memoriaHistorico = [];
+        window._motorJogo = { multiplicador: 1.00, crashAlvo: 2.00, ativo: false, speed: 0.01 };
+        window._apostaModo1 = "manual";
+        window._apostaModo2 = "manual";
+        window._statusMecanica1 = "apostar";
+        window._statusMecanica2 = "apostar";
+        window._valorAposta1 = 0;
+        window._valorAposta2 = 0;
+        window._seedAleatoriaGlobal = Date.now();
+        window._carteiraSelecionada = null;
 
-    let numerosDeposito = JSON.parse(localStorage.getItem('numerosDeposito') || JSON.stringify({
-        mpesa: { numero: '84 123 4567', status: 'ativo' },
-        emola: { numero: '86 765 4321', status: 'ativo' }
-    }));
-
-    let stats = JSON.parse(localStorage.getItem('houseStats') || '{"totalApostado":0,"totalPago":0,"totalRodadas":0}');
-    let carteiraSelecionada = null;
-    let cliquesAdmin = 0;
-    let memoriaHistorico = [];
-    let motorJogo = { multiplicador: 1.00, crashAlvo: 2.00, ativo: false, speed: 0.01 };
-    let apostaModo1 = "manual", apostaModo2 = "manual";
-    let statusMecanica1 = "apostar", statusMecanica2 = "apostar";
-    let valorAposta1 = 0, valorAposta2 = 0;
-    let seedAleatoriaGlobal = Date.now();
-    let jogoIniciado = false;
-
-    function inicializarSistemas() {
-        if (jogoIniciado) return;
-        jogoIniciado = true;
+        document.getElementById('btn-mentoria-yt').href = window._linkMentoriaYT;
         inicializarHistorico();
         renderizarHistoricoSuperior();
         atualizarSaldoNuvem();
@@ -1043,95 +1137,111 @@
         atualizarTextosBonus();
         atualizarDisplayNumeros();
         atualizarCavernaBlock();
-        const label = document.getElementById('sistema-ativo-label');
-        if (sistemaAtivo === 'casa') { label.textContent = '🏦 Casa Ganha (Margem ' + margemCasa + '%)'; label.style.color = '#4caf50'; }
-        else { label.textContent = '🌹 Rosas & Quedas (Muitas Rosas)'; label.style.color = '#d500f9'; }
-        document.getElementById('sistema-casa-btn').classList.toggle('active', sistemaAtivo === 'casa');
-        document.getElementById('sistema-rosa-btn').classList.toggle('active', sistemaAtivo === 'rosa');
-        setTimeout(processarLoopVoo, 1200);
+        atualizarLabelSistema();
+        setTimeout(processarLoopVoo, 1500);
+        console.log('✅ App iniciado!');
     }
 
+    function getS(k) { return window['_' + k]; }
+
+    function setS(k, v) { window['_' + k] = v; }
+
     function inicializarHistorico() {
-        const padrao = [];
-        for (let i = 0; i < 15; i++) { padrao.push(gerarNumeroAleatorio()); }
-        memoriaHistorico = padrao;
+        var padrao = [];
+        for (var i = 0; i < 15; i++) padrao.push(gerarNumeroAleatorio());
+        setS('memoriaHistorico', padrao);
     }
 
     function gerarNumeroAleatorio() {
-        seedAleatoriaGlobal = (seedAleatoriaGlobal * 16807 + 0) % 2147483647;
-        const seed = (seedAleatoriaGlobal / 2147483647);
-        return sistemaAtivo === 'casa' ? gerarCrashSistemaCasa(seed) : gerarCrashSistemaRosa(seed);
+        var seed = getS('seedAleatoriaGlobal');
+        seed = (seed * 16807 + 0) % 2147483647;
+        setS('seedAleatoriaGlobal', seed);
+        var s = seed / 2147483647;
+        return getS('sistemaAtivo') === 'casa' ? gerarCrashSistemaCasa(s) : gerarCrashSistemaRosa(s);
     }
 
     function gerarCrashSistemaCasa(seed) {
-        const margem = margemCasa / 100;
-        const pb = 0.25 + (margem * 1.5), pm = 0.30 - (margem * 0.5), pa = 0.25 - (margem * 0.5), pma = 0.15 - (margem * 0.3);
-        let crash;
-        if (seed < pb) crash = 1.00 + (seed / pb) * 0.60;
-        else if (seed < pb + pm) crash = 1.60 + ((seed - pb) / pm) * 1.90;
-        else if (seed < pb + pm + pa) crash = 3.50 + ((seed - pb - pm) / pa) * 4.50;
-        else if (seed < pb + pm + pa + pma) crash = 8.00 + ((seed - pb - pm - pa) / pma) * 17.00;
-        else crash = 25.00 + ((seed - pb - pm - pa - pma) / (1 - pb - pm - pa - pma)) * 75.00;
-        return parseFloat(crash.toFixed(2));
+        var m = getS('margemCasa') / 100;
+        var pb = 0.25 + (m * 1.5),
+            pm = 0.30 - (m * 0.5),
+            pa = 0.25 - (m * 0.5),
+            pma = 0.15 - (m * 0.3);
+        var c;
+        if (seed < pb) c = 1.00 + (seed / pb) * 0.60;
+        else if (seed < pb + pm) c = 1.60 + ((seed - pb) / pm) * 1.90;
+        else if (seed < pb + pm + pa) c = 3.50 + ((seed - pb - pm) / pa) * 4.50;
+        else if (seed < pb + pm + pa + pma) c = 8.00 + ((seed - pb - pm - pa) / pma) * 17.00;
+        else c = 25.00 + ((seed - pb - pm - pa - pma) / (1 - pb - pm - pa - pma)) * 75.00;
+        return parseFloat(c.toFixed(2));
     }
 
     function gerarCrashSistemaRosa(seed) {
-        const pq = 0.10, pb = 0.15, pm = 0.20, pa = 0.25, pr = 0.20, ps = 0.10;
-        let crash;
-        if (seed < pq) crash = 1.00 + (seed / pq) * 0.50;
-        else if (seed < pq + pb) crash = 1.50 + ((seed - pq) / pb) * 1.50;
-        else if (seed < pq + pb + pm) crash = 3.00 + ((seed - pq - pb) / pm) * 5.00;
-        else if (seed < pq + pb + pm + pa) crash = 8.00 + ((seed - pq - pb - pm) / pa) * 17.00;
-        else if (seed < pq + pb + pm + pa + pr) crash = 25.00 + ((seed - pq - pb - pm - pa) / pr) * 55.00;
-        else crash = 80.00 + ((seed - pq - pb - pm - pa - pr) / ps) * 420.00;
-        return parseFloat(crash.toFixed(2));
+        var pq = 0.10,
+            pb = 0.15,
+            pm = 0.20,
+            pa = 0.25,
+            pr = 0.20,
+            ps = 0.10;
+        var c;
+        if (seed < pq) c = 1.00 + (seed / pq) * 0.50;
+        else if (seed < pq + pb) c = 1.50 + ((seed - pq) / pb) * 1.50;
+        else if (seed < pq + pb + pm) c = 3.00 + ((seed - pq - pb) / pm) * 5.00;
+        else if (seed < pq + pb + pm + pa) c = 8.00 + ((seed - pq - pb - pm) / pa) * 17.00;
+        else if (seed < pq + pb + pm + pa + pr) c = 25.00 + ((seed - pq - pb - pm - pa) / pr) * 55.00;
+        else c = 80.00 + ((seed - pq - pb - pm - pa - pr) / ps) * 420.00;
+        return parseFloat(c.toFixed(2));
     }
 
     function selecionarSistema(tipo) {
-        sistemaAtivo = tipo;
-        localStorage.setItem('sistemaAtivo', sistemaAtivo);
+        setS('sistemaAtivo', tipo);
+        localStorage.setItem('sistemaAtivo', tipo);
         document.getElementById('sistema-casa-btn').classList.toggle('active', tipo === 'casa');
         document.getElementById('sistema-rosa-btn').classList.toggle('active', tipo === 'rosa');
-        const label = document.getElementById('sistema-ativo-label');
-        if (tipo === 'casa') { label.textContent = '🏦 Casa Ganha (Margem ' + margemCasa + '%)'; label.style.color = '#4caf50'; }
-        else { label.textContent = '🌹 Rosas & Quedas (Muitas Rosas)'; label.style.color = '#d500f9'; }
-        seedAleatoriaGlobal = Date.now();
+        atualizarLabelSistema();
+        setS('seedAleatoriaGlobal', Date.now());
+    }
+
+    function atualizarLabelSistema() {
+        var label = document.getElementById('sistema-ativo-label');
+        if (getS('sistemaAtivo') === 'casa') {
+            label.textContent = '🏦 Casa Ganha (Margem ' + getS('margemCasa') + '%)';
+            label.style.color = '#4caf50';
+        } else {
+            label.textContent = '🌹 Rosas & Quedas (Muitas Rosas)';
+            label.style.color = '#d500f9';
+        }
     }
 
     function atualizarTextosBonus() {
-        document.getElementById('bonus-p1-criar').textContent = '🎁 +' + bonusP1 + ' Bônus';
-        document.getElementById('bonus-p1-depositar').textContent = '💰 Receber ' + bonusP1;
-        document.getElementById('bonus-p2-criar').textContent = '🎁 +' + bonusP2 + ' Bônus';
-        document.getElementById('bonus-p2-depositar').textContent = '💰 Receber ' + bonusP2;
+        document.getElementById('bonus-p1-criar').textContent = '🎁 +' + getS('bonusP1') + ' Bônus';
+        document.getElementById('bonus-p1-depositar').textContent = '💰 Receber ' + getS('bonusP1');
+        document.getElementById('bonus-p2-criar').textContent = '🎁 +' + getS('bonusP2') + ' Bônus';
+        document.getElementById('bonus-p2-depositar').textContent = '💰 Receber ' + getS('bonusP2');
     }
 
     function atualizarDisplayNumeros() {
-        const mpesaNum = numerosDeposito.mpesa.numero;
-        const mpesaStatus = numerosDeposito.mpesa.status;
-        document.getElementById('disp-mpesa-num').innerHTML = mpesaStatus === 'embreve' ? '<span style="color:#ff9800;">EM BREVE</span>' : 'Enviar para:<br><strong>' + mpesaNum + '</strong>';
-        document.getElementById('disp-mpesa-status').innerHTML = mpesaStatus === 'embreve' ? '<span class="embreve-badge">EM BREVE</span>' : '';
-        document.getElementById('form-mpesa-num').textContent = mpesaStatus === 'embreve' ? 'EM BREVE' : mpesaNum;
-        document.getElementById('opt-mpesa').style.opacity = mpesaStatus === 'embreve' ? '0.5' : '1';
-        document.getElementById('opt-mpesa').style.pointerEvents = mpesaStatus === 'embreve' ? 'none' : 'auto';
-
-        const emolaNum = numerosDeposito.emola.numero;
-        const emolaStatus = numerosDeposito.emola.status;
-        document.getElementById('disp-emola-num').innerHTML = emolaStatus === 'embreve' ? '<span style="color:#ff9800;">EM BREVE</span>' : 'Enviar para:<br><strong>' + emolaNum + '</strong>';
-        document.getElementById('disp-emola-status').innerHTML = emolaStatus === 'embreve' ? '<span class="embreve-badge">EM BREVE</span>' : '';
-        document.getElementById('form-emola-num').textContent = emolaStatus === 'embreve' ? 'EM BREVE' : emolaNum;
-        document.getElementById('opt-emola').style.opacity = emolaStatus === 'embreve' ? '0.5' : '1';
-        document.getElementById('opt-emola').style.pointerEvents = emolaStatus === 'embreve' ? 'none' : 'auto';
+        var nd = getS('numerosDeposito');
+        ['mpesa', 'emola'].forEach(function(t) {
+            var n = nd[t].numero,
+                st = nd[t].status;
+            document.getElementById('disp-' + t + '-num').innerHTML = st === 'embreve' ? '<span style="color:#ff9800;">EM BREVE</span>' : 'Enviar para:<br><strong>' + n + '</strong>';
+            document.getElementById('disp-' + t + '-status').innerHTML = st === 'embreve' ? '<span class="embreve-badge">EM BREVE</span>' : '';
+            document.getElementById('form-' + t + '-num').textContent = st === 'embreve' ? 'EM BREVE' : n;
+            document.getElementById('opt-' + t).style.opacity = st === 'embreve' ? '0.5' : '1';
+            document.getElementById('opt-' + t).style.pointerEvents = st === 'embreve' ? 'none' : 'auto';
+        });
     }
 
     function atualizarCavernaBlock() {
-        const progresso = Math.min((convitesFeitos / metaConvites) * 100, 100);
-        document.getElementById('caverna-progress-bar').style.width = progresso + '%';
-        document.getElementById('caverna-counter-text').textContent = convitesFeitos;
-        document.getElementById('caverna-meta-text').textContent = metaConvites;
-        document.getElementById('caverna-msg').textContent = msgCaverna;
-
-        const lockEl = document.querySelector('.caverna-lock');
-        if (convitesFeitos >= metaConvites) {
+        var cf = getS('convitesFeitos'),
+            mc = getS('metaConvites');
+        var p = Math.min((cf / mc) * 100, 100);
+        document.getElementById('caverna-progress-bar').style.width = p + '%';
+        document.getElementById('caverna-counter-text').textContent = cf;
+        document.getElementById('caverna-meta-text').textContent = mc;
+        document.getElementById('caverna-msg').textContent = getS('msgCaverna');
+        var lockEl = document.querySelector('.caverna-lock');
+        if (cf >= mc) {
             if (lockEl) lockEl.textContent = '🔓';
             document.getElementById('caverna-msg').textContent = '✅ MODO CAVERNA ULTRA LIBERADO!';
             document.getElementById('caverna-msg').style.color = '#00e676';
@@ -1149,58 +1259,58 @@
         document.getElementById('form-mpesa').classList.remove('active');
         document.getElementById('form-emola').classList.remove('active');
         document.getElementById('deposito-status').style.display = 'none';
-        carteiraSelecionada = null;
-        document.querySelectorAll('.wallet-option').forEach(el => el.classList.remove('selected'));
-        ['mpesa-nome','mpesa-numero','mpesa-valor','emola-nome','emola-numero','emola-valor'].forEach(id => { document.getElementById(id).value = ''; });
+        setS('carteiraSelecionada', null);
+        document.querySelectorAll('.wallet-option').forEach(function(el) { el.classList.remove('selected'); });
+        ['mpesa-nome', 'mpesa-numero', 'mpesa-valor', 'emola-nome', 'emola-numero', 'emola-valor'].forEach(function(id) { document.getElementById(id).value = ''; });
         atualizarDisplayNumeros();
     }
 
     function fecharModalDeposito() { document.getElementById('deposit-overlay').style.display = 'none'; }
 
     function selecionarCarteira(tipo) {
-        if (tipo === 'mpesa' && numerosDeposito.mpesa.status === 'embreve') { alert('🚧 M-Pesa EM BREVE!'); return; }
-        if (tipo === 'emola' && numerosDeposito.emola.status === 'embreve') { alert('🚧 E-Mola EM BREVE!'); return; }
-        carteiraSelecionada = tipo;
-        document.querySelectorAll('.wallet-option').forEach(el => el.classList.remove('selected'));
-        document.querySelector(`.wallet-option.${tipo}`).classList.add('selected');
+        var nd = getS('numerosDeposito');
+        if (tipo === 'mpesa' && nd.mpesa.status === 'embreve') { alert('🚧 M-Pesa EM BREVE!'); return; }
+        if (tipo === 'emola' && nd.emola.status === 'embreve') { alert('🚧 E-Mola EM BREVE!'); return; }
+        setS('carteiraSelecionada', tipo);
+        document.querySelectorAll('.wallet-option').forEach(function(el) { el.classList.remove('selected'); });
+        document.querySelector('.wallet-option.' + tipo).classList.add('selected');
         document.getElementById('form-mpesa').classList.remove('active');
         document.getElementById('form-emola').classList.remove('active');
         document.getElementById('deposito-status').style.display = 'none';
-        if (tipo === 'mpesa') document.getElementById('form-mpesa').classList.add('active');
-        else document.getElementById('form-emola').classList.add('active');
+        document.getElementById('form-' + tipo).classList.add('active');
     }
 
     function enviarDeposito(tipo) {
-        if (tipo === 'mpesa' && numerosDeposito.mpesa.status === 'embreve') { alert('🚧 M-Pesa EM BREVE!'); return; }
-        if (tipo === 'emola' && numerosDeposito.emola.status === 'embreve') { alert('🚧 E-Mola EM BREVE!'); return; }
-        const prefixo = tipo === 'mpesa' ? 'mpesa' : 'emola';
-        const nome = document.getElementById(`${prefixo}-nome`).value.trim();
-        const numero = document.getElementById(`${prefixo}-numero`).value.trim();
-        const valorStr = document.getElementById(`${prefixo}-valor`).value;
-        const valor = parseFloat(valorStr);
+        var nd = getS('numerosDeposito');
+        if (tipo === 'mpesa' && nd.mpesa.status === 'embreve') { alert('🚧 M-Pesa EM BREVE!'); return; }
+        if (tipo === 'emola' && nd.emola.status === 'embreve') { alert('🚧 E-Mola EM BREVE!'); return; }
+        var prefixo = tipo;
+        var nome = document.getElementById(prefixo + '-nome').value.trim();
+        var numero = document.getElementById(prefixo + '-numero').value.trim();
+        var valorStr = document.getElementById(prefixo + '-valor').value;
+        var valor = parseFloat(valorStr);
         if (!nome || nome.length < 3) { alert('Digite seu nome completo.'); return; }
         if (!numero || numero.replace(/\D/g, '').length < 9) { alert('Número inválido.'); return; }
         if (!valorStr || isNaN(valor)) { alert('Digite o valor transferido.'); return; }
         if (valor < 50) { alert('Valor mínimo: 50 MZN'); return; }
         if (valor > 50000) { alert('Valor máximo: 50.000 MZN'); return; }
-        const deposito = { id: Date.now(), tipo: tipo.toUpperCase(), nome, numero, valor, data: new Date().toLocaleString('pt-BR'), status: 'pendente', usuarioId: usuarioId, usuarioNumero: usuarioNumero };
-        depositosPendentes.push(deposito);
-        localStorage.setItem('depositosPendentes', JSON.stringify(depositosPendentes));
+        var deposito = { id: Date.now(), tipo: tipo.toUpperCase(), nome: nome, numero: numero, valor: valor, data: new Date().toLocaleString('pt-BR'), status: 'pendente', usuarioId: usuarioId, usuarioNumero: usuarioNumero };
+        var dp = getS('depositosPendentes');
+        dp.push(deposito);
+        localStorage.setItem('depositosPendentes', JSON.stringify(dp));
         document.getElementById('form-mpesa').classList.remove('active');
         document.getElementById('form-emola').classList.remove('active');
         document.getElementById('wallet-options').style.display = 'none';
-        const statusDiv = document.getElementById('deposito-status');
-        statusDiv.style.display = 'block';
-        statusDiv.querySelector('.status-icon').textContent = '✅';
-        statusDiv.querySelector('.status-text').textContent = 'Depósito Enviado com Sucesso!';
-        statusDiv.querySelector('.status-sub').textContent = `${tipo.toUpperCase()} • ${valor.toFixed(2)} MZN • Aguardando aprovação`;
+        document.getElementById('deposito-status').style.display = 'block';
+        document.querySelector('.deposito-status .status-sub').textContent = tipo.toUpperCase() + ' • ' + valor.toFixed(2) + ' MZN • Aguardando aprovação';
     }
 
     function registrarCliqueSecret() {
-        cliquesAdmin++;
-        if (cliquesAdmin >= 10) {
-            cliquesAdmin = 0;
-            let psw = prompt("🔐 Introduza a Chave Mestra de Acesso:");
+        var cc = getS('cliquesAdmin') + 1;
+        setS('cliquesAdmin', cc);
+        if (cc >= 10) {
+            setS('cliquesAdmin', 0);
+            var psw = prompt("🔐 Introduza a Chave Mestra de Acesso:");
             if (psw === "admin111000") abrirPainelAdmin();
             else alert("❌ Chave incorreta!");
         }
@@ -1209,83 +1319,85 @@
     function abrirPainelAdmin() {
         document.getElementById('admin-panel').style.display = 'block';
         document.getElementById('house-stats').style.display = 'block';
-        document.getElementById('adm-saldo').value = saldoMZN;
-        document.getElementById('adm-cloud').value = saldoNuvem;
-        document.getElementById('adm-margem').value = margemCasa;
-        document.getElementById('adm-plataforma1').value = linkP1;
-        document.getElementById('adm-plataforma2').value = linkP2;
-        document.getElementById('adm-mentoria').value = linkMentoriaCustom;
-        document.getElementById('adm-bonus-p1').value = bonusP1;
-        document.getElementById('adm-bonus-p2').value = bonusP2;
-        document.getElementById('adm-mpesa-p1').value = numerosDeposito.mpesa.numero;
-        document.getElementById('adm-status-mpesa-p1').value = numerosDeposito.mpesa.status;
-        document.getElementById('adm-emola-p1').value = numerosDeposito.emola.numero;
-        document.getElementById('adm-status-emola-p1').value = numerosDeposito.emola.status;
-        document.getElementById('adm-mpesa-p2').value = numerosDeposito.mpesa.numero;
-        document.getElementById('adm-status-mpesa-p2').value = numerosDeposito.mpesa.status;
-        document.getElementById('adm-emola-p2').value = numerosDeposito.emola.numero;
-        document.getElementById('adm-status-emola-p2').value = numerosDeposito.emola.status;
-        document.getElementById('adm-meta-convites').value = metaConvites;
-        document.getElementById('adm-msg-caverna').value = msgCaverna;
-        document.getElementById('sistema-casa-btn').classList.toggle('active', sistemaAtivo === 'casa');
-        document.getElementById('sistema-rosa-btn').classList.toggle('active', sistemaAtivo === 'rosa');
+        document.getElementById('adm-saldo').value = getS('saldoMZN');
+        document.getElementById('adm-cloud').value = getS('saldoNuvem');
+        document.getElementById('adm-margem').value = getS('margemCasa');
+        document.getElementById('adm-plataforma1').value = getS('linkP1');
+        document.getElementById('adm-plataforma2').value = getS('linkP2');
+        document.getElementById('adm-mentoria-yt').value = getS('linkMentoriaYT');
+        document.getElementById('adm-bonus-p1').value = getS('bonusP1');
+        document.getElementById('adm-bonus-p2').value = getS('bonusP2');
+        var nd = getS('numerosDeposito');
+        document.getElementById('adm-mpesa-p1').value = nd.mpesa.numero;
+        document.getElementById('adm-status-mpesa-p1').value = nd.mpesa.status;
+        document.getElementById('adm-emola-p1').value = nd.emola.numero;
+        document.getElementById('adm-status-emola-p1').value = nd.emola.status;
+        document.getElementById('adm-mpesa-p2').value = nd.mpesa.numero;
+        document.getElementById('adm-status-mpesa-p2').value = nd.mpesa.status;
+        document.getElementById('adm-emola-p2').value = nd.emola.numero;
+        document.getElementById('adm-status-emola-p2').value = nd.emola.status;
+        document.getElementById('adm-meta-convites').value = getS('metaConvites');
+        document.getElementById('adm-msg-caverna').value = getS('msgCaverna');
+        document.getElementById('sistema-casa-btn').classList.toggle('active', getS('sistemaAtivo') === 'casa');
+        document.getElementById('sistema-rosa-btn').classList.toggle('active', getS('sistemaAtivo') === 'rosa');
         renderizarAdminDepositos();
         atualizarStatsDisplay();
     }
 
     function renderizarAdminDepositos() {
-        const container = document.getElementById('admin-depositos-pendentes');
-        const pendentes = depositosPendentes.filter(d => d.status === 'pendente');
+        var container = document.getElementById('admin-depositos-pendentes');
+        var pendentes = getS('depositosPendentes').filter(function(d) { return d.status === 'pendente'; });
         if (pendentes.length === 0) { container.innerHTML = '<p style="color:#888;font-size:10px;">✅ Nenhum depósito pendente</p>'; return; }
-        container.innerHTML = pendentes.map(d => `
-            <div style="background:#111;border:1px solid #333;border-radius:8px;padding:8px;margin-bottom:6px;">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-                    <span style="font-weight:900;font-size:11px;">${d.tipo}</span><span style="color:#ff9800;font-size:9px;">⏳ Pendente</span>
-                </div>
-                <div style="font-size:9px;color:#ccc;"><div>👤 ${d.nome}</div><div>📱 ${d.numero}</div><div>💰 ${d.valor.toFixed(2)} MZN</div><div>📅 ${d.data}</div><div style="color:#4caf50;">ID: ${d.usuarioId ? d.usuarioId.slice(-8) : 'N/A'}</div></div>
-                <div style="display:flex;gap:4px;margin-top:6px;">
-                    <button onclick="aprovarDeposito('${d.id}')" style="flex:1;padding:5px;background:#4caf50;border:none;color:#fff;border-radius:5px;font-size:9px;font-weight:bold;cursor:pointer;">✅ APROVAR</button>
-                    <button onclick="rejeitarDeposito('${d.id}')" style="flex:1;padding:5px;background:#e71d36;border:none;color:#fff;border-radius:5px;font-size:9px;font-weight:bold;cursor:pointer;">❌ REJEITAR</button>
-                </div>
-            </div>`).join('');
+        container.innerHTML = pendentes.map(function(d) {
+            return '<div style="background:#111;border:1px solid #333;border-radius:8px;padding:8px;margin-bottom:6px;">' +
+                '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">' +
+                '<span style="font-weight:900;font-size:11px;">' + d.tipo + '</span><span style="color:#ff9800;font-size:9px;">⏳ Pendente</span></div>' +
+                '<div style="font-size:9px;color:#ccc;"><div>👤 ' + d.nome + '</div><div>📱 ' + d.numero + '</div><div>💰 ' + d.valor.toFixed(2) + ' MZN</div><div>📅 ' + d.data + '</div></div>' +
+                '<div style="display:flex;gap:4px;margin-top:6px;">' +
+                '<button onclick="aprovarDeposito(\'' + d.id + '\')" style="flex:1;padding:5px;background:#4caf50;border:none;color:#fff;border-radius:5px;font-size:9px;font-weight:bold;cursor:pointer;">✅ APROVAR</button>' +
+                '<button onclick="rejeitarDeposito(\'' + d.id + '\')" style="flex:1;padding:5px;background:#e71d36;border:none;color:#fff;border-radius:5px;font-size:9px;font-weight:bold;cursor:pointer;">❌ REJEITAR</button></div></div>';
+        }).join('');
     }
 
     function aprovarDeposito(id) {
-        const index = depositosPendentes.findIndex(d => d.id.toString() === id.toString());
+        var dp = getS('depositosPendentes');
+        var index = dp.findIndex(function(d) { return d.id.toString() === id.toString(); });
         if (index === -1) return;
-        const deposito = depositosPendentes[index];
-        deposito.status = 'aprovado';
-        // Creditar saldo ao usuário correto
-        if (deposito.usuarioId === usuarioId) {
-            saldoMZN += deposito.valor;
-            saldoNuvem += deposito.valor;
-            localStorage.setItem('saldoMZN_' + usuarioId, saldoMZN.toString());
-            localStorage.setItem('saldoNuvem_' + usuarioId, saldoNuvem.toString());
+        dp[index].status = 'aprovado';
+        setS('depositosPendentes', dp);
+        if (dp[index].usuarioId === usuarioId) {
+            setS('saldoMZN', getS('saldoMZN') + dp[index].valor);
+            setS('saldoNuvem', getS('saldoNuvem') + dp[index].valor);
+            localStorage.setItem('saldoMZN_' + usuarioId, getS('saldoMZN').toString());
+            localStorage.setItem('saldoNuvem_' + usuarioId, getS('saldoNuvem').toString());
         }
-        // Incrementa convites (crescimento lento)
-        convitesFeitos++;
-        localStorage.setItem('convitesFeitos_' + usuarioId, convitesFeitos.toString());
-        localStorage.setItem('depositosPendentes', JSON.stringify(depositosPendentes));
-        atualizarPainelSaldo(); atualizarSaldoNuvem(); renderizarAdminDepositos();
+        setS('convitesFeitos', getS('convitesFeitos') + 1);
+        localStorage.setItem('convitesFeitos_' + usuarioId, getS('convitesFeitos').toString());
+        localStorage.setItem('depositosPendentes', JSON.stringify(dp));
+        atualizarPainelSaldo();
+        atualizarSaldoNuvem();
+        renderizarAdminDepositos();
         atualizarCavernaBlock();
-        alert(`✅ Depósito de ${deposito.valor.toFixed(2)} MZN aprovado!\n\nCliente: ${deposito.nome}\n👥 Convites: ${convitesFeitos}/${metaConvites}`);
+        alert('✅ Depósito aprovado! Convites: ' + getS('convitesFeitos') + '/' + getS('metaConvites'));
     }
 
     function rejeitarDeposito(id) {
         if (!confirm('Tem certeza que deseja rejeitar?')) return;
-        const index = depositosPendentes.findIndex(d => d.id.toString() === id.toString());
+        var dp = getS('depositosPendentes');
+        var index = dp.findIndex(function(d) { return d.id.toString() === id.toString(); });
         if (index === -1) return;
-        depositosPendentes[index].status = 'rejeitado';
-        localStorage.setItem('depositosPendentes', JSON.stringify(depositosPendentes));
+        dp[index].status = 'rejeitado';
+        setS('depositosPendentes', dp);
+        localStorage.setItem('depositosPendentes', JSON.stringify(dp));
         renderizarAdminDepositos();
         alert('❌ Depósito rejeitado.');
     }
 
     function resetarEstatisticas() {
         if (!confirm('Resetar todas as estatísticas?')) return;
-        stats = { totalApostado: 0, totalPago: 0, totalRodadas: 0 };
-        convitesFeitos = 0;
-        localStorage.setItem('houseStats', JSON.stringify(stats));
+        setS('stats', { totalApostado: 0, totalPago: 0, totalRodadas: 0 });
+        setS('convitesFeitos', 0);
+        localStorage.setItem('houseStats', JSON.stringify(getS('stats')));
         localStorage.setItem('convitesFeitos_' + usuarioId, '0');
         atualizarStatsDisplay();
         atualizarCavernaBlock();
@@ -1293,134 +1405,149 @@
     }
 
     function salvarConfigAdmin() {
-        let nSaldo = parseFloat(document.getElementById('adm-saldo').value);
-        let nCloud = parseFloat(document.getElementById('adm-cloud').value);
-        let nMargin = parseFloat(document.getElementById('adm-margem').value);
-        let lP1 = document.getElementById('adm-plataforma1').value.trim();
-        let lP2 = document.getElementById('adm-plataforma2').value.trim();
-        let lMentoria = document.getElementById('adm-mentoria').value.trim();
-        let bP1 = document.getElementById('adm-bonus-p1').value.trim();
-        let bP2 = document.getElementById('adm-bonus-p2').value.trim();
-        let mMeta = parseInt(document.getElementById('adm-meta-convites').value) || 30;
-        let mMsg = document.getElementById('adm-msg-caverna').value.trim();
-        let mpesaNum = document.getElementById('adm-mpesa-p1').value.trim();
-        let mpesaStatus = document.getElementById('adm-status-mpesa-p1').value;
-        let emolaNum = document.getElementById('adm-emola-p1').value.trim();
-        let emolaStatus = document.getElementById('adm-status-emola-p1').value;
+        var ns = parseFloat(document.getElementById('adm-saldo').value);
+        var nc = parseFloat(document.getElementById('adm-cloud').value);
+        var nm = parseFloat(document.getElementById('adm-margem').value);
+        var lp1 = document.getElementById('adm-plataforma1').value.trim();
+        var lp2 = document.getElementById('adm-plataforma2').value.trim();
+        var lyt = document.getElementById('adm-mentoria-yt').value.trim();
+        var bp1 = document.getElementById('adm-bonus-p1').value.trim();
+        var bp2 = document.getElementById('adm-bonus-p2').value.trim();
+        var mm = parseInt(document.getElementById('adm-meta-convites').value) || 30;
+        var msg = document.getElementById('adm-msg-caverna').value.trim();
+        var mn = document.getElementById('adm-mpesa-p1').value.trim();
+        var ms = document.getElementById('adm-status-mpesa-p1').value;
+        var en = document.getElementById('adm-emola-p1').value.trim();
+        var es = document.getElementById('adm-status-emola-p1').value;
 
-        if (!isNaN(nSaldo)) { saldoMZN = nSaldo; localStorage.setItem('saldoMZN_' + usuarioId, saldoMZN.toString()); }
-        if (!isNaN(nCloud)) { saldoNuvem = nCloud; localStorage.setItem('saldoNuvem_' + usuarioId, saldoNuvem.toString()); }
-        if (!isNaN(nMargin) && nMargin >= 0 && nMargin <= 30) { margemCasa = nMargin; localStorage.setItem('margemCasa', margemCasa.toString()); }
-        if (lP1) { linkP1 = lP1; localStorage.setItem('linkPlataforma1', lP1); }
-        if (lP2) { linkP2 = lP2; localStorage.setItem('linkPlataforma2', lP2); }
-        if (lMentoria) { linkMentoriaCustom = lMentoria; localStorage.setItem('linkMentoriaCustom', lMentoria); }
-        if (bP1) { bonusP1 = bP1; localStorage.setItem('bonusP1', bonusP1); }
-        if (bP2) { bonusP2 = bP2; localStorage.setItem('bonusP2', bonusP2); }
-        if (mMsg) { msgCaverna = mMsg; localStorage.setItem('msgCaverna', msgCaverna); }
-        metaConvites = mMeta;
-        localStorage.setItem('metaConvites', metaConvites.toString());
-        if (mpesaNum) numerosDeposito.mpesa.numero = mpesaNum;
-        numerosDeposito.mpesa.status = mpesaStatus;
-        if (emolaNum) numerosDeposito.emola.numero = emolaNum;
-        numerosDeposito.emola.status = emolaStatus;
-        localStorage.setItem('numerosDeposito', JSON.stringify(numerosDeposito));
+        if (!isNaN(ns)) { setS('saldoMZN', ns);
+            localStorage.setItem('saldoMZN_' + usuarioId, ns.toString()); }
+        if (!isNaN(nc)) { setS('saldoNuvem', nc);
+            localStorage.setItem('saldoNuvem_' + usuarioId, nc.toString()); }
+        if (!isNaN(nm) && nm >= 0 && nm <= 30) { setS('margemCasa', nm);
+            localStorage.setItem('margemCasa', nm.toString()); }
+        if (lp1) { setS('linkP1', lp1);
+            localStorage.setItem('linkPlataforma1', lp1); }
+        if (lp2) { setS('linkP2', lp2);
+            localStorage.setItem('linkPlataforma2', lp2); }
+        if (lyt) { setS('linkMentoriaYT', lyt);
+            localStorage.setItem('linkMentoriaYT', lyt);
+            document.getElementById('btn-mentoria-yt').href = lyt; }
+        if (bp1) { setS('bonusP1', bp1);
+            localStorage.setItem('bonusP1', bp1); }
+        if (bp2) { setS('bonusP2', bp2);
+            localStorage.setItem('bonusP2', bp2); }
+        if (msg) { setS('msgCaverna', msg);
+            localStorage.setItem('msgCaverna', msg); }
+        setS('metaConvites', mm);
+        localStorage.setItem('metaConvites', mm.toString());
+        var nd = getS('numerosDeposito');
+        if (mn) nd.mpesa.numero = mn;
+        nd.mpesa.status = ms;
+        if (en) nd.emola.numero = en;
+        nd.emola.status = es;
+        setS('numerosDeposito', nd);
+        localStorage.setItem('numerosDeposito', JSON.stringify(nd));
 
         vincularTodosLinks();
         atualizarTextosBonus();
         atualizarDisplayNumeros();
         atualizarCavernaBlock();
-        atualizarPainelSaldo(); atualizarSaldoNuvem();
+        atualizarPainelSaldo();
+        atualizarSaldoNuvem();
+        atualizarLabelSistema();
         document.getElementById('admin-panel').style.display = 'none';
         document.getElementById('house-stats').style.display = 'none';
-        const label = document.getElementById('sistema-ativo-label');
-        if (sistemaAtivo === 'casa') label.textContent = '🏦 Casa Ganha (Margem ' + margemCasa + '%)';
     }
 
     function vincularTodosLinks() {
-        document.getElementById('card-p1-criar').href = linkP1 || '#';
-        document.getElementById('card-p1-depositar').href = linkP1 || '#';
-        document.getElementById('card-p2-criar').href = linkP2 || '#';
-        document.getElementById('card-p2-depositar').href = linkP2 || '#';
-        let btnMentoria = document.getElementById('btn-mentoria-link');
-        if (linkMentoriaCustom && linkMentoriaCustom !== '#') { btnMentoria.href = linkMentoriaCustom; btnMentoria.style.display = 'flex'; }
-        else { btnMentoria.style.display = 'none'; }
+        document.getElementById('card-p1-criar').href = getS('linkP1') || '#';
+        document.getElementById('card-p1-depositar').href = getS('linkP1') || '#';
+        document.getElementById('card-p2-criar').href = getS('linkP2') || '#';
+        document.getElementById('card-p2-depositar').href = getS('linkP2') || '#';
     }
 
-    function atualizarSaldoNuvem() { document.getElementById('cloud-balance').textContent = saldoNuvem.toFixed(2) + ' MZN'; }
+    function atualizarSaldoNuvem() { document.getElementById('cloud-balance').textContent = getS('saldoNuvem').toFixed(2) + ' MZN'; }
 
     function atualizarStatsDisplay() {
-        const ta = stats.totalApostado || 0, tp = stats.totalPago || 0;
-        const lucro = ta - tp;
-        const rtp = ta > 0 ? (tp / ta * 100) : 0;
-        const me = ta > 0 ? (lucro / ta * 100) : 0;
+        var s = getS('stats'),
+            ta = s.totalApostado || 0,
+            tp = s.totalPago || 0;
+        var lucro = ta - tp,
+            rtp = ta > 0 ? (tp / ta * 100) : 0,
+            me = ta > 0 ? (lucro / ta * 100) : 0;
         document.getElementById('stat-apostado').textContent = ta.toFixed(2);
         document.getElementById('stat-pago').textContent = tp.toFixed(2);
         document.getElementById('stat-lucro').textContent = lucro.toFixed(2);
         document.getElementById('stat-lucro').className = 'stat-value ' + (lucro >= 0 ? 'positive' : 'negative');
         document.getElementById('stat-rtp').textContent = rtp.toFixed(1) + '%';
-        document.getElementById('stat-rodadas').textContent = stats.totalRodadas;
+        document.getElementById('stat-rodadas').textContent = s.totalRodadas;
         document.getElementById('stat-margem').textContent = me.toFixed(2) + '%';
         document.getElementById('stat-margem').className = 'stat-value ' + (me >= 0 ? 'positive' : 'negative');
     }
 
     function toggleHistorico() {
-        let p = document.getElementById('historico-completo');
+        var p = document.getElementById('historico-completo');
         p.style.display = p.style.display === "grid" ? "none" : "grid";
         if (p.style.display === "grid") renderizarTabelaExpandida();
     }
 
     function renderizarHistoricoSuperior() {
-        let c = document.getElementById('historico-velas');
+        var c = document.getElementById('historico-velas');
         c.innerHTML = "";
-        [...memoriaHistorico].reverse().slice(0, 7).forEach(v => {
-            let b = document.createElement('span');
-            b.className = `badge-vela ${v >= 10 ? 'v-high' : (v >= 2 ? 'v-mid' : 'v-low')}`;
+        [].concat(getS('memoriaHistorico')).reverse().slice(0, 7).forEach(function(v) {
+            var b = document.createElement('span');
+            b.className = 'badge-vela ' + (v >= 10 ? 'v-high' : (v >= 2 ? 'v-mid' : 'v-low'));
             b.innerText = v.toFixed(2) + "x";
             c.appendChild(b);
         });
     }
 
     function renderizarTabelaExpandida() {
-        let c = document.getElementById('historico-completo');
+        var c = document.getElementById('historico-completo');
         c.innerHTML = "";
-        [...memoriaHistorico].reverse().slice(0, 16).forEach(v => {
-            let b = document.createElement('span');
-            b.className = `badge-vela ${v >= 10 ? 'v-high' : (v >= 2 ? 'v-mid' : 'v-low')}`;
+        [].concat(getS('memoriaHistorico')).reverse().slice(0, 16).forEach(function(v) {
+            var b = document.createElement('span');
+            b.className = 'badge-vela ' + (v >= 10 ? 'v-high' : (v >= 2 ? 'v-mid' : 'v-low'));
             b.innerText = v.toFixed(2) + "x";
             c.appendChild(b);
         });
     }
 
     function atualizarListasDeVelas() {
-        if (memoriaHistorico.length > 30) memoriaHistorico.shift();
+        var mh = getS('memoriaHistorico');
+        if (mh.length > 30) mh.shift();
         renderizarHistoricoSuperior();
         if (document.getElementById('historico-completo').style.display === "grid") renderizarTabelaExpandida();
     }
 
     function passoValor(id, dir) {
-        let input = document.getElementById('input-val-' + id);
-        let v = parseFloat(input.value) || 0;
-        v += dir; if (v < 1) v = 1; if (v > 75000) v = 75000;
-        input.value = v.toFixed(2); sincronizarLabelsSub(id);
+        var input = document.getElementById('input-val-' + id);
+        var v = parseFloat(input.value) || 0;
+        v += dir;
+        if (v < 1) v = 1;
+        if (v > 75000) v = 75000;
+        input.value = v.toFixed(2);
+        sincronizarLabelsSub(id);
     }
 
-    function setValorFixo(id, val) { document.getElementById('input-val-' + id).value = val.toFixed(2); sincronizarLabelsSub(id); }
+    function setValorFixo(id, val) { document.getElementById('input-val-' + id).value = val.toFixed(2);
+        sincronizarLabelsSub(id); }
 
     function sincronizarLabelsSub(id) {
-        let val = parseFloat(document.getElementById('input-val-' + id).value) || 1;
-        if (id === 1 ? statusMecanica1 === "apostar" : statusMecanica2 === "apostar") {
-            document.getElementById('lbl-sub-' + id).innerText = val.toFixed(2) + " MZN";
-        }
+        var val = parseFloat(document.getElementById('input-val-' + id).value) || 1;
+        var status = id === 1 ? getS('statusMecanica1') : getS('statusMecanica2');
+        if (status === "apostar") document.getElementById('lbl-sub-' + id).innerText = val.toFixed(2) + " MZN";
     }
 
     function mudarModoAposta(id, modo) {
         if (id === 1) {
-            apostaModo1 = modo;
+            setS('apostaModo1', modo);
             document.getElementById('t1-manual').className = modo === 'manual' ? 'tab-btn active' : 'tab-btn';
             document.getElementById('t1-auto').className = modo === 'auto' ? 'tab-btn active' : 'tab-btn';
             document.getElementById('auto-row-1').style.display = modo === 'auto' ? 'flex' : 'none';
         } else {
-            apostaModo2 = modo;
+            setS('apostaModo2', modo);
             document.getElementById('t2-manual').className = modo === 'manual' ? 'tab-btn active' : 'tab-btn';
             document.getElementById('t2-auto').className = modo === 'auto' ? 'tab-btn active' : 'tab-btn';
             document.getElementById('auto-row-2').style.display = modo === 'auto' ? 'flex' : 'none';
@@ -1428,109 +1555,153 @@
     }
 
     function executarApostaBotao(id) {
-        let iv = parseFloat(document.getElementById('input-val-' + id).value) || 1;
-        let btn = document.getElementById('btn-bet-' + id);
+        var iv = parseFloat(document.getElementById('input-val-' + id).value) || 1;
+        var btn = document.getElementById('btn-bet-' + id);
+        var motor = getS('motorJogo');
         if (id === 1) {
-            if (statusMecanica1 === "apostar" && !motorJogo.ativo) {
-                if (saldoMZN < iv) { alert("Saldo Insuficiente!"); return; }
-                saldoMZN -= iv; valorAposta1 = iv;
-                stats.totalApostado += iv; localStorage.setItem('houseStats', JSON.stringify(stats));
-                atualizarPainelSaldo(); statusMecanica1 = "esperando";
+            if (getS('statusMecanica1') === "apostar" && !motor.ativo) {
+                if (getS('saldoMZN') < iv) { alert("Saldo Insuficiente!"); return; }
+                setS('saldoMZN', getS('saldoMZN') - iv);
+                setS('valorAposta1', iv);
+                var s = getS('stats');
+                s.totalApostado += iv;
+                setS('stats', s);
+                localStorage.setItem('houseStats', JSON.stringify(s));
+                atualizarPainelSaldo();
+                setS('statusMecanica1', "esperando");
                 btn.className = "btn-action-trigger btn-style-espera";
                 document.getElementById('lbl-title-1').innerText = "CANCELAR";
-            } else if (statusMecanica1 === "em_jogo" && motorJogo.ativo) { recolherPremioFicticio(1); }
+            } else if (getS('statusMecanica1') === "em_jogo" && motor.ativo) { recolherPremioFicticio(1); }
         } else {
-            if (statusMecanica2 === "apostar" && !motorJogo.ativo) {
-                if (saldoMZN < iv) { alert("Saldo Insuficiente!"); return; }
-                saldoMZN -= iv; valorAposta2 = iv;
-                stats.totalApostado += iv; localStorage.setItem('houseStats', JSON.stringify(stats));
-                atualizarPainelSaldo(); statusMecanica2 = "esperando";
+            if (getS('statusMecanica2') === "apostar" && !motor.ativo) {
+                if (getS('saldoMZN') < iv) { alert("Saldo Insuficiente!"); return; }
+                setS('saldoMZN', getS('saldoMZN') - iv);
+                setS('valorAposta2', iv);
+                var s = getS('stats');
+                s.totalApostado += iv;
+                setS('stats', s);
+                localStorage.setItem('houseStats', JSON.stringify(s));
+                atualizarPainelSaldo();
+                setS('statusMecanica2', "esperando");
                 btn.className = "btn-action-trigger btn-style-espera";
                 document.getElementById('lbl-title-2').innerText = "CANCELAR";
-            } else if (statusMecanica2 === "em_jogo" && motorJogo.ativo) { recolherPremioFicticio(2); }
+            } else if (getS('statusMecanica2') === "em_jogo" && motor.ativo) { recolherPremioFicticio(2); }
         }
     }
 
     function recolherPremioFicticio(id) {
-        let vb = id === 1 ? valorAposta1 : valorAposta2;
-        let fat = vb * motorJogo.multiplicador;
-        saldoMZN += fat; stats.totalPago += fat;
-        localStorage.setItem('saldoMZN_' + usuarioId, saldoMZN.toString());
-        localStorage.setItem('houseStats', JSON.stringify(stats));
+        var vb = id === 1 ? getS('valorAposta1') : getS('valorAposta2');
+        var fat = vb * getS('motorJogo').multiplicador;
+        setS('saldoMZN', getS('saldoMZN') + fat);
+        var s = getS('stats');
+        s.totalPago += fat;
+        setS('stats', s);
+        localStorage.setItem('saldoMZN_' + usuarioId, getS('saldoMZN').toString());
+        localStorage.setItem('houseStats', JSON.stringify(s));
         atualizarPainelSaldo();
-        if (id === 1) statusMecanica1 = "ganhou"; else statusMecanica2 = "ganhou";
-        let btn = document.getElementById('btn-bet-' + id);
+        if (id === 1) setS('statusMecanica1', "ganhou");
+        else setS('statusMecanica2', "ganhou");
+        var btn = document.getElementById('btn-bet-' + id);
         btn.className = "btn-action-trigger btn-style-espera";
         document.getElementById('lbl-title-' + id).innerText = "Venceu!";
         document.getElementById('lbl-sub-' + id).innerText = "+" + fat.toFixed(2) + " MZN";
     }
 
     function atualizarPainelSaldo() {
-        document.getElementById('main-saldo').innerText = saldoMZN.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        localStorage.setItem('saldoMZN_' + usuarioId, saldoMZN.toString());
+        document.getElementById('main-saldo').innerText = getS('saldoMZN').toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        localStorage.setItem('saldoMZN_' + usuarioId, getS('saldoMZN').toString());
     }
 
     function processarLoopVoo() {
-        motorJogo.multiplicador = 1.00; motorJogo.ativo = true;
-        motorJogo.crashAlvo = gerarNumeroAleatorio();
-        stats.totalRodadas++; localStorage.setItem('houseStats', JSON.stringify(stats));
+        var motor = getS('motorJogo');
+        motor.multiplicador = 1.00;
+        motor.ativo = true;
+        motor.crashAlvo = gerarNumeroAleatorio();
+        var s = getS('stats');
+        s.totalRodadas++;
+        setS('stats', s);
+        localStorage.setItem('houseStats', JSON.stringify(s));
         document.getElementById('game-status').innerText = "";
-        document.getElementById('txt-sinal-fake').innerText = (motorJogo.crashAlvo * (0.85 + Math.random() * 0.3)).toFixed(2) + "x";
-        if (motorJogo.crashAlvo <= 1.00) { executarCrashImediato(); return; }
-        if (statusMecanica1 === "esperando") { statusMecanica1 = "em_jogo"; document.getElementById('btn-bet-1').className = "btn-action-trigger btn-style-cashout"; document.getElementById('lbl-title-1').innerText = "CASHOUT"; }
-        if (statusMecanica2 === "esperando") { statusMecanica2 = "em_jogo"; document.getElementById('btn-bet-2').className = "btn-action-trigger btn-style-cashout"; document.getElementById('lbl-title-2').innerText = "CASHOUT"; }
-        let loopVoo = setInterval(() => {
-            if (motorJogo.multiplicador > 20) motorJogo.speed = 0.50;
-            else if (motorJogo.multiplicador > 10) motorJogo.speed = 0.28;
-            else if (motorJogo.multiplicador > 4) motorJogo.speed = 0.10;
-            else motorJogo.speed = 0.022;
-            motorJogo.multiplicador += motorJogo.speed;
-            document.getElementById('live-mult').innerText = motorJogo.multiplicador.toFixed(2) + "x";
+        document.getElementById('txt-sinal-fake').innerText = (motor.crashAlvo * (0.85 + Math.random() * 0.3)).toFixed(2) + "x";
+        if (motor.crashAlvo <= 1.00) { executarCrashImediato(); return; }
+        if (getS('statusMecanica1') === "esperando") { setS('statusMecanica1', "em_jogo");
+            document.getElementById('btn-bet-1').className = "btn-action-trigger btn-style-cashout";
+            document.getElementById('lbl-title-1').innerText = "CASHOUT"; }
+        if (getS('statusMecanica2') === "esperando") { setS('statusMecanica2', "em_jogo");
+            document.getElementById('btn-bet-2').className = "btn-action-trigger btn-style-cashout";
+            document.getElementById('lbl-title-2').innerText = "CASHOUT"; }
+        var loopVoo = setInterval(function() {
+            if (motor.multiplicador > 20) motor.speed = 0.50;
+            else if (motor.multiplicador > 10) motor.speed = 0.28;
+            else if (motor.multiplicador > 4) motor.speed = 0.10;
+            else motor.speed = 0.022;
+            motor.multiplicador += motor.speed;
+            document.getElementById('live-mult').innerText = motor.multiplicador.toFixed(2) + "x";
             verificarMotoresDeCashout();
-            if (motorJogo.multiplicador >= motorJogo.crashAlvo) { clearInterval(loopVoo); finalizarRodadaMecanica(); }
+            if (motor.multiplicador >= motor.crashAlvo) { clearInterval(loopVoo);
+                finalizarRodadaMecanica(); }
         }, 75);
     }
 
     function executarCrashImediato() {
-        motorJogo.ativo = false;
+        var motor = getS('motorJogo');
+        motor.ativo = false;
         document.getElementById('live-mult').innerText = "1.00x";
         document.getElementById('game-status').innerText = "FLEW AWAY EM 1.00x (QUEDA)";
-        if (statusMecanica1 === "esperando") { statusMecanica1 = "apostar"; valorAposta1 = 0; }
-        if (statusMecanica2 === "esperando") { statusMecanica2 = "apostar"; valorAposta2 = 0; }
-        memoriaHistorico.push(1.00); atualizarListasDeVelas(); resetarBotoesPosRodada();
+        if (getS('statusMecanica1') === "esperando") { setS('statusMecanica1', "apostar");
+            setS('valorAposta1', 0); }
+        if (getS('statusMecanica2') === "esperando") { setS('statusMecanica2', "apostar");
+            setS('valorAposta2', 0); }
+        getS('memoriaHistorico').push(1.00);
+        atualizarListasDeVelas();
+        resetarBotoesPosRodada();
         setTimeout(processarLoopVoo, 4000);
     }
 
     function finalizarRodadaMecanica() {
-        motorJogo.ativo = false;
+        var motor = getS('motorJogo');
+        motor.ativo = false;
         document.getElementById('live-mult').innerText = "Flew Away! 👋";
-        document.getElementById('game-status').innerText = "FLEW AWAY EM " + motorJogo.crashAlvo.toFixed(2) + "x";
-        if (statusMecanica1 === "em_jogo") { statusMecanica1 = "apostar"; valorAposta1 = 0; }
-        if (statusMecanica2 === "em_jogo") { statusMecanica2 = "apostar"; valorAposta2 = 0; }
-        memoriaHistorico.push(motorJogo.crashAlvo); atualizarListasDeVelas(); resetarBotoesPosRodada();
+        document.getElementById('game-status').innerText = "FLEW AWAY EM " + motor.crashAlvo.toFixed(2) + "x";
+        if (getS('statusMecanica1') === "em_jogo") { setS('statusMecanica1', "apostar");
+            setS('valorAposta1', 0); }
+        if (getS('statusMecanica2') === "em_jogo") { setS('statusMecanica2', "apostar");
+            setS('valorAposta2', 0); }
+        getS('memoriaHistorico').push(motor.crashAlvo);
+        atualizarListasDeVelas();
+        resetarBotoesPosRodada();
         if (document.getElementById('house-stats').style.display === 'block') atualizarStatsDisplay();
         setTimeout(processarLoopVoo, 4000);
     }
 
     function verificarMotoresDeCashout() {
-        if (statusMecanica1 === "em_jogo") {
-            if (apostaModo1 === "manual") document.getElementById('lbl-sub-1').innerText = (valorAposta1 * motorJogo.multiplicador).toFixed(2) + " MZN";
-            else { let aa = parseFloat(document.getElementById('auto-cash-val-1').value) || 2.0; if (motorJogo.multiplicador >= aa) recolherPremioFicticio(1); }
+        var motor = getS('motorJogo');
+        if (getS('statusMecanica1') === "em_jogo") {
+            if (getS('apostaModo1') === "manual") document.getElementById('lbl-sub-1').innerText = (getS('valorAposta1') * motor.multiplicador).toFixed(2) + " MZN";
+            else { var aa = parseFloat(document.getElementById('auto-cash-val-1').value) || 2.0; if (motor.multiplicador >= aa) recolherPremioFicticio(1); }
         }
-        if (statusMecanica2 === "em_jogo") {
-            if (apostaModo2 === "manual") document.getElementById('lbl-sub-2').innerText = (valorAposta2 * motorJogo.multiplicador).toFixed(2) + " MZN";
-            else { let aa = parseFloat(document.getElementById('auto-cash-val-2').value) || 2.0; if (motorJogo.multiplicador >= aa) recolherPremioFicticio(2); }
+        if (getS('statusMecanica2') === "em_jogo") {
+            if (getS('apostaModo2') === "manual") document.getElementById('lbl-sub-2').innerText = (getS('valorAposta2') * motor.multiplicador).toFixed(2) + " MZN";
+            else { var aa = parseFloat(document.getElementById('auto-cash-val-2').value) || 2.0; if (motor.multiplicador >= aa) recolherPremioFicticio(2); }
         }
     }
 
     function resetarBotoesPosRodada() {
-        statusMecanica1 = "apostar"; let b1 = document.getElementById('btn-bet-1'); b1.className = "btn-action-trigger btn-style-aposta";
-        document.getElementById('lbl-title-1').innerText = "Aposta"; sincronizarLabelsSub(1); valorAposta1 = 0;
-        statusMecanica2 = "apostar"; let b2 = document.getElementById('btn-bet-2'); b2.className = "btn-action-trigger btn-style-aposta";
-        document.getElementById('lbl-title-2').innerText = "Aposta"; sincronizarLabelsSub(2); valorAposta2 = 0;
+        setS('statusMecanica1', "apostar");
+        document.getElementById('btn-bet-1').className = "btn-action-trigger btn-style-aposta";
+        document.getElementById('lbl-title-1').innerText = "Aposta";
+        sincronizarLabelsSub(1);
+        setS('valorAposta1', 0);
+        setS('statusMecanica2', "apostar");
+        document.getElementById('btn-bet-2').className = "btn-action-trigger btn-style-aposta";
+        document.getElementById('lbl-title-2').innerText = "Aposta";
+        sincronizarLabelsSub(2);
+        setS('valorAposta2', 0);
     }
 
     document.getElementById('deposit-overlay').addEventListener('click', function(e) { if (e.target === this) fecharModalDeposito(); });
+
+    console.log('📦 Script carregado com sucesso!');
 </script>
 </body>
 </html>
