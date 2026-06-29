@@ -3,8 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>BOT AVIATOR</title>
+    <title>BOT AVIATOR - FIREBASE</title>
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+    
     <style>
+        /* ===== TODO O CSS AQUI (mesmo do código anterior) ===== */
         :root {
             --bg-main: #0b0c0d;
             --bg-block: #161719;
@@ -53,13 +61,134 @@
             scroll-behavior: smooth;
         }
 
-        .btn-mentoria-flutuante {
+        /* ===== BOTÃO FLUTUANTE PRINCIPAL ===== */
+        .floating-menu-wrapper {
             position: fixed;
             bottom: 20px;
             right: 20px;
             z-index: 9999;
-            width: 52px;
-            height: 52px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        .floating-main-btn {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            border: 2px solid #fff;
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.6);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+            outline: none;
+            color: #fff;
+            font-size: 28px;
+            animation: floatBounce 3s ease-in-out infinite;
+            position: relative;
+        }
+
+        .floating-main-btn:active {
+            transform: scale(0.9);
+        }
+
+        .floating-main-btn .pulse-ring {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2px solid rgba(124, 58, 237, 0.4);
+            animation: pulse-ring 2s ease-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.9); opacity: 0.8; }
+            100% { transform: scale(1.3); opacity: 0; }
+        }
+
+        .floating-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(10px) scale(0.9);
+            transition: 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-origin: bottom right;
+        }
+
+        .floating-options.open {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0) scale(1);
+        }
+
+        .floating-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(24, 26, 31, 0.92);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 10px 16px 10px 14px;
+            border-radius: 50px;
+            border: 1px solid #363a42;
+            color: #f0f0f0;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.15s;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+            min-width: 180px;
+            justify-content: flex-start;
+        }
+
+        .floating-option:active {
+            transform: scale(0.94);
+            background: #2d3038;
+        }
+
+        .floating-option .icon {
+            font-size: 20px;
+            min-width: 28px;
+            text-align: center;
+        }
+
+        .floating-option .label {
+            white-space: nowrap;
+        }
+
+        .floating-option .sub-label {
+            font-size: 10px;
+            color: #999;
+            display: block;
+            font-weight: 400;
+        }
+
+        .floating-option.whatsapp { border-left: 4px solid #25D366; }
+        .floating-option.services { border-left: 4px solid #f59e0b; }
+        .floating-option.extra { border-left: 4px solid #8b5cf6; }
+
+        .floating-option .contact-phone {
+            font-size: 10px;
+            color: #4ade80;
+            font-weight: 600;
+            margin-left: 4px;
+        }
+
+        /* ===== BOTÃO MENTORIA ===== */
+        .btn-mentoria-flutuante {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            z-index: 9998;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             background: linear-gradient(135deg, #ff0000, #cc0000);
             border: 2px solid #fff;
@@ -79,21 +208,21 @@
         }
 
         .btn-mentoria-flutuante .yt-icon {
-            font-size: 22px;
+            font-size: 18px;
             color: #fff;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .btn-mentoria-flutuante .badge-mentoria {
             position: absolute;
-            top: -10px;
-            right: -15px;
+            top: -8px;
+            right: -12px;
             background: #fff;
             color: #ff0000;
-            font-size: 8px;
+            font-size: 7px;
             font-weight: 900;
-            padding: 3px 8px;
-            border-radius: 10px;
+            padding: 2px 6px;
+            border-radius: 8px;
             white-space: nowrap;
             animation: badgePulse 1.5s infinite;
         }
@@ -108,6 +237,7 @@
             50% { transform: scale(1.1); }
         }
 
+        /* ===== LOGIN ===== */
         .login-screen {
             display: flex;
             flex-direction: column;
@@ -182,47 +312,27 @@
             line-height: 12px;
         }
 
-        .link-unico-box {
-            background: #111;
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 6px 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 8px;
+        .login-loading {
+            color: #ffd700;
+            font-size: 12px;
+            display: none;
         }
 
-        .link-unico-box .link-text {
-            flex: 1;
-            color: #4caf50;
-            word-break: break-all;
-            font-size: 7px;
-        }
-
-        .btn-copiar-link {
-            background: #4caf50;
-            border: none;
-            color: #fff;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 8px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
+        /* ===== HEADER ===== */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 2px 4px;
             min-height: 28px;
+            flex-wrap: wrap;
+            gap: 4px;
         }
 
         .logo {
             color: var(--accent-red);
             font-weight: 900;
-            font-size: clamp(14px, 4vw, 16px);
+            font-size: clamp(12px, 3.5vw, 15px);
             font-style: italic;
             cursor: pointer;
         }
@@ -231,15 +341,29 @@
             display: flex;
             gap: 4px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .btn-depositar-top {
             background: linear-gradient(135deg, #ffd700, #ff8c00);
             border: none;
             color: #000;
-            padding: 5px 12px;
+            padding: 4px 10px;
             border-radius: 14px;
-            font-size: clamp(9px, 3vw, 10px);
+            font-size: clamp(8px, 2.5vw, 10px);
+            font-weight: 900;
+            cursor: pointer;
+            text-transform: uppercase;
+            animation: pulse 2s infinite;
+        }
+
+        .btn-sacar-top {
+            background: linear-gradient(135deg, #00e676, #00c853);
+            border: none;
+            color: #000;
+            padding: 4px 10px;
+            border-radius: 14px;
+            font-size: clamp(8px, 2.5vw, 10px);
             font-weight: 900;
             cursor: pointer;
             text-transform: uppercase;
@@ -257,49 +381,212 @@
         .saldo-box {
             color: var(--accent-green);
             font-weight: bold;
-            font-size: clamp(11px, 3.5vw, 13px);
+            font-size: clamp(10px, 3vw, 12px);
             background: #111214;
             padding: 3px 8px;
             border-radius: 14px;
             border: 1px solid #1c1e22;
         }
 
-        .house-stats {
-            display: none;
-            background: linear-gradient(135deg, #1a1a2e, #0d1b2a);
-            border: 1px solid #2a2a4a;
-            border-radius: 8px;
-            padding: 6px 8px;
-            font-size: 8px;
-        }
-
-        .house-stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 4px;
-        }
-
-        .stat-item {
-            text-align: center;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 6px;
-            padding: 3px;
-        }
-
-        .stat-label {
-            color: #888;
+        .saldo-box .sync-status {
             font-size: 7px;
-            text-transform: uppercase;
+            color: #666;
+            display: block;
+            text-align: center;
         }
 
-        .stat-value {
+        /* ===== MODAL DE SAQUE ===== */
+        .saque-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            height: 100dvh;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .saque-modal {
+            background: #1a1a2e;
+            border: 2px solid #2a2a4a;
+            border-radius: 16px;
+            width: 92%;
+            max-width: 400px;
+            max-height: 85vh;
+            max-height: 85dvh;
+            overflow-y: auto;
+            padding: 0;
+        }
+
+        .saque-header {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 14px;
+            border-radius: 16px 16px 0 0;
+            text-align: center;
+            border-bottom: 1px solid #2a2a4a;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .saque-title { font-size: 16px; font-weight: 900; color: var(--accent-green); margin-bottom: 2px; }
+        .saque-subtitle { font-size: 9px; color: #888; }
+
+        .saque-body { padding: 12px; }
+
+        .saque-info-box {
+            background: rgba(0, 230, 118, 0.05);
+            border: 1px solid rgba(0, 230, 118, 0.15);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 14px;
+            text-align: center;
+        }
+
+        .saque-info-box .saldo-disponivel {
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .saque-info-box .valor-disponivel {
+            font-size: 28px;
             font-weight: 900;
-            font-size: 11px;
+            color: var(--accent-green);
+            margin: 4px 0;
         }
 
-        .stat-value.positive { color: var(--accent-green); }
-        .stat-value.negative { color: var(--accent-red); }
+        .saque-info-box .minimo-saque {
+            font-size: 9px;
+            color: #888;
+        }
 
+        .saque-info-box .minimo-saque strong {
+            color: #ffd700;
+        }
+
+        .form-group { margin-bottom: 10px; }
+
+        .form-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px 12px;
+            background: #0b0c0d;
+            border: 1px solid #2a2a4a;
+            color: #fff;
+            border-radius: 8px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .form-input:focus { border-color: var(--accent-green); }
+
+        .input-with-icon { position: relative; }
+        .input-with-icon .form-input { padding-left: 35px; }
+
+        .input-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: #666;
+        }
+
+        .btn-enviar-saque {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #00e676, #00c853);
+            border: none;
+            border-radius: 10px;
+            font-weight: 900;
+            font-size: 14px;
+            color: #000;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+            transition: 0.2s;
+        }
+
+        .btn-enviar-saque:active {
+            transform: scale(0.96);
+        }
+
+        .btn-enviar-saque:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .saque-status {
+            background: rgba(255, 152, 0, 0.1);
+            border: 1px solid rgba(255, 152, 0, 0.3);
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .saque-status .status-icon { font-size: 30px; animation: bounce 1s infinite; }
+        .saque-status .status-text { font-size: 11px; font-weight: bold; color: #ff9800; margin-top: 4px; }
+        .saque-status .status-sub { font-size: 8px; color: #888; margin-top: 2px; }
+
+        .saque-method {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .saque-method-option {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 10px 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .saque-method-option.selected {
+            border-color: var(--accent-green);
+            background: rgba(0, 230, 118, 0.1);
+        }
+
+        .saque-method-option .method-icon { font-size: 24px; margin-bottom: 4px; }
+        .saque-method-option .method-name { font-size: 12px; font-weight: 900; }
+
+        .btn-fechar-modal {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== MODAL DE DEPÓSITO ===== */
         .deposit-overlay {
             display: none;
             position: fixed;
@@ -339,23 +626,6 @@
 
         .deposit-title { font-size: 16px; font-weight: 900; color: var(--gold); margin-bottom: 2px; }
         .deposit-subtitle { font-size: 9px; color: #888; }
-
-        .btn-fechar-modal {
-            position: absolute;
-            top: 10px;
-            right: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: #fff;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            font-size: 16px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
 
         .deposit-body { padding: 12px; }
 
@@ -411,58 +681,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .form-group { margin-bottom: 10px; }
-
-        .form-label {
-            font-size: 10px;
-            font-weight: 800;
-            color: #aaa;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
-            display: block;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 10px 12px;
-            background: #0b0c0d;
-            border: 1px solid #2a2a4a;
-            color: #fff;
-            border-radius: 8px;
-            font-size: 13px;
-            outline: none;
-        }
-
-        .form-input:focus { border-color: var(--gold); }
-
-        .input-with-icon { position: relative; }
-        .input-with-icon .form-input { padding-left: 35px; }
-
-        .input-icon {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 16px;
-            color: #666;
-        }
-
-        .btn-enviar-deposito {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #ffd700, #ff8c00);
-            border: none;
-            border-radius: 10px;
-            font-weight: 900;
-            font-size: 14px;
-            color: #000;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 4px;
-        }
-
         .transfer-info {
             background: rgba(255, 255, 255, 0.03);
             border: 1px dashed rgba(255, 255, 255, 0.15);
@@ -511,16 +729,127 @@
             50% { opacity: 0.5; }
         }
 
-        .embreve-badge {
-            background: rgba(0, 0, 0, 0.7);
-            color: #ffd700;
-            font-size: 7px;
-            font-weight: 900;
-            padding: 2px 6px;
-            border-radius: 4px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .app-hidden { display: none !important; }
+
+        /* ===== OUTROS ===== */
+        .link-unico-box {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 6px 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 8px;
         }
+
+        .link-unico-box .link-text {
+            flex: 1;
+            color: #4caf50;
+            word-break: break-all;
+            font-size: 7px;
+        }
+
+        .btn-copiar-link {
+            background: #4caf50;
+            border: none;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .cloud-balance {
+            background: rgba(0, 230, 118, 0.1);
+            border: 1px solid rgba(0, 230, 118, 0.2);
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-size: 9px;
+            text-align: center;
+            color: var(--accent-green);
+        }
+
+        .admin-modal {
+            display: none;
+            background: #1c1d21;
+            border: 1px solid #444;
+            border-radius: 10px;
+            padding: 10px;
+            animation: fadeIn 0.2s ease;
+            margin-bottom: 2px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-3px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .admin-modal h4 { color: #ff9100; font-size: 12px; margin-bottom: 6px; }
+        .admin-modal label {
+            font-size: 9px;
+            color: #aaa;
+            display: block;
+            margin-bottom: 2px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .admin-modal input, .admin-modal select, .admin-modal textarea {
+            width: 100%;
+            padding: 6px;
+            background: #000;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 6px;
+            margin-bottom: 6px;
+            font-size: 11px;
+            outline: none;
+            font-family: inherit;
+        }
+        .admin-modal textarea {
+            resize: vertical;
+            min-height: 40px;
+        }
+
+        .btn-salvar-admin {
+            width: 100%;
+            background: var(--accent-green);
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            color: #000;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .admin-section-floating {
+            background: #1a1d24;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            border-left: 3px solid #7c3aed;
+        }
+
+        .admin-section-floating .section-title {
+            font-size: 10px;
+            color: #8b5cf6;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .plataforma-bloco {
+            background: #111215;
+            border-radius: 8px;
+            padding: 6px;
+            margin-bottom: 6px;
+            border-left: 3px solid #ffd700;
+        }
+
+        .plataforma-bloco.plataforma-2-admin { border-left-color: #e71d36; }
+        .plataforma-titulo { font-weight: 900; font-size: 10px; margin-bottom: 4px; }
 
         .sistema-selector {
             background: #111;
@@ -557,7 +886,6 @@
 
         .sistema-btn.sistema-casa { border-top: 3px solid #4caf50; }
         .sistema-btn.sistema-rosa { border-top: 3px solid #d500f9; }
-
         .sistema-label { font-size: 9px; color: #888; margin-top: 2px; }
 
         .cards-container {
@@ -687,16 +1015,6 @@
         .caverna-counter { font-size: 8px; color: #aaa; margin-top: 2px; }
         .caverna-counter span { color: #ffd700; font-weight: 900; }
 
-        .cloud-balance {
-            background: rgba(0, 230, 118, 0.1);
-            border: 1px solid rgba(0, 230, 118, 0.2);
-            border-radius: 8px;
-            padding: 6px 10px;
-            font-size: 9px;
-            text-align: center;
-            color: var(--accent-green);
-        }
-
         .historico-wrapper {
             display: flex;
             align-items: center;
@@ -718,9 +1036,9 @@
             white-space: nowrap;
         }
 
-        .v-low { background: var(--v-azul); }
-        .v-mid { background: var(--v-roxo); }
-        .v-high { background: var(--v-rosa); }
+        .v-low { background: #304ffe; }
+        .v-mid { background: #7c4dff; }
+        .v-high { background: #d500f9; }
 
         .btn-expandir {
             background: #22252a;
@@ -923,175 +1241,202 @@
             font-size: 10px;
         }
 
-        .admin-modal {
+        .house-stats {
             display: none;
-            background: #1c1d21;
-            border: 1px solid #444;
-            border-radius: 10px;
-            padding: 10px;
-            animation: fadeIn 0.2s ease;
-            margin-bottom: 2px;
+            background: linear-gradient(135deg, #1a1a2e, #0d1b2a);
+            border: 1px solid #2a2a4a;
+            border-radius: 8px;
+            padding: 6px 8px;
+            font-size: 8px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-3px); }
-            to { opacity: 1; transform: translateY(0); }
+        .house-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
         }
 
-        .admin-modal h4 { color: #ff9100; font-size: 12px; margin-bottom: 6px; }
+        .stat-item {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 6px;
+            padding: 3px;
+        }
 
-        .admin-modal label {
-            font-size: 9px;
-            color: #aaa;
-            display: block;
-            margin-bottom: 2px;
-            font-weight: bold;
+        .stat-label {
+            color: #888;
+            font-size: 7px;
             text-transform: uppercase;
         }
 
-        .admin-modal input, .admin-modal select {
-            width: 100%;
-            padding: 6px;
-            background: #000;
-            border: 1px solid #444;
-            color: #fff;
-            border-radius: 6px;
-            margin-bottom: 6px;
+        .stat-value {
+            font-weight: 900;
             font-size: 11px;
-            outline: none;
         }
 
-        .plataforma-bloco {
-            background: #111215;
-            border-radius: 8px;
-            padding: 6px;
-            margin-bottom: 6px;
-            border-left: 3px solid #ffd700;
+        .stat-value.positive { color: var(--accent-green); }
+        .stat-value.negative { color: var(--accent-red); }
+
+        .embreve-badge {
+            background: rgba(0, 0, 0, 0.7);
+            color: #ffd700;
+            font-size: 7px;
+            font-weight: 900;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-
-        .plataforma-bloco.plataforma-2-admin { border-left-color: #e71d36; }
-
-        .plataforma-titulo { font-weight: 900; font-size: 10px; margin-bottom: 4px; }
-
-        .btn-salvar-admin {
-            width: 100%;
-            background: var(--accent-green);
-            border: none;
-            padding: 8px;
-            border-radius: 6px;
-            font-weight: bold;
-            color: #000;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
-        .app-hidden { display: none !important; }
 
         ::-webkit-scrollbar { width: 3px; }
         ::-webkit-scrollbar-track { background: #0b0c0d; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+        @media (max-width: 420px) {
+            .header { gap: 2px; }
+            .logo { font-size: 11px; }
+            .btn-depositar-top, .btn-sacar-top { padding: 3px 7px; font-size: 7px; }
+            .saldo-box { font-size: 9px; padding: 2px 5px; }
+            .user-numero-badge { font-size: 7px; padding: 2px 4px; }
+        }
     </style>
 </head>
 <body>
 
-<!-- Botão Flutuante Mentoria -->
-<a href="https://youtube.com/@seucanal?sub_confirmation=1" target="_blank" rel="noopener" class="btn-mentoria-flutuante" id="btn-mentoria-yt">
+<!-- ===== BOTÃO FLUTUANTE ===== -->
+<div class="floating-menu-wrapper">
+    <div class="floating-options" id="floatingOptions">
+        <a href="#" id="floatingWhatsapp" target="_blank" rel="noopener" class="floating-option whatsapp">
+            <span class="icon">💬</span>
+            <span class="label">Entrar no Grupo</span>
+        </a>
+        <a href="#" id="floatingServices" target="_blank" rel="noopener" class="floating-option services">
+            <span class="icon">🔧</span>
+            <div>
+                <span class="label">Serviços</span>
+                <span class="sub-label" id="servicesSubLabel">Crio sites e plataformas</span>
+                <span class="contact-phone" id="servicesPhoneDisplay">📞 +258 84 123 4567</span>
+            </div>
+        </a>
+        <a href="#" id="floatingExtra" target="_blank" rel="noopener" class="floating-option extra">
+            <span class="icon">💎</span>
+            <div>
+                <span class="label">Renda Extra</span>
+                <span class="sub-label" id="extraSubLabel">Oportunidades online</span>
+            </div>
+        </a>
+    </div>
+    <button class="floating-main-btn" id="floatingMainBtn" aria-label="Abrir menu">
+        <span class="pulse-ring"></span>
+        <span style="position: relative; z-index: 2; font-size: 30px;">➕</span>
+    </button>
+</div>
+
+<!-- Botão Mentoria -->
+<a href="#" target="_blank" rel="noopener" class="btn-mentoria-flutuante" id="btn-mentoria-yt">
     <span class="yt-icon">▶</span>
     <span class="badge-mentoria">MENTORIA</span>
 </a>
 
-<!-- Tela de Login -->
+<!-- ===== TELA DE LOGIN ===== -->
 <div class="login-screen" id="login-screen">
     <div class="login-logo">✈️</div>
     <div class="login-title">BOT AVIATOR</div>
     <div class="login-subtitle">Digite seu número para acessar</div>
     <input type="tel" class="login-input" id="login-numero" placeholder="84 123 4567" maxlength="15" autocomplete="off" inputmode="tel">
-    <button class="btn-login" onclick="fazerLogin()">🔓 ENTRAR</button>
-    <div class="login-info">Seus dados ficam salvos apenas neste dispositivo.<br>Sem necessidade de criar conta com email ou senha.</div>
+    <button class="btn-login" id="btn-login" onclick="fazerLogin()">🔓 ENTRAR</button>
+    <div class="login-loading" id="login-loading">⏳ Conectando ao servidor...</div>
+    <div class="login-info">Seus dados são salvos na nuvem 🔒<br>Acesse de qualquer dispositivo com seu número.</div>
 </div>
 
-<!-- App Container -->
+<!-- ===== APP ===== -->
 <div class="container app-hidden" id="app-container">
+    <!-- HEADER -->
     <div class="header">
         <span class="logo" onclick="registrarCliqueSecret()">✈️ BOT AVIATOR</span>
         <div class="header-right">
             <span class="user-numero-badge" id="user-numero-badge">📱 ...</span>
             <button class="btn-depositar-top" onclick="abrirModalDeposito()">💰 Depositar</button>
+            <button class="btn-sacar-top" onclick="abrirModalSaque()">💳 Saque</button>
             <div class="saldo-box">
-                <span id="main-saldo">0.00</span> 
+                <span id="main-saldo">0.00</span>
                 <span style="font-size:9px;background:#222;padding:1px 3px;border-radius:4px;margin-left:2px;">MZN</span>
+                <span class="sync-status" id="sync-status">● sincronizado</span>
             </div>
         </div>
     </div>
 
+    <!-- STATS -->
     <div class="house-stats" id="house-stats">
         <div style="font-weight:900;font-size:9px;color:#ffd700;margin-bottom:4px;">🏦 ESTATÍSTICAS DA CASA</div>
         <div class="house-stats-grid">
-            <div class="stat-item">
-                <div class="stat-label">Total Apostado</div>
-                <div class="stat-value" id="stat-apostado">0</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Total Pago</div>
-                <div class="stat-value" id="stat-pago">0</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Lucro Casa</div>
-                <div class="stat-value positive" id="stat-lucro">0</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">RTP %</div>
-                <div class="stat-value" id="stat-rtp">0%</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Rodadas</div>
-                <div class="stat-value" id="stat-rodadas">0</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Margem</div>
-                <div class="stat-value positive" id="stat-margem">0%</div>
-            </div>
+            <div class="stat-item"><div class="stat-label">Total Apostado</div><div class="stat-value" id="stat-apostado">0</div></div>
+            <div class="stat-item"><div class="stat-label">Total Pago</div><div class="stat-value" id="stat-pago">0</div></div>
+            <div class="stat-item"><div class="stat-label">Lucro Casa</div><div class="stat-value positive" id="stat-lucro">0</div></div>
+            <div class="stat-item"><div class="stat-label">RTP %</div><div class="stat-value" id="stat-rtp">0%</div></div>
+            <div class="stat-item"><div class="stat-label">Rodadas</div><div class="stat-value" id="stat-rodadas">0</div></div>
+            <div class="stat-item"><div class="stat-label">Margem</div><div class="stat-value positive" id="stat-margem">0%</div></div>
         </div>
         <div style="margin-top:4px;font-size:8px;text-align:center;color:#888;">
-            Sistema Ativo: <span id="sistema-ativo-label" style="font-weight:900;color:#ffd700;">🏦 Casa Ganha</span>
+            Sistema: <span id="sistema-ativo-label" style="font-weight:900;color:#ffd700;">🏦 Casa Ganha</span>
         </div>
     </div>
 
+    <!-- SALDO NUVEM -->
     <div class="cloud-balance">
         ☁️ Saldo em Nuvem: <span id="cloud-balance" style="font-weight:900;">0.00 MZN</span>
     </div>
 
+    <!-- LINK ÚNICO -->
     <div class="link-unico-box" id="link-unico-box">
         <span style="font-size:9px;">🔗 Seu link:</span>
         <span class="link-text" id="link-unico-text">Gerando...</span>
         <button class="btn-copiar-link" onclick="copiarLink()">📋 Copiar</button>
     </div>
 
+    <!-- ADMIN PANEL -->
     <div class="admin-modal" id="admin-panel">
         <h4>⚙️ PAINEL ADMIN</h4>
+        
+        <div class="admin-section-floating">
+            <div class="section-title">📌 BOTÃO FLUTUANTE - LINKS</div>
+            <label>💬 Link Grupo WhatsApp</label>
+            <input type="url" id="adm-floating-whatsapp" placeholder="https://chat.whatsapp.com/..." value="https://chat.whatsapp.com/ABCDEFG">
+            <label>🔧 Link Serviços</label>
+            <input type="url" id="adm-floating-services" placeholder="https://seusite.com/servicos" value="https://seusite.com/servicos">
+            <label>📱 Número de Contato</label>
+            <input type="tel" id="adm-floating-phone" placeholder="+258 84 123 4567" value="+258 84 123 4567">
+            <label>📝 Descrição Serviços</label>
+            <textarea id="adm-floating-services-desc" rows="2">Crio sites e plataformas personalizadas</textarea>
+            <label>💎 Link Renda Extra</label>
+            <input type="url" id="adm-floating-extra" placeholder="https://parceiro.com/renda" value="https://parceiro.com/renda">
+            <label>📝 Descrição Renda Extra</label>
+            <textarea id="adm-floating-extra-desc" rows="2">Ganhe dinheiro extra online</textarea>
+        </div>
+
         <div class="sistema-selector">
-            <label style="font-size:10px;color:#ffd700;margin-bottom:6px;display:block;">🎲 SISTEMA DE GERAÇÃO DE NÚMEROS</label>
+            <label style="font-size:10px;color:#ffd700;margin-bottom:6px;display:block;">🎲 SISTEMA</label>
             <div class="sistema-options">
-                <div class="sistema-btn sistema-casa active" id="sistema-casa-btn" onclick="selecionarSistema('casa')">
-                    🏦 CASA GANHA
-                    <div class="sistema-label">Margem configurável</div>
-                </div>
-                <div class="sistema-btn sistema-rosa" id="sistema-rosa-btn" onclick="selecionarSistema('rosa')">
-                    🌹 ROSAS & QUEDAS
-                    <div class="sistema-label">Muitas rosas, poucas quedas</div>
-                </div>
+                <div class="sistema-btn sistema-casa active" id="sistema-casa-btn" onclick="selecionarSistema('casa')">🏦 CASA GANHA<div class="sistema-label">Margem configurável</div></div>
+                <div class="sistema-btn sistema-rosa" id="sistema-rosa-btn" onclick="selecionarSistema('rosa')">🌹 ROSAS & QUEDAS<div class="sistema-label">Muitas rosas</div></div>
             </div>
         </div>
+
         <div id="admin-depositos-pendentes" style="max-height:120px;overflow-y:auto;margin-bottom:8px;">
             <p style="color:#888;font-size:10px;">Nenhum depósito pendente</p>
         </div>
+
+        <div id="admin-saques-pendentes" style="max-height:120px;overflow-y:auto;margin-bottom:8px;">
+            <p style="color:#888;font-size:10px;">Nenhum saque pendente</p>
+        </div>
+
         <div class="plataforma-bloco">
             <div class="plataforma-titulo">🟡 PLATAFORMA 1</div>
-            <label>🔗 Link de Afiliado</label>
+            <label>🔗 Link</label>
             <input type="text" id="adm-plataforma1" placeholder="https://...">
-            <label style="margin-top:4px;">🎁 Bônus</label>
+            <label>🎁 Bônus</label>
             <input type="text" id="adm-bonus-p1" value="500 MT">
-            <label style="margin-top:4px;">📱 M-Pesa</label>
+            <label>📱 M-Pesa</label>
             <div style="display:flex;gap:4px;">
                 <input type="text" id="adm-mpesa-p1" placeholder="84 123 4567" style="flex:1;">
                 <select id="adm-status-mpesa-p1" style="width:90px;font-size:9px;">
@@ -1099,7 +1444,7 @@
                     <option value="embreve">Em Breve</option>
                 </select>
             </div>
-            <label style="margin-top:4px;">📲 E-Mola</label>
+            <label>📲 E-Mola</label>
             <div style="display:flex;gap:4px;">
                 <input type="text" id="adm-emola-p1" placeholder="86 765 4321" style="flex:1;">
                 <select id="adm-status-emola-p1" style="width:90px;font-size:9px;">
@@ -1108,13 +1453,14 @@
                 </select>
             </div>
         </div>
+
         <div class="plataforma-bloco plataforma-2-admin">
             <div class="plataforma-titulo">🔴 PLATAFORMA 2</div>
-            <label>🔗 Link de Afiliado</label>
+            <label>🔗 Link</label>
             <input type="text" id="adm-plataforma2" placeholder="https://...">
-            <label style="margin-top:4px;">🎁 Bônus</label>
+            <label>🎁 Bônus</label>
             <input type="text" id="adm-bonus-p2" value="750 MT">
-            <label style="margin-top:4px;">📱 M-Pesa</label>
+            <label>📱 M-Pesa</label>
             <div style="display:flex;gap:4px;">
                 <input type="text" id="adm-mpesa-p2" placeholder="84 987 6543" style="flex:1;">
                 <select id="adm-status-mpesa-p2" style="width:90px;font-size:9px;">
@@ -1122,7 +1468,7 @@
                     <option value="embreve">Em Breve</option>
                 </select>
             </div>
-            <label style="margin-top:4px;">📲 E-Mola</label>
+            <label>📲 E-Mola</label>
             <div style="display:flex;gap:4px;">
                 <input type="text" id="adm-emola-p2" placeholder="86 987 6543" style="flex:1;">
                 <select id="adm-status-emola-p2" style="width:90px;font-size:9px;">
@@ -1131,33 +1477,36 @@
                 </select>
             </div>
         </div>
-        <label>🎥 Link Mentoria YouTube</label>
+
+        <label>🎥 Link Mentoria</label>
         <input type="text" id="adm-mentoria-yt" placeholder="https://youtube.com/@seucanal">
-        <label>🏦 Margem da Casa (%)</label>
+        <label>🏦 Margem (%)</label>
         <input type="number" id="adm-margem" value="5" min="0" max="30" step="0.5">
-        <label>💵 Saldo Jogo (MZN)</label>
+        <label>💵 Saldo Admin (MZN)</label>
         <input type="number" id="adm-saldo" placeholder="Ex: 5000">
         <label>☁️ Saldo Nuvem (MZN)</label>
         <input type="number" id="adm-cloud" placeholder="Ex: 10000">
         <label>🔓 Meta Convites</label>
-        <input type="number" id="adm-meta-convites" value="30" min="1" max="500">
+        <input type="number" id="adm-meta-convites" value="30">
         <label>📝 Mensagem Caverna</label>
         <input type="text" id="adm-msg-caverna" value="CONVIDE 30 PESSOAS PARA LIBERAR O MODO CAVERNA ULTRA">
+        <label>💳 Saque Mínimo (MZN)</label>
+        <input type="number" id="adm-saque-minimo" value="15" min="1">
+
         <button onclick="resetarEstatisticas()" style="width:100%;padding:6px;background:#e71d36;border:none;color:#fff;border-radius:6px;font-size:10px;font-weight:bold;cursor:pointer;margin-bottom:6px;">
             🔄 RESETAR ESTATÍSTICAS
         </button>
         <button class="btn-salvar-admin" onclick="salvarConfigAdmin()">💾 GRAVAR CONFIGURAÇÕES</button>
     </div>
 
+    <!-- HISTÓRICO -->
     <div class="historico-wrapper">
         <div class="historico" id="historico-velas"></div>
         <button class="btn-expandir" onclick="toggleHistorico()">▼</button>
     </div>
     <div class="historico-expandido" id="historico-completo"></div>
 
-    <div class="banner-aviso-id">
-        ⚠️ CRIE A CONTA E FAÇA UM DEPÓSITO PARA LIBERAR O BOT PROFISSIONAL
-    </div>
+    <div class="banner-aviso-id">⚠️ CRIE A CONTA E FAÇA UM DEPÓSITO PARA LIBERAR O BOT PROFISSIONAL</div>
 
     <div class="sinal-ia-top">
         <div class="sinal-ia-info">
@@ -1175,6 +1524,7 @@
         <div class="game-status" id="game-status">ESPERANDO PRÓXIMA RODADA</div>
     </div>
 
+    <!-- BET 1 -->
     <div class="bet-container">
         <div class="bet-tabs">
             <button class="tab-btn active" id="t1-manual" onclick="mudarModoAposta(1,'manual')">Aposta</button>
@@ -1205,6 +1555,7 @@
         </div>
     </div>
 
+    <!-- BET 2 -->
     <div class="bet-container">
         <div class="bet-tabs">
             <button class="tab-btn active" id="t2-manual" onclick="mudarModoAposta(2,'manual')">Aposta</button>
@@ -1235,6 +1586,7 @@
         </div>
     </div>
 
+    <!-- PLATAFORMAS -->
     <div class="cards-container">
         <div class="plataforma-row">
             <a href="#" class="card-box plataforma-1" id="card-p1-criar" target="_blank" rel="noopener">
@@ -1262,6 +1614,7 @@
         </div>
     </div>
 
+    <!-- CAVERNA -->
     <div class="caverna-block" id="caverna-block">
         <div class="caverna-lock">🔒</div>
         <div class="caverna-msg" id="caverna-msg">CONVIDE 30 PESSOAS PARA LIBERAR O MODO CAVERNA ULTRA</div>
@@ -1274,13 +1627,71 @@
     </div>
 </div>
 
-<!-- Modal de Depósito -->
+<!-- ===== MODAL SAQUE ===== -->
+<div class="saque-overlay" id="saque-overlay">
+    <div class="saque-modal">
+        <div class="saque-header">
+            <button class="btn-fechar-modal" onclick="fecharModalSaque()">✕</button>
+            <div class="saque-title">💳 SOLICITAR SAQUE</div>
+            <div class="saque-subtitle">Retire seus ganhos</div>
+        </div>
+        <div class="saque-body">
+            <div class="saque-info-box">
+                <div class="saldo-disponivel">Saldo Disponível</div>
+                <div class="valor-disponivel" id="saque-saldo-disponivel">0.00 MZN</div>
+                <div class="minimo-saque">Valor mínimo: <strong id="saque-minimo-label">15.00 MZN</strong></div>
+            </div>
+
+            <div class="saque-method" id="saque-method">
+                <div class="saque-method-option selected" id="saque-method-mpesa" onclick="selecionarMetodoSaque('mpesa')">
+                    <div class="method-icon">📱</div>
+                    <div class="method-name">M-PESA</div>
+                </div>
+                <div class="saque-method-option" id="saque-method-emola" onclick="selecionarMetodoSaque('emola')">
+                    <div class="method-icon">📲</div>
+                    <div class="method-name">E-MOLA</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">👤 Nome Completo</label>
+                <input type="text" class="form-input" id="saque-nome" placeholder="Ex: João da Silva">
+            </div>
+            <div class="form-group">
+                <label class="form-label">📱 Número</label>
+                <div class="input-with-icon">
+                    <span class="input-icon">📱</span>
+                    <input type="tel" class="form-input" id="saque-numero" placeholder="Ex: 84 123 4567">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">💵 Valor (MZN)</label>
+                <div class="input-with-icon">
+                    <span class="input-icon">💰</span>
+                    <input type="number" class="form-input" id="saque-valor" placeholder="Ex: 100" min="15" step="1">
+                </div>
+            </div>
+
+            <button class="btn-enviar-saque" id="btn-solicitar-saque" onclick="solicitarSaque()">📤 SOLICITAR SAQUE</button>
+
+            <div class="saque-status" id="saque-status">
+                <div class="status-icon">⏳</div>
+                <div class="status-text">Saque Solicitado!</div>
+                <div class="status-sub">Aguardando aprovação...</div>
+                <div style="margin-top:6px;"><span class="pending-badge">⏳ PENDENTE</span></div>
+                <button style="width:100%;padding:8px;background:transparent;border:1px solid #444;color:#ccc;border-radius:8px;margin-top:8px;cursor:pointer;font-size:11px;" onclick="fecharModalSaque()">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== MODAL DEPÓSITO ===== -->
 <div class="deposit-overlay" id="deposit-overlay">
     <div class="deposit-modal">
         <div class="deposit-header">
             <button class="btn-fechar-modal" onclick="fecharModalDeposito()">✕</button>
             <div class="deposit-title">💰 FAZER DEPÓSITO</div>
-            <div class="deposit-subtitle">Escolha sua carteira móvel</div>
+            <div class="deposit-subtitle">Escolha sua carteira</div>
         </div>
         <div class="deposit-body">
             <div class="wallet-options" id="wallet-options">
@@ -1288,18 +1699,14 @@
                     <div class="wallet-icon">📱</div>
                     <div class="wallet-name">M-PESA</div>
                     <div style="font-size:8px;color:#888;">Vodacom</div>
-                    <div class="wallet-number" id="disp-mpesa-num">
-                        Enviar para:<br><strong>84 123 4567</strong>
-                    </div>
+                    <div class="wallet-number" id="disp-mpesa-num">Enviar para:<br><strong>84 123 4567</strong></div>
                     <div id="disp-mpesa-status"></div>
                 </div>
                 <div class="wallet-option emola" id="opt-emola" onclick="selecionarCarteira('emola')">
                     <div class="wallet-icon">📲</div>
                     <div class="wallet-name">E-MOLA</div>
                     <div style="font-size:8px;color:#888;">Movitel</div>
-                    <div class="wallet-number" id="disp-emola-num">
-                        Enviar para:<br><strong>86 765 4321</strong>
-                    </div>
+                    <div class="wallet-number" id="disp-emola-num">Enviar para:<br><strong>86 765 4321</strong></div>
                     <div id="disp-emola-status"></div>
                 </div>
             </div>
@@ -1310,24 +1717,24 @@
                     <div class="note">⚠️ Guarde o comprovativo!</div>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">👤 Seu Nome Completo</label>
+                    <label class="form-label">👤 Nome</label>
                     <input type="text" class="form-input" id="mpesa-nome" placeholder="Ex: João da Silva">
                 </div>
                 <div class="form-group">
-                    <label class="form-label">📱 Seu Número M-Pesa</label>
+                    <label class="form-label">📱 Número</label>
                     <div class="input-with-icon">
                         <span class="input-icon">📱</span>
                         <input type="tel" class="form-input" id="mpesa-numero" placeholder="Ex: 84 123 4567">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">💵 Valor Transferido (MZN)</label>
+                    <label class="form-label">💵 Valor (MZN)</label>
                     <div class="input-with-icon">
                         <span class="input-icon">💰</span>
                         <input type="number" class="form-input" id="mpesa-valor" placeholder="Ex: 500" min="50" max="50000">
                     </div>
                 </div>
-                <button class="btn-enviar-deposito" onclick="enviarDeposito('mpesa')">📤 ENVIAR COMPROVATIVO</button>
+                <button class="btn-enviar-deposito" onclick="enviarDeposito('mpesa')">📤 ENVIAR</button>
             </div>
             <div class="deposit-form" id="form-emola">
                 <div class="transfer-info">
@@ -1336,70 +1743,365 @@
                     <div class="note">⚠️ Guarde o comprovativo!</div>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">👤 Seu Nome Completo</label>
+                    <label class="form-label">👤 Nome</label>
                     <input type="text" class="form-input" id="emola-nome" placeholder="Ex: Maria Santos">
                 </div>
                 <div class="form-group">
-                    <label class="form-label">📱 Seu Número E-Mola</label>
+                    <label class="form-label">📱 Número</label>
                     <div class="input-with-icon">
                         <span class="input-icon">📲</span>
                         <input type="tel" class="form-input" id="emola-numero" placeholder="Ex: 86 765 4321">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">💵 Valor Transferido (MZN)</label>
+                    <label class="form-label">💵 Valor (MZN)</label>
                     <div class="input-with-icon">
                         <span class="input-icon">💰</span>
                         <input type="number" class="form-input" id="emola-valor" placeholder="Ex: 500" min="50" max="50000">
                     </div>
                 </div>
-                <button class="btn-enviar-deposito" onclick="enviarDeposito('emola')">📤 ENVIAR COMPROVATIVO</button>
+                <button class="btn-enviar-deposito" onclick="enviarDeposito('emola')">📤 ENVIAR</button>
             </div>
             <div class="deposito-status" id="deposito-status" style="display:none;">
                 <div class="status-icon">⏳</div>
-                <div class="status-text">Depósito Enviado com Sucesso!</div>
-                <div class="status-sub">Aguardando aprovação do administrador...</div>
-                <div style="margin-top:6px;">
-                    <span class="pending-badge">⏳ PENDENTE</span>
-                </div>
-                <button style="width:100%;padding:8px;background:transparent;border:1px solid #444;color:#ccc;border-radius:8px;margin-top:8px;cursor:pointer;font-size:11px;" onclick="fecharModalDeposito()">
-                    Fechar
-                </button>
+                <div class="status-text">Depósito Enviado!</div>
+                <div class="status-sub">Aguardando aprovação...</div>
+                <div style="margin-top:6px;"><span class="pending-badge">⏳ PENDENTE</span></div>
+                <button style="width:100%;padding:8px;background:transparent;border:1px solid #444;color:#ccc;border-radius:8px;margin-top:8px;cursor:pointer;font-size:11px;" onclick="fecharModalDeposito()">Fechar</button>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-// ============ SISTEMA COMPLETO SEM BLOQUEIOS ============
-console.log('🚀 Bot Aviator iniciando...');
+// ============================================
+// ===== CONFIGURAÇÃO DO FIREBASE =====
+// ============================================
+const firebaseConfig = {
+    apiKey: "AIzaSyCB2CdHW8cKQeYk5x7wHa6sOiWIWHGCoqo",
+    authDomain: "aviator-4-1687a.firebaseapp.com",
+    projectId: "aviator-4-1687a",
+    storageBucket: "aviator-4-1687a.firebasestorage.app",
+    messagingSenderId: "72664155943",
+    appId: "1:72664155943:web:3cfd0517fd41eae8978b02",
+    measurementId: "G-0K1E1GT6VY"
+};
+
+// Inicializar Firebase
+try {
+    firebase.initializeApp(firebaseConfig);
+    console.log('✅ Firebase inicializado com sucesso!');
+} catch (e) {
+    console.error('❌ Erro ao inicializar Firebase:', e);
+    alert('⚠️ Erro de configuração do Firebase. Verifique as credenciais.');
+}
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+const analytics = firebase.analytics();
+
+// ============================================
+// ===== CONFIGURAÇÃO: AUTENTICAÇÃO ANÔNIMA =====
+// ============================================
+// 🔥 IMPORTANTE: Ative a autenticação anônima no Firebase Console:
+// 1. Vá para Authentication > Sign-in methods
+// 2. Ative "Anonymous" 
+// 3. Salve as alterações
+
+// ============================================
+// ===== SISTEMA COMPLETO =====
+// ============================================
+console.log('🚀 Bot Aviator com Firebase (Auth Anônima) iniciando...');
 
 // Variáveis globais
 var usuarioNumero = localStorage.getItem('usuarioNumero') || '';
 var usuarioId = localStorage.getItem('usuarioId') || '';
+var usuarioDocId = null;
+var saldoListenerUnsubscribe = null;
+var saqueMinimo = parseFloat(localStorage.getItem('saqueMinimo') || '15');
 
-// Funções de utilidade
-function gerarIdUnico() {
-    return 'usr_' + Date.now().toString(36) + '_' + Math.random().toString(36).substr(2, 6);
+// ===== CONFIGURAÇÕES FLUTUANTE =====
+var floatingConfig = {
+    whatsapp: localStorage.getItem('floating_whatsapp') || 'https://chat.whatsapp.com/ABCDEFG',
+    services: localStorage.getItem('floating_services') || 'https://seusite.com/servicos',
+    phone: localStorage.getItem('floating_phone') || '+258 84 123 4567',
+    servicesDesc: localStorage.getItem('floating_services_desc') || 'Crio sites e plataformas personalizadas',
+    extra: localStorage.getItem('floating_extra') || 'https://parceiro.com/renda',
+    extraDesc: localStorage.getItem('floating_extra_desc') || 'Ganhe dinheiro extra online'
+};
+
+// ===== ELEMENTOS =====
+const floatingMainBtn = document.getElementById('floatingMainBtn');
+const floatingOptions = document.getElementById('floatingOptions');
+const floatingWhatsapp = document.getElementById('floatingWhatsapp');
+const floatingServices = document.getElementById('floatingServices');
+const floatingExtra = document.getElementById('floatingExtra');
+const servicesSubLabel = document.getElementById('servicesSubLabel');
+const servicesPhoneDisplay = document.getElementById('servicesPhoneDisplay');
+const extraSubLabel = document.getElementById('extraSubLabel');
+
+// ===== FUNÇÕES FIREBASE =====
+
+// Autenticar anonimamente (NÃO USA SENHA/NÚMERO)
+function autenticarAnonimo(callback) {
+    document.getElementById('login-loading').style.display = 'block';
+    document.getElementById('btn-login').disabled = true;
+    
+    // Verifica se já está autenticado
+    if (auth.currentUser && !auth.currentUser.isAnonymous) {
+        // Se já está logado com email, faz logout primeiro
+        auth.signOut().then(function() {
+            autenticarAnonimo(callback);
+        });
+        return;
+    }
+    
+    if (auth.currentUser && auth.currentUser.isAnonymous) {
+        console.log('✅ Já autenticado anonimamente:', auth.currentUser.uid);
+        document.getElementById('login-loading').style.display = 'none';
+        document.getElementById('btn-login').disabled = false;
+        callback(null, auth.currentUser);
+        return;
+    }
+    
+    auth.signInAnonymously()
+        .then(function(userCredential) {
+            console.log('✅ Autenticado anonimamente com sucesso:', userCredential.user.uid);
+            document.getElementById('login-loading').style.display = 'none';
+            document.getElementById('btn-login').disabled = false;
+            callback(null, userCredential.user);
+        })
+        .catch(function(error) {
+            console.error('❌ Erro na autenticação anônima:', error);
+            document.getElementById('login-loading').style.display = 'none';
+            document.getElementById('btn-login').disabled = false;
+            
+            let msg = 'Erro ao conectar ao servidor. ';
+            if (error.code === 'auth/operation-not-allowed') {
+                msg += 'A autenticação anônima não está ativada no Firebase Console.';
+            } else {
+                msg += 'Verifique sua internet.';
+            }
+            alert(msg);
+            callback(error, null);
+        });
 }
 
-function gerarLinkUnico() {
-    return window.location.href.split('?')[0] + '?ref=' + usuarioId;
+// Criar/Obter documento do usuário no Firestore
+function getUsuarioDoc(numero, callback) {
+    if (!numero) {
+        callback('Número não fornecido', null);
+        return;
+    }
+    
+    db.collection('usuarios')
+        .where('numero', '==', numero)
+        .get()
+        .then(function(querySnapshot) {
+            if (!querySnapshot.empty) {
+                var doc = querySnapshot.docs[0];
+                usuarioDocId = doc.id;
+                console.log('📄 Usuário encontrado:', usuarioDocId);
+                callback(null, doc);
+            } else {
+                var novoUsuario = {
+                    numero: numero,
+                    saldo: 0,
+                    saldoNuvem: 0,
+                    convites: 0,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                
+                db.collection('usuarios').add(novoUsuario)
+                    .then(function(docRef) {
+                        usuarioDocId = docRef.id;
+                        console.log('✅ Novo usuário criado:', usuarioDocId);
+                        callback(null, { id: docRef.id, data: function() { return novoUsuario; } });
+                    })
+                    .catch(function(error) {
+                        console.error('❌ Erro ao criar usuário:', error);
+                        callback(error, null);
+                    });
+            }
+        })
+        .catch(function(error) {
+            console.error('❌ Erro na consulta:', error);
+            callback(error, null);
+        });
 }
 
-// Login
+// Escutar alterações do saldo em tempo real
+function escutarSaldo(numero, onUpdate) {
+    if (saldoListenerUnsubscribe) {
+        saldoListenerUnsubscribe();
+        saldoListenerUnsubscribe = null;
+    }
+    
+    saldoListenerUnsubscribe = db.collection('usuarios')
+        .where('numero', '==', numero)
+        .onSnapshot(function(snapshot) {
+            if (!snapshot.empty) {
+                var doc = snapshot.docs[0];
+                var data = doc.data();
+                usuarioDocId = doc.id;
+                console.log('🔄 Saldo atualizado:', data.saldo);
+                onUpdate(data);
+                document.getElementById('sync-status').textContent = '● sincronizado';
+                document.getElementById('sync-status').style.color = '#00e676';
+            }
+        }, function(error) {
+            console.error('❌ Erro no listener:', error);
+            document.getElementById('sync-status').textContent = '⚠️ offline';
+            document.getElementById('sync-status').style.color = '#ff6b6b';
+        });
+}
+
+// Atualizar saldo no Firestore
+function atualizarSaldoFirebase(novoSaldo, callback) {
+    if (!usuarioDocId) {
+        console.error('❌ usuarioDocId não definido');
+        if (callback) callback('Usuário não encontrado');
+        return;
+    }
+    
+    db.collection('usuarios').doc(usuarioDocId).update({
+        saldo: novoSaldo,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    .then(function() {
+        console.log('✅ Saldo atualizado no Firebase:', novoSaldo);
+        if (callback) callback(null);
+    })
+    .catch(function(error) {
+        console.error('❌ Erro ao atualizar saldo:', error);
+        if (callback) callback(error);
+    });
+}
+
+// Registrar transação
+function registrarTransacao(tipo, valor, descricao, callback) {
+    if (!usuarioDocId) {
+        if (callback) callback('Usuário não encontrado');
+        return;
+    }
+    
+    db.collection('usuarios').doc(usuarioDocId).collection('transacoes').add({
+        tipo: tipo,
+        valor: valor,
+        descricao: descricao || '',
+        data: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    .then(function() {
+        console.log('✅ Transação registrada:', tipo, valor);
+        if (callback) callback(null);
+    })
+    .catch(function(error) {
+        console.error('❌ Erro ao registrar transação:', error);
+        if (callback) callback(error);
+    });
+}
+
+// ===== FUNÇÕES DO BOTÃO FLUTUANTE =====
+function atualizarFloatingLinks() {
+    floatingWhatsapp.href = floatingConfig.whatsapp;
+    floatingServices.href = floatingConfig.services;
+    floatingExtra.href = floatingConfig.extra;
+    servicesSubLabel.textContent = floatingConfig.servicesDesc;
+    servicesPhoneDisplay.textContent = '📞 ' + floatingConfig.phone;
+    extraSubLabel.textContent = floatingConfig.extraDesc;
+    floatingServices.dataset.phone = floatingConfig.phone;
+}
+
+floatingServices.addEventListener('click', function(e) {
+    const phone = this.dataset.phone || floatingConfig.phone;
+    if (phone && phone.trim()) {
+        e.preventDefault();
+        const confirmar = confirm(
+            `📞 Deseja entrar em contato?\n\nNúmero: ${phone}\n\n` +
+            `"OK" para WhatsApp ou "Cancelar" para site.`
+        );
+        if (confirmar) {
+            const numeroLimpo = phone.replace(/\s/g, '').replace(/[^0-9+]/g, '');
+            window.open(`https://wa.me/${numeroLimpo.replace('+', '')}`, '_blank');
+        } else {
+            window.open(this.href, '_blank');
+        }
+    }
+});
+
+// ===== MENU FLUTUANTE =====
+let menuAberto = false;
+
+function toggleFloatingMenu(e) {
+    e.stopPropagation();
+    menuAberto = !menuAberto;
+    floatingOptions.classList.toggle('open', menuAberto);
+    floatingMainBtn.querySelector('span:last-child').textContent = menuAberto ? '✕' : '➕';
+}
+
+floatingMainBtn.addEventListener('click', toggleFloatingMenu);
+
+document.addEventListener('click', function(event) {
+    if (menuAberto) {
+        const wrapper = document.querySelector('.floating-menu-wrapper');
+        if (!wrapper.contains(event.target)) {
+            menuAberto = false;
+            floatingOptions.classList.remove('open');
+            floatingMainBtn.querySelector('span:last-child').textContent = '➕';
+        }
+    }
+});
+
+// ===== LOGIN (com autenticação anônima) =====
 function fazerLogin() {
     var numero = document.getElementById('login-numero').value.trim();
     if (!numero || numero.replace(/\D/g, '').length < 9) {
-        alert('Digite um número de telefone válido (mínimo 9 dígitos).');
+        alert('Digite um número válido (mínimo 9 dígitos).');
         return;
     }
+    
     usuarioNumero = numero;
-    if (!usuarioId) usuarioId = gerarIdUnico();
-    localStorage.setItem('usuarioNumero', usuarioNumero);
-    localStorage.setItem('usuarioId', usuarioId);
-    console.log('✅ Login feito:', usuarioNumero, usuarioId);
-    mostrarApp();
+    document.getElementById('login-loading').style.display = 'block';
+    document.getElementById('btn-login').disabled = true;
+    
+    // 1. Autenticar anonimamente
+    autenticarAnonimo(function(err, user) {
+        if (err) {
+            document.getElementById('login-loading').style.display = 'none';
+            document.getElementById('btn-login').disabled = false;
+            return;
+        }
+        
+        // 2. Buscar ou criar usuário no Firestore
+        getUsuarioDoc(usuarioNumero, function(err, doc) {
+            document.getElementById('login-loading').style.display = 'none';
+            document.getElementById('btn-login').disabled = false;
+            
+            if (err) {
+                alert('Erro ao acessar seus dados. Tente novamente.');
+                return;
+            }
+            
+            // 3. Salvar no localStorage
+            localStorage.setItem('usuarioNumero', usuarioNumero);
+            localStorage.setItem('usuarioId', user.uid);
+            
+            // 4. Escutar saldo em tempo real
+            escutarSaldo(usuarioNumero, function(data) {
+                window._saldoMZN = data.saldo || 0;
+                window._saldoNuvem = data.saldoNuvem || 0;
+                window._convitesFeitos = data.convites || 0;
+                atualizarPainelSaldo();
+                atualizarSaldoNuvem();
+                atualizarCavernaBlock();
+            });
+            
+            // 5. Mostrar app
+            mostrarApp();
+            console.log('✅ Login completo com autenticação anônima!');
+        });
+    });
 }
 
 function mostrarApp() {
@@ -1407,10 +2109,60 @@ function mostrarApp() {
     document.getElementById('app-container').classList.remove('app-hidden');
     document.getElementById('user-numero-badge').textContent = '📱 ' + usuarioNumero.slice(-4);
     document.getElementById('link-unico-text').textContent = gerarLinkUnico();
+    
     if (!window._appIniciado) {
         window._appIniciado = true;
         inicializarApp();
     }
+}
+
+// Auto-login (se já tiver sessão)
+if (usuarioNumero && localStorage.getItem('usuarioId')) {
+    document.getElementById('login-numero').value = usuarioNumero;
+    // Verifica se já está autenticado anonimamente
+    if (auth.currentUser && auth.currentUser.isAnonymous) {
+        getUsuarioDoc(usuarioNumero, function(err, doc) {
+            if (!err) {
+                escutarSaldo(usuarioNumero, function(data) {
+                    window._saldoMZN = data.saldo || 0;
+                    window._saldoNuvem = data.saldoNuvem || 0;
+                    window._convitesFeitos = data.convites || 0;
+                    atualizarPainelSaldo();
+                    atualizarSaldoNuvem();
+                    atualizarCavernaBlock();
+                });
+                mostrarApp();
+            }
+        });
+    } else {
+        // Se não estiver autenticado, tenta autenticar anonimamente
+        autenticarAnonimo(function(err, user) {
+            if (!err) {
+                getUsuarioDoc(usuarioNumero, function(err, doc) {
+                    if (!err) {
+                        escutarSaldo(usuarioNumero, function(data) {
+                            window._saldoMZN = data.saldo || 0;
+                            window._saldoNuvem = data.saldoNuvem || 0;
+                            window._convitesFeitos = data.convites || 0;
+                            atualizarPainelSaldo();
+                            atualizarSaldoNuvem();
+                            atualizarCavernaBlock();
+                        });
+                        mostrarApp();
+                    }
+                });
+            }
+        });
+    }
+}
+
+// ===== FUNÇÕES DE UTILIDADE =====
+function gerarIdUnico() {
+    return 'usr_' + Date.now().toString(36) + '_' + Math.random().toString(36).substr(2, 6);
+}
+
+function gerarLinkUnico() {
+    return window.location.href.split('?')[0] + '?ref=' + (usuarioId || '');
 }
 
 function copiarLink() {
@@ -1426,156 +2178,231 @@ function copiarLink() {
     }
 }
 
-// Auto-login se já tiver sessão
-if (usuarioNumero && usuarioId) {
-    document.getElementById('login-numero').value = usuarioNumero;
-    setTimeout(mostrarApp, 100);
+// ===== FUNÇÕES DE SAQUE =====
+var metodoSaqueSelecionado = 'mpesa';
+var saquesPendentes = JSON.parse(localStorage.getItem('saquesPendentes') || '[]');
+
+function abrirModalSaque() {
+    document.getElementById('saque-overlay').style.display = 'flex';
+    document.getElementById('saque-status').style.display = 'none';
+    document.getElementById('saque-saldo-disponivel').textContent = (window._saldoMZN || 0).toFixed(2) + ' MZN';
+    document.getElementById('saque-minimo-label').textContent = saqueMinimo.toFixed(2) + ' MZN';
+    document.getElementById('saque-valor').min = saqueMinimo;
+    document.getElementById('saque-valor').placeholder = 'Min: ' + saqueMinimo.toFixed(0);
+    document.getElementById('saque-nome').value = '';
+    document.getElementById('saque-numero').value = '';
+    document.getElementById('saque-valor').value = '';
+    document.getElementById('btn-solicitar-saque').disabled = false;
+    document.getElementById('btn-solicitar-saque').textContent = '📤 SOLICITAR SAQUE';
+    selecionarMetodoSaque('mpesa');
 }
 
-// Referência
-var urlParams = new URLSearchParams(window.location.search);
-var refParam = urlParams.get('ref');
-if (refParam) localStorage.setItem('referencia', refParam);
-
-// Inicialização do App
-function inicializarApp() {
-    console.log('🎮 Inicializando app...');
-    window._saldoMZN = parseFloat(localStorage.getItem('saldoMZN_' + usuarioId) || '0');
-    window._saldoNuvem = parseFloat(localStorage.getItem('saldoNuvem_' + usuarioId) || '0');
-    window._depositosPendentes = JSON.parse(localStorage.getItem('depositosPendentes') || '[]');
-    window._margemCasa = parseFloat(localStorage.getItem('margemCasa') || '5');
-    window._sistemaAtivo = localStorage.getItem('sistemaAtivo') || 'casa';
-    window._bonusP1 = localStorage.getItem('bonusP1') || '500 MT';
-    window._bonusP2 = localStorage.getItem('bonusP2') || '750 MT';
-    window._metaConvites = parseInt(localStorage.getItem('metaConvites') || '30');
-    window._msgCaverna = localStorage.getItem('msgCaverna') || 'CONVIDE 30 PESSOAS PARA LIBERAR O MODO CAVERNA ULTRA';
-    window._convitesFeitos = parseInt(localStorage.getItem('convitesFeitos_' + usuarioId) || '0');
-    window._linkP1 = localStorage.getItem('linkPlataforma1') || '#';
-    window._linkP2 = localStorage.getItem('linkPlataforma2') || '#';
-    window._linkMentoriaYT = localStorage.getItem('linkMentoriaYT') || 'https://youtube.com/@seucanal?sub_confirmation=1';
-    window._numerosDeposito = JSON.parse(localStorage.getItem('numerosDeposito') || '{"mpesa":{"numero":"84 123 4567","status":"ativo"},"emola":{"numero":"86 765 4321","status":"ativo"}}');
-    window._stats = JSON.parse(localStorage.getItem('houseStats') || '{"totalApostado":0,"totalPago":0,"totalRodadas":0}');
-    window._cliquesAdmin = 0;
-    window._memoriaHistorico = [];
-    window._motorJogo = { multiplicador: 1.00, crashAlvo: 2.00, ativo: false, speed: 0.01 };
-    window._apostaModo1 = "manual";
-    window._apostaModo2 = "manual";
-    window._statusMecanica1 = "apostar";
-    window._statusMecanica2 = "apostar";
-    window._valorAposta1 = 0;
-    window._valorAposta2 = 0;
-    window._seedAleatoriaGlobal = Date.now();
-    window._carteiraSelecionada = null;
-
-    document.getElementById('btn-mentoria-yt').href = window._linkMentoriaYT;
-    inicializarHistorico();
-    renderizarHistoricoSuperior();
-    atualizarSaldoNuvem();
-    atualizarPainelSaldo();
-    vincularTodosLinks();
-    atualizarTextosBonus();
-    atualizarDisplayNumeros();
-    atualizarCavernaBlock();
-    atualizarLabelSistema();
-    setTimeout(processarLoopVoo, 1500);
-    console.log('✅ App iniciado!');
+function fecharModalSaque() {
+    document.getElementById('saque-overlay').style.display = 'none';
 }
 
-// Geradores de números
-function gerarNumeroAleatorio() {
-    window._seedAleatoriaGlobal = (window._seedAleatoriaGlobal * 16807 + 0) % 2147483647;
-    var s = window._seedAleatoriaGlobal / 2147483647;
-    return window._sistemaAtivo === 'casa' ? gerarCrashSistemaCasa(s) : gerarCrashSistemaRosa(s);
-}
-
-function gerarCrashSistemaCasa(seed) {
-    var m = window._margemCasa / 100;
-    var pb = 0.25 + (m * 1.5), pm = 0.30 - (m * 0.5), pa = 0.25 - (m * 0.5), pma = 0.15 - (m * 0.3);
-    var c;
-    if (seed < pb) c = 1.00 + (seed / pb) * 0.60;
-    else if (seed < pb + pm) c = 1.60 + ((seed - pb) / pm) * 1.90;
-    else if (seed < pb + pm + pa) c = 3.50 + ((seed - pb - pm) / pa) * 4.50;
-    else if (seed < pb + pm + pa + pma) c = 8.00 + ((seed - pb - pm - pa) / pma) * 17.00;
-    else c = 25.00 + ((seed - pb - pm - pa - pma) / (1 - pb - pm - pa - pma)) * 75.00;
-    return parseFloat(c.toFixed(2));
-}
-
-function gerarCrashSistemaRosa(seed) {
-    var pq = 0.10, pb = 0.15, pm = 0.20, pa = 0.25, pr = 0.20, ps = 0.10;
-    var c;
-    if (seed < pq) c = 1.00 + (seed / pq) * 0.50;
-    else if (seed < pq + pb) c = 1.50 + ((seed - pq) / pb) * 1.50;
-    else if (seed < pq + pb + pm) c = 3.00 + ((seed - pq - pb) / pm) * 5.00;
-    else if (seed < pq + pb + pm + pa) c = 8.00 + ((seed - pq - pb - pm) / pa) * 17.00;
-    else if (seed < pq + pb + pm + pa + pr) c = 25.00 + ((seed - pq - pb - pm - pa) / pr) * 55.00;
-    else c = 80.00 + ((seed - pq - pb - pm - pa - pr) / ps) * 420.00;
-    return parseFloat(c.toFixed(2));
-}
-
-// Sistema
-function selecionarSistema(tipo) {
-    window._sistemaAtivo = tipo;
-    localStorage.setItem('sistemaAtivo', tipo);
-    document.getElementById('sistema-casa-btn').classList.toggle('active', tipo === 'casa');
-    document.getElementById('sistema-rosa-btn').classList.toggle('active', tipo === 'rosa');
-    atualizarLabelSistema();
-    window._seedAleatoriaGlobal = Date.now();
-}
-
-function atualizarLabelSistema() {
-    var label = document.getElementById('sistema-ativo-label');
-    if (window._sistemaAtivo === 'casa') {
-        label.textContent = '🏦 Casa Ganha (Margem ' + window._margemCasa + '%)';
-        label.style.color = '#4caf50';
+function selecionarMetodoSaque(metodo) {
+    metodoSaqueSelecionado = metodo;
+    document.querySelectorAll('.saque-method-option').forEach(el => el.classList.remove('selected'));
+    document.getElementById('saque-method-' + metodo).classList.add('selected');
+    const icon = document.querySelector('#saque-numero').previousElementSibling;
+    if (metodo === 'mpesa') {
+        icon.textContent = '📱';
+        document.querySelector('#saque-numero').placeholder = 'Ex: 84 123 4567';
     } else {
-        label.textContent = '🌹 Rosas & Quedas (Muitas Rosas)';
-        label.style.color = '#d500f9';
+        icon.textContent = '📲';
+        document.querySelector('#saque-numero').placeholder = 'Ex: 86 765 4321';
     }
 }
 
-// Histórico
-function inicializarHistorico() {
-    var padrao = [];
-    for (var i = 0; i < 15; i++) padrao.push(gerarNumeroAleatorio());
-    window._memoriaHistorico = padrao;
+function solicitarSaque() {
+    var nome = document.getElementById('saque-nome').value.trim();
+    var numero = document.getElementById('saque-numero').value.trim();
+    var valorStr = document.getElementById('saque-valor').value;
+    var valor = parseFloat(valorStr);
+    var saldo = window._saldoMZN || 0;
+
+    if (!nome || nome.length < 3) { alert('Digite seu nome completo.'); return; }
+    if (!numero || numero.replace(/\D/g, '').length < 9) { alert('Número inválido.'); return; }
+    if (!valorStr || isNaN(valor) || valor < saqueMinimo) {
+        alert('Valor mínimo: ' + saqueMinimo.toFixed(2) + ' MZN');
+        return;
+    }
+    if (valor > saldo) {
+        alert('Saldo insuficiente. Você tem ' + saldo.toFixed(2) + ' MZN.');
+        return;
+    }
+
+    if (!confirm('💳 Confirmar saque de ' + valor.toFixed(2) + ' MZN?')) return;
+
+    if (usuarioDocId) {
+        db.collection('usuarios').doc(usuarioDocId).collection('saques').add({
+            metodo: metodoSaqueSelecionado.toUpperCase(),
+            nome: nome,
+            numero: numero,
+            valor: valor,
+            status: 'pendente',
+            data: firebase.firestore.FieldValue.serverTimestamp()
+        }).then(function() {
+            var saque = {
+                id: Date.now(),
+                metodo: metodoSaqueSelecionado.toUpperCase(),
+                nome: nome,
+                numero: numero,
+                valor: valor,
+                data: new Date().toLocaleString('pt-BR'),
+                status: 'pendente',
+                usuarioId: usuarioId,
+                usuarioNumero: usuarioNumero
+            };
+            saquesPendentes.push(saque);
+            localStorage.setItem('saquesPendentes', JSON.stringify(saquesPendentes));
+            
+            document.getElementById('saque-status').style.display = 'block';
+            document.querySelector('.saque-status .status-sub').textContent = 
+                metodoSaqueSelecionado.toUpperCase() + ' • ' + valor.toFixed(2) + ' MZN • Aguardando aprovação';
+            document.getElementById('btn-solicitar-saque').disabled = true;
+            document.getElementById('btn-solicitar-saque').textContent = '⏳ AGUARDANDO...';
+            
+            renderizarAdminSaques();
+        }).catch(function(error) {
+            console.error('Erro ao registrar saque:', error);
+            alert('Erro ao solicitar saque. Tente novamente.');
+        });
+    } else {
+        alert('Usuário não autenticado. Faça login novamente.');
+    }
 }
 
-function renderizarHistoricoSuperior() {
-    var c = document.getElementById('historico-velas');
-    c.innerHTML = "";
-    [].concat(window._memoriaHistorico).reverse().slice(0, 7).forEach(function(v) {
-        var b = document.createElement('span');
-        b.className = 'badge-vela ' + (v >= 10 ? 'v-high' : (v >= 2 ? 'v-mid' : 'v-low'));
-        b.innerText = v.toFixed(2) + "x";
-        c.appendChild(b);
+function renderizarAdminSaques() {
+    var container = document.getElementById('admin-saques-pendentes');
+    var pendentes = saquesPendentes.filter(function(s) { return s.status === 'pendente'; });
+    if (pendentes.length === 0) {
+        container.innerHTML = '<p style="color:#888;font-size:10px;">✅ Nenhum saque pendente</p>';
+        return;
+    }
+    container.innerHTML = pendentes.map(function(s) {
+        return '<div style="background:#111;border:1px solid #333;border-radius:8px;padding:8px;margin-bottom:6px;border-left:3px solid #00e676;">' +
+            '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">' +
+            '<span style="font-weight:900;font-size:11px;">💳 ' + s.metodo + '</span>' +
+            '<span style="color:#ff9800;font-size:9px;">⏳ Pendente</span></div>' +
+            '<div style="font-size:9px;color:#ccc;">' +
+            '<div>👤 ' + s.nome + '</div><div>📱 ' + s.numero + '</div>' +
+            '<div>💰 ' + s.valor.toFixed(2) + ' MZN</div><div>📅 ' + s.data + '</div></div>' +
+            '<div style="display:flex;gap:4px;margin-top:6px;">' +
+            '<button onclick="aprovarSaque(\'' + s.id + '\')" style="flex:1;padding:5px;background:#4caf50;border:none;color:#fff;border-radius:5px;font-size:9px;font-weight:bold;cursor:pointer;">✅ APROVAR</button>' +
+            '<button onclick="rejeitarSaque(\'' + s.id + '\")" style="flex:1;padding:5px;background:#e71d36;border:none;color:#fff;border-radius:5px;font-size:9px;font-weight:bold;cursor:pointer;">❌ REJEITAR</button></div></div>';
+    }).join('');
+}
+
+function aprovarSaque(id) {
+    var index = saquesPendentes.findIndex(function(s) { return s.id.toString() === id.toString(); });
+    if (index === -1) return;
+    
+    var valor = saquesPendentes[index].valor;
+    
+    if (usuarioDocId) {
+        var novoSaldo = (window._saldoMZN || 0) - valor;
+        atualizarSaldoFirebase(novoSaldo, function(err) {
+            if (!err) {
+                window._saldoMZN = novoSaldo;
+                atualizarPainelSaldo();
+                registrarTransacao('saque', -valor, 'Saque aprovado: ' + saquesPendentes[index].metodo);
+                
+                saquesPendentes[index].status = 'aprovado';
+                localStorage.setItem('saquesPendentes', JSON.stringify(saquesPendentes));
+                renderizarAdminSaques();
+                alert('✅ Saque aprovado!');
+            } else {
+                alert('Erro ao processar saque.');
+            }
+        });
+    }
+}
+
+function rejeitarSaque(id) {
+    if (!confirm('Rejeitar este saque?')) return;
+    var index = saquesPendentes.findIndex(function(s) { return s.id.toString() === id.toString(); });
+    if (index === -1) return;
+    saquesPendentes[index].status = 'rejeitado';
+    localStorage.setItem('saquesPendentes', JSON.stringify(saquesPendentes));
+    renderizarAdminSaques();
+    alert('❌ Saque rejeitado.');
+}
+
+// ===== FUNÇÕES DE DEPÓSITO =====
+function abrirModalDeposito() {
+    document.getElementById('deposit-overlay').style.display = 'flex';
+    document.getElementById('wallet-options').style.display = 'grid';
+    document.getElementById('form-mpesa').classList.remove('active');
+    document.getElementById('form-emola').classList.remove('active');
+    document.getElementById('deposito-status').style.display = 'none';
+    window._carteiraSelecionada = null;
+    document.querySelectorAll('.wallet-option').forEach(function(el) { el.classList.remove('selected'); });
+    ['mpesa-nome', 'mpesa-numero', 'mpesa-valor', 'emola-nome', 'emola-numero', 'emola-valor'].forEach(function(id) {
+        document.getElementById(id).value = '';
     });
+    atualizarDisplayNumeros();
 }
 
-function renderizarTabelaExpandida() {
-    var c = document.getElementById('historico-completo');
-    c.innerHTML = "";
-    [].concat(window._memoriaHistorico).reverse().slice(0, 16).forEach(function(v) {
-        var b = document.createElement('span');
-        b.className = 'badge-vela ' + (v >= 10 ? 'v-high' : (v >= 2 ? 'v-mid' : 'v-low'));
-        b.innerText = v.toFixed(2) + "x";
-        c.appendChild(b);
-    });
+function fecharModalDeposito() {
+    document.getElementById('deposit-overlay').style.display = 'none';
 }
 
-function toggleHistorico() {
-    var p = document.getElementById('historico-completo');
-    p.style.display = p.style.display === "grid" ? "none" : "grid";
-    if (p.style.display === "grid") renderizarTabelaExpandida();
+function selecionarCarteira(tipo) {
+    var nd = window._numerosDeposito;
+    if (tipo === 'mpesa' && nd.mpesa.status === 'embreve') { alert('🚧 M-Pesa EM BREVE!'); return; }
+    if (tipo === 'emola' && nd.emola.status === 'embreve') { alert('🚧 E-Mola EM BREVE!'); return; }
+    window._carteiraSelecionada = tipo;
+    document.querySelectorAll('.wallet-option').forEach(function(el) { el.classList.remove('selected'); });
+    document.querySelector('.wallet-option.' + tipo).classList.add('selected');
+    document.getElementById('form-mpesa').classList.remove('active');
+    document.getElementById('form-emola').classList.remove('active');
+    document.getElementById('deposito-status').style.display = 'none';
+    document.getElementById('form-' + tipo).classList.add('active');
 }
 
-function atualizarListasDeVelas() {
-    var mh = window._memoriaHistorico;
-    if (mh.length > 30) mh.shift();
-    renderizarHistoricoSuperior();
-    if (document.getElementById('historico-completo').style.display === "grid") renderizarTabelaExpandida();
+function enviarDeposito(tipo) {
+    var nd = window._numerosDeposito;
+    if (tipo === 'mpesa' && nd.mpesa.status === 'embreve') { alert('🚧 M-Pesa EM BREVE!'); return; }
+    if (tipo === 'emola' && nd.emola.status === 'embreve') { alert('🚧 E-Mola EM BREVE!'); return; }
+    
+    var prefixo = tipo;
+    var nome = document.getElementById(prefixo + '-nome').value.trim();
+    var numero = document.getElementById(prefixo + '-numero').value.trim();
+    var valorStr = document.getElementById(prefixo + '-valor').value;
+    var valor = parseFloat(valorStr);
+    
+    if (!nome || nome.length < 3) { alert('Digite seu nome completo.'); return; }
+    if (!numero || numero.replace(/\D/g, '').length < 9) { alert('Número inválido.'); return; }
+    if (!valorStr || isNaN(valor)) { alert('Digite o valor.'); return; }
+    if (valor < 50) { alert('Valor mínimo: 50 MZN'); return; }
+    if (valor > 50000) { alert('Valor máximo: 50.000 MZN'); return; }
+    
+    var deposito = {
+        id: Date.now(),
+        tipo: tipo.toUpperCase(),
+        nome: nome,
+        numero: numero,
+        valor: valor,
+        data: new Date().toLocaleString('pt-BR'),
+        status: 'pendente',
+        usuarioId: usuarioId,
+        usuarioNumero: usuarioNumero
+    };
+    
+    var dp = window._depositosPendentes;
+    dp.push(deposito);
+    localStorage.setItem('depositosPendentes', JSON.stringify(dp));
+    
+    document.getElementById('form-mpesa').classList.remove('active');
+    document.getElementById('form-emola').classList.remove('active');
+    document.getElementById('wallet-options').style.display = 'none';
+    document.getElementById('deposito-status').style.display = 'block';
+    document.querySelector('.deposito-status .status-sub').textContent = tipo.toUpperCase() + ' • ' + valor.toFixed(2) + ' MZN • Aguardando aprovação';
 }
 
-// Apostas
+// ===== APOSTAS =====
 function passoValor(id, dir) {
     var input = document.getElementById('input-val-' + id);
     var v = parseFloat(input.value) || 0;
@@ -1619,32 +2446,50 @@ function executarApostaBotao(id) {
     if (id === 1) {
         if (window._statusMecanica1 === "apostar" && !motor.ativo) {
             if (window._saldoMZN < iv) { alert("Saldo Insuficiente!"); return; }
-            window._saldoMZN -= iv;
-            window._valorAposta1 = iv;
-            var s = window._stats;
-            s.totalApostado += iv;
-            window._stats = s;
-            localStorage.setItem('houseStats', JSON.stringify(s));
-            atualizarPainelSaldo();
-            window._statusMecanica1 = "esperando";
-            btn.className = "btn-action-trigger btn-style-espera";
-            document.getElementById('lbl-title-1').innerText = "CANCELAR";
+            
+            var novoSaldo = window._saldoMZN - iv;
+            atualizarSaldoFirebase(novoSaldo, function(err) {
+                if (err) {
+                    alert('Erro ao processar aposta. Tente novamente.');
+                    return;
+                }
+                window._saldoMZN = novoSaldo;
+                window._valorAposta1 = iv;
+                var s = window._stats;
+                s.totalApostado += iv;
+                window._stats = s;
+                localStorage.setItem('houseStats', JSON.stringify(s));
+                atualizarPainelSaldo();
+                window._statusMecanica1 = "esperando";
+                btn.className = "btn-action-trigger btn-style-espera";
+                document.getElementById('lbl-title-1').innerText = "CANCELAR";
+                registrarTransacao('aposta', -iv, 'Aposta #1');
+            });
         } else if (window._statusMecanica1 === "em_jogo" && motor.ativo) {
             recolherPremioFicticio(1);
         }
     } else {
         if (window._statusMecanica2 === "apostar" && !motor.ativo) {
             if (window._saldoMZN < iv) { alert("Saldo Insuficiente!"); return; }
-            window._saldoMZN -= iv;
-            window._valorAposta2 = iv;
-            var s = window._stats;
-            s.totalApostado += iv;
-            window._stats = s;
-            localStorage.setItem('houseStats', JSON.stringify(s));
-            atualizarPainelSaldo();
-            window._statusMecanica2 = "esperando";
-            btn.className = "btn-action-trigger btn-style-espera";
-            document.getElementById('lbl-title-2').innerText = "CANCELAR";
+            
+            var novoSaldo = window._saldoMZN - iv;
+            atualizarSaldoFirebase(novoSaldo, function(err) {
+                if (err) {
+                    alert('Erro ao processar aposta. Tente novamente.');
+                    return;
+                }
+                window._saldoMZN = novoSaldo;
+                window._valorAposta2 = iv;
+                var s = window._stats;
+                s.totalApostado += iv;
+                window._stats = s;
+                localStorage.setItem('houseStats', JSON.stringify(s));
+                atualizarPainelSaldo();
+                window._statusMecanica2 = "esperando";
+                btn.className = "btn-action-trigger btn-style-espera";
+                document.getElementById('lbl-title-2').innerText = "CANCELAR";
+                registrarTransacao('aposta', -iv, 'Aposta #2');
+            });
         } else if (window._statusMecanica2 === "em_jogo" && motor.ativo) {
             recolherPremioFicticio(2);
         }
@@ -1654,13 +2499,22 @@ function executarApostaBotao(id) {
 function recolherPremioFicticio(id) {
     var vb = id === 1 ? window._valorAposta1 : window._valorAposta2;
     var fat = vb * window._motorJogo.multiplicador;
-    window._saldoMZN += fat;
-    var s = window._stats;
-    s.totalPago += fat;
-    window._stats = s;
-    localStorage.setItem('saldoMZN_' + usuarioId, window._saldoMZN.toString());
-    localStorage.setItem('houseStats', JSON.stringify(s));
-    atualizarPainelSaldo();
+    
+    var novoSaldo = window._saldoMZN + fat;
+    atualizarSaldoFirebase(novoSaldo, function(err) {
+        if (err) {
+            alert('Erro ao processar prêmio. Tente novamente.');
+            return;
+        }
+        window._saldoMZN = novoSaldo;
+        var s = window._stats;
+        s.totalPago += fat;
+        window._stats = s;
+        localStorage.setItem('houseStats', JSON.stringify(s));
+        atualizarPainelSaldo();
+        registrarTransacao('premio', fat, 'Prêmio - ' + window._motorJogo.multiplicador.toFixed(2) + 'x');
+    });
+    
     if (id === 1) window._statusMecanica1 = "ganhou";
     else window._statusMecanica2 = "ganhou";
     var btn = document.getElementById('btn-bet-' + id);
@@ -1670,15 +2524,168 @@ function recolherPremioFicticio(id) {
 }
 
 function atualizarPainelSaldo() {
-    document.getElementById('main-saldo').textContent = window._saldoMZN.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    localStorage.setItem('saldoMZN_' + usuarioId, window._saldoMZN.toString());
+    var saldo = window._saldoMZN || 0;
+    document.getElementById('main-saldo').textContent = saldo.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    var saqueSaldo = document.getElementById('saque-saldo-disponivel');
+    if (saqueSaldo && document.getElementById('saque-overlay').style.display === 'flex') {
+        saqueSaldo.textContent = saldo.toFixed(2) + ' MZN';
+    }
 }
 
 function atualizarSaldoNuvem() {
-    document.getElementById('cloud-balance').textContent = window._saldoNuvem.toFixed(2) + ' MZN';
+    document.getElementById('cloud-balance').textContent = (window._saldoNuvem || 0).toFixed(2) + ' MZN';
 }
 
-// Motor do Jogo
+// ===== INICIALIZAÇÃO DO APP =====
+function inicializarApp() {
+    console.log('🎮 Inicializando app...');
+    atualizarFloatingLinks();
+    
+    saquesPendentes = JSON.parse(localStorage.getItem('saquesPendentes') || '[]');
+    saqueMinimo = parseFloat(localStorage.getItem('saqueMinimo') || '15');
+    
+    if (window._saldoMZN === undefined) {
+        window._saldoMZN = parseFloat(localStorage.getItem('saldoMZN_' + usuarioId) || '0');
+    }
+    if (window._saldoNuvem === undefined) {
+        window._saldoNuvem = parseFloat(localStorage.getItem('saldoNuvem_' + usuarioId) || '0');
+    }
+    
+    window._depositosPendentes = JSON.parse(localStorage.getItem('depositosPendentes') || '[]');
+    window._margemCasa = parseFloat(localStorage.getItem('margemCasa') || '5');
+    window._sistemaAtivo = localStorage.getItem('sistemaAtivo') || 'casa';
+    window._bonusP1 = localStorage.getItem('bonusP1') || '500 MT';
+    window._bonusP2 = localStorage.getItem('bonusP2') || '750 MT';
+    window._metaConvites = parseInt(localStorage.getItem('metaConvites') || '30');
+    window._msgCaverna = localStorage.getItem('msgCaverna') || 'CONVIDE 30 PESSOAS PARA LIBERAR O MODO CAVERNA ULTRA';
+    if (window._convitesFeitos === undefined) {
+        window._convitesFeitos = parseInt(localStorage.getItem('convitesFeitos_' + usuarioId) || '0');
+    }
+    window._linkP1 = localStorage.getItem('linkPlataforma1') || '#';
+    window._linkP2 = localStorage.getItem('linkPlataforma2') || '#';
+    window._linkMentoriaYT = localStorage.getItem('linkMentoriaYT') || 'https://youtube.com/@seucanal?sub_confirmation=1';
+    window._numerosDeposito = JSON.parse(localStorage.getItem('numerosDeposito') || '{"mpesa":{"numero":"84 123 4567","status":"ativo"},"emola":{"numero":"86 765 4321","status":"ativo"}}');
+    window._stats = JSON.parse(localStorage.getItem('houseStats') || '{"totalApostado":0,"totalPago":0,"totalRodadas":0}');
+    window._cliquesAdmin = 0;
+    window._memoriaHistorico = [];
+    window._motorJogo = { multiplicador: 1.00, crashAlvo: 2.00, ativo: false, speed: 0.01 };
+    window._apostaModo1 = "manual";
+    window._apostaModo2 = "manual";
+    window._statusMecanica1 = "apostar";
+    window._statusMecanica2 = "apostar";
+    window._valorAposta1 = 0;
+    window._valorAposta2 = 0;
+    window._seedAleatoriaGlobal = Date.now();
+    window._carteiraSelecionada = null;
+
+    document.getElementById('btn-mentoria-yt').href = window._linkMentoriaYT;
+    inicializarHistorico();
+    renderizarHistoricoSuperior();
+    atualizarSaldoNuvem();
+    atualizarPainelSaldo();
+    vincularTodosLinks();
+    atualizarTextosBonus();
+    atualizarDisplayNumeros();
+    atualizarCavernaBlock();
+    atualizarLabelSistema();
+    setTimeout(processarLoopVoo, 1500);
+    console.log('✅ App iniciado!');
+}
+
+// ===== SISTEMA DE NÚMEROS =====
+function gerarNumeroAleatorio() {
+    window._seedAleatoriaGlobal = (window._seedAleatoriaGlobal * 16807 + 0) % 2147483647;
+    var s = window._seedAleatoriaGlobal / 2147483647;
+    return window._sistemaAtivo === 'casa' ? gerarCrashSistemaCasa(s) : gerarCrashSistemaRosa(s);
+}
+
+function gerarCrashSistemaCasa(seed) {
+    var m = window._margemCasa / 100;
+    var pb = 0.25 + (m * 1.5), pm = 0.30 - (m * 0.5), pa = 0.25 - (m * 0.5), pma = 0.15 - (m * 0.3);
+    var c;
+    if (seed < pb) c = 1.00 + (seed / pb) * 0.60;
+    else if (seed < pb + pm) c = 1.60 + ((seed - pb) / pm) * 1.90;
+    else if (seed < pb + pm + pa) c = 3.50 + ((seed - pb - pm) / pa) * 4.50;
+    else if (seed < pb + pm + pa + pma) c = 8.00 + ((seed - pb - pm - pa) / pma) * 17.00;
+    else c = 25.00 + ((seed - pb - pm - pa - pma) / (1 - pb - pm - pa - pma)) * 75.00;
+    return parseFloat(c.toFixed(2));
+}
+
+function gerarCrashSistemaRosa(seed) {
+    var pq = 0.10, pb = 0.15, pm = 0.20, pa = 0.25, pr = 0.20, ps = 0.10;
+    var c;
+    if (seed < pq) c = 1.00 + (seed / pq) * 0.50;
+    else if (seed < pq + pb) c = 1.50 + ((seed - pq) / pb) * 1.50;
+    else if (seed < pq + pb + pm) c = 3.00 + ((seed - pq - pb) / pm) * 5.00;
+    else if (seed < pq + pb + pm + pa) c = 8.00 + ((seed - pq - pb - pm) / pa) * 17.00;
+    else if (seed < pq + pb + pm + pa + pr) c = 25.00 + ((seed - pq - pb - pm - pa) / pr) * 55.00;
+    else c = 80.00 + ((seed - pq - pb - pm - pa - pr) / ps) * 420.00;
+    return parseFloat(c.toFixed(2));
+}
+
+function selecionarSistema(tipo) {
+    window._sistemaAtivo = tipo;
+    localStorage.setItem('sistemaAtivo', tipo);
+    document.getElementById('sistema-casa-btn').classList.toggle('active', tipo === 'casa');
+    document.getElementById('sistema-rosa-btn').classList.toggle('active', tipo === 'rosa');
+    atualizarLabelSistema();
+    window._seedAleatoriaGlobal = Date.now();
+}
+
+function atualizarLabelSistema() {
+    var label = document.getElementById('sistema-ativo-label');
+    if (window._sistemaAtivo === 'casa') {
+        label.textContent = '🏦 Casa Ganha (Margem ' + window._margemCasa + '%)';
+        label.style.color = '#4caf50';
+    } else {
+        label.textContent = '🌹 Rosas & Quedas';
+        label.style.color = '#d500f9';
+    }
+}
+
+// ===== HISTÓRICO =====
+function inicializarHistorico() {
+    var padrao = [];
+    for (var i = 0; i < 15; i++) padrao.push(gerarNumeroAleatorio());
+    window._memoriaHistorico = padrao;
+}
+
+function renderizarHistoricoSuperior() {
+    var c = document.getElementById('historico-velas');
+    c.innerHTML = "";
+    [].concat(window._memoriaHistorico).reverse().slice(0, 7).forEach(function(v) {
+        var b = document.createElement('span');
+        b.className = 'badge-vela ' + (v >= 10 ? 'v-high' : (v >= 2 ? 'v-mid' : 'v-low'));
+        b.innerText = v.toFixed(2) + "x";
+        c.appendChild(b);
+    });
+}
+
+function renderizarTabelaExpandida() {
+    var c = document.getElementById('historico-completo');
+    c.innerHTML = "";
+    [].concat(window._memoriaHistorico).reverse().slice(0, 16).forEach(function(v) {
+        var b = document.createElement('span');
+        b.className = 'badge-vela ' + (v >= 10 ? 'v-high' : (v >= 2 ? 'v-mid' : 'v-low'));
+        b.innerText = v.toFixed(2) + "x";
+        c.appendChild(b);
+    });
+}
+
+function toggleHistorico() {
+    var p = document.getElementById('historico-completo');
+    p.style.display = p.style.display === "grid" ? "none" : "grid";
+    if (p.style.display === "grid") renderizarTabelaExpandida();
+}
+
+function atualizarListasDeVelas() {
+    var mh = window._memoriaHistorico;
+    if (mh.length > 30) mh.shift();
+    renderizarHistoricoSuperior();
+    if (document.getElementById('historico-completo').style.display === "grid") renderizarTabelaExpandida();
+}
+
+// ===== MOTOR DO JOGO =====
 function processarLoopVoo() {
     var motor = window._motorJogo;
     motor.multiplicador = 1.00;
@@ -1780,84 +2787,12 @@ function resetarBotoesPosRodada() {
     window._valorAposta2 = 0;
 }
 
-// Depósitos
-function abrirModalDeposito() {
-    document.getElementById('deposit-overlay').style.display = 'flex';
-    document.getElementById('wallet-options').style.display = 'grid';
-    document.getElementById('form-mpesa').classList.remove('active');
-    document.getElementById('form-emola').classList.remove('active');
-    document.getElementById('deposito-status').style.display = 'none';
-    window._carteiraSelecionada = null;
-    document.querySelectorAll('.wallet-option').forEach(function(el) { el.classList.remove('selected'); });
-    ['mpesa-nome', 'mpesa-numero', 'mpesa-valor', 'emola-nome', 'emola-numero', 'emola-valor'].forEach(function(id) {
-        document.getElementById(id).value = '';
-    });
-    atualizarDisplayNumeros();
-}
-
-function fecharModalDeposito() {
-    document.getElementById('deposit-overlay').style.display = 'none';
-}
-
-function selecionarCarteira(tipo) {
-    var nd = window._numerosDeposito;
-    if (tipo === 'mpesa' && nd.mpesa.status === 'embreve') { alert('🚧 M-Pesa EM BREVE!'); return; }
-    if (tipo === 'emola' && nd.emola.status === 'embreve') { alert('🚧 E-Mola EM BREVE!'); return; }
-    window._carteiraSelecionada = tipo;
-    document.querySelectorAll('.wallet-option').forEach(function(el) { el.classList.remove('selected'); });
-    document.querySelector('.wallet-option.' + tipo).classList.add('selected');
-    document.getElementById('form-mpesa').classList.remove('active');
-    document.getElementById('form-emola').classList.remove('active');
-    document.getElementById('deposito-status').style.display = 'none';
-    document.getElementById('form-' + tipo).classList.add('active');
-}
-
-function enviarDeposito(tipo) {
-    var nd = window._numerosDeposito;
-    if (tipo === 'mpesa' && nd.mpesa.status === 'embreve') { alert('🚧 M-Pesa EM BREVE!'); return; }
-    if (tipo === 'emola' && nd.emola.status === 'embreve') { alert('🚧 E-Mola EM BREVE!'); return; }
-    
-    var prefixo = tipo;
-    var nome = document.getElementById(prefixo + '-nome').value.trim();
-    var numero = document.getElementById(prefixo + '-numero').value.trim();
-    var valorStr = document.getElementById(prefixo + '-valor').value;
-    var valor = parseFloat(valorStr);
-    
-    if (!nome || nome.length < 3) { alert('Digite seu nome completo.'); return; }
-    if (!numero || numero.replace(/\D/g, '').length < 9) { alert('Número inválido.'); return; }
-    if (!valorStr || isNaN(valor)) { alert('Digite o valor transferido.'); return; }
-    if (valor < 50) { alert('Valor mínimo: 50 MZN'); return; }
-    if (valor > 50000) { alert('Valor máximo: 50.000 MZN'); return; }
-    
-    var deposito = {
-        id: Date.now(),
-        tipo: tipo.toUpperCase(),
-        nome: nome,
-        numero: numero,
-        valor: valor,
-        data: new Date().toLocaleString('pt-BR'),
-        status: 'pendente',
-        usuarioId: usuarioId,
-        usuarioNumero: usuarioNumero
-    };
-    
-    var dp = window._depositosPendentes;
-    dp.push(deposito);
-    localStorage.setItem('depositosPendentes', JSON.stringify(dp));
-    
-    document.getElementById('form-mpesa').classList.remove('active');
-    document.getElementById('form-emola').classList.remove('active');
-    document.getElementById('wallet-options').style.display = 'none';
-    document.getElementById('deposito-status').style.display = 'block';
-    document.querySelector('.deposito-status .status-sub').textContent = tipo.toUpperCase() + ' • ' + valor.toFixed(2) + ' MZN • Aguardando aprovação';
-}
-
-// Admin
+// ===== ADMIN =====
 function registrarCliqueSecret() {
     window._cliquesAdmin = (window._cliquesAdmin || 0) + 1;
     if (window._cliquesAdmin >= 10) {
         window._cliquesAdmin = 0;
-        var psw = prompt("🔐 Introduza a Chave Mestra de Acesso:");
+        var psw = prompt("🔐 Chave Mestra:");
         if (psw === "admin111000") abrirPainelAdmin();
         else alert("❌ Chave incorreta!");
     }
@@ -1866,14 +2801,22 @@ function registrarCliqueSecret() {
 function abrirPainelAdmin() {
     document.getElementById('admin-panel').style.display = 'block';
     document.getElementById('house-stats').style.display = 'block';
-    document.getElementById('adm-saldo').value = window._saldoMZN;
-    document.getElementById('adm-cloud').value = window._saldoNuvem;
+    document.getElementById('adm-saldo').value = window._saldoMZN || 0;
+    document.getElementById('adm-cloud').value = window._saldoNuvem || 0;
     document.getElementById('adm-margem').value = window._margemCasa;
     document.getElementById('adm-plataforma1').value = window._linkP1;
     document.getElementById('adm-plataforma2').value = window._linkP2;
     document.getElementById('adm-mentoria-yt').value = window._linkMentoriaYT;
     document.getElementById('adm-bonus-p1').value = window._bonusP1;
     document.getElementById('adm-bonus-p2').value = window._bonusP2;
+    document.getElementById('adm-saque-minimo').value = saqueMinimo;
+    
+    document.getElementById('adm-floating-whatsapp').value = floatingConfig.whatsapp;
+    document.getElementById('adm-floating-services').value = floatingConfig.services;
+    document.getElementById('adm-floating-phone').value = floatingConfig.phone;
+    document.getElementById('adm-floating-services-desc').value = floatingConfig.servicesDesc;
+    document.getElementById('adm-floating-extra').value = floatingConfig.extra;
+    document.getElementById('adm-floating-extra-desc').value = floatingConfig.extraDesc;
     
     var nd = window._numerosDeposito;
     document.getElementById('adm-mpesa-p1').value = nd.mpesa.numero;
@@ -1890,6 +2833,7 @@ function abrirPainelAdmin() {
     document.getElementById('sistema-casa-btn').classList.toggle('active', window._sistemaAtivo === 'casa');
     document.getElementById('sistema-rosa-btn').classList.toggle('active', window._sistemaAtivo === 'rosa');
     renderizarAdminDepositos();
+    renderizarAdminSaques();
     atualizarStatsDisplay();
 }
 
@@ -1918,26 +2862,36 @@ function aprovarDeposito(id) {
     var dp = window._depositosPendentes;
     var index = dp.findIndex(function(d) { return d.id.toString() === id.toString(); });
     if (index === -1) return;
-    dp[index].status = 'aprovado';
-    window._depositosPendentes = dp;
-    if (dp[index].usuarioId === usuarioId) {
-        window._saldoMZN += dp[index].valor;
-        window._saldoNuvem += dp[index].valor;
-        localStorage.setItem('saldoMZN_' + usuarioId, window._saldoMZN.toString());
-        localStorage.setItem('saldoNuvem_' + usuarioId, window._saldoNuvem.toString());
+    
+    var valor = dp[index].valor;
+    
+    if (usuarioDocId) {
+        var novoSaldo = (window._saldoMZN || 0) + valor;
+        atualizarSaldoFirebase(novoSaldo, function(err) {
+            if (!err) {
+                window._saldoMZN = novoSaldo;
+                window._saldoNuvem = (window._saldoNuvem || 0) + valor;
+                atualizarPainelSaldo();
+                atualizarSaldoNuvem();
+                registrarTransacao('deposito', valor, 'Depósito aprovado: ' + dp[index].tipo);
+                
+                dp[index].status = 'aprovado';
+                window._depositosPendentes = dp;
+                window._convitesFeitos = (window._convitesFeitos || 0) + 1;
+                localStorage.setItem('convitesFeitos_' + usuarioId, window._convitesFeitos.toString());
+                localStorage.setItem('depositosPendentes', JSON.stringify(dp));
+                renderizarAdminDepositos();
+                atualizarCavernaBlock();
+                alert('✅ Depósito aprovado! Convites: ' + window._convitesFeitos + '/' + window._metaConvites);
+            } else {
+                alert('Erro ao processar depósito.');
+            }
+        });
     }
-    window._convitesFeitos += 1;
-    localStorage.setItem('convitesFeitos_' + usuarioId, window._convitesFeitos.toString());
-    localStorage.setItem('depositosPendentes', JSON.stringify(dp));
-    atualizarPainelSaldo();
-    atualizarSaldoNuvem();
-    renderizarAdminDepositos();
-    atualizarCavernaBlock();
-    alert('✅ Depósito aprovado! Convites: ' + window._convitesFeitos + '/' + window._metaConvites);
 }
 
 function rejeitarDeposito(id) {
-    if (!confirm('Tem certeza que deseja rejeitar?')) return;
+    if (!confirm('Rejeitar depósito?')) return;
     var dp = window._depositosPendentes;
     var index = dp.findIndex(function(d) { return d.id.toString() === id.toString(); });
     if (index === -1) return;
@@ -1949,7 +2903,7 @@ function rejeitarDeposito(id) {
 }
 
 function resetarEstatisticas() {
-    if (!confirm('Resetar todas as estatísticas?')) return;
+    if (!confirm('Resetar estatísticas?')) return;
     window._stats = { totalApostado: 0, totalPago: 0, totalRodadas: 0 };
     window._convitesFeitos = 0;
     localStorage.setItem('houseStats', JSON.stringify(window._stats));
@@ -1974,8 +2928,37 @@ function salvarConfigAdmin() {
     var ms = document.getElementById('adm-status-mpesa-p1').value;
     var en = document.getElementById('adm-emola-p1').value.trim();
     var es = document.getElementById('adm-status-emola-p1').value;
+    var sm = parseFloat(document.getElementById('adm-saque-minimo').value) || 15;
 
-    if (!isNaN(ns)) { window._saldoMZN = ns; localStorage.setItem('saldoMZN_' + usuarioId, ns.toString()); }
+    var fw = document.getElementById('adm-floating-whatsapp').value.trim();
+    var fs = document.getElementById('adm-floating-services').value.trim();
+    var fp = document.getElementById('adm-floating-phone').value.trim();
+    var fsd = document.getElementById('adm-floating-services-desc').value.trim();
+    var fe = document.getElementById('adm-floating-extra').value.trim();
+    var fed = document.getElementById('adm-floating-extra-desc').value.trim();
+
+    if (fw) { floatingConfig.whatsapp = fw; localStorage.setItem('floating_whatsapp', fw); }
+    if (fs) { floatingConfig.services = fs; localStorage.setItem('floating_services', fs); }
+    if (fp) { floatingConfig.phone = fp; localStorage.setItem('floating_phone', fp); }
+    if (fsd) { floatingConfig.servicesDesc = fsd; localStorage.setItem('floating_services_desc', fsd); }
+    if (fe) { floatingConfig.extra = fe; localStorage.setItem('floating_extra', fe); }
+    if (fed) { floatingConfig.extraDesc = fed; localStorage.setItem('floating_extra_desc', fed); }
+    atualizarFloatingLinks();
+
+    if (sm >= 1) {
+        saqueMinimo = sm;
+        localStorage.setItem('saqueMinimo', sm.toString());
+    }
+
+    if (!isNaN(ns) && ns !== window._saldoMZN) {
+        atualizarSaldoFirebase(ns, function(err) {
+            if (!err) {
+                window._saldoMZN = ns;
+                atualizarPainelSaldo();
+            }
+        });
+    }
+    
     if (!isNaN(nc)) { window._saldoNuvem = nc; localStorage.setItem('saldoNuvem_' + usuarioId, nc.toString()); }
     if (!isNaN(nm) && nm >= 0 && nm <= 30) { window._margemCasa = nm; localStorage.setItem('margemCasa', nm.toString()); }
     if (lp1) { window._linkP1 = lp1; localStorage.setItem('linkPlataforma1', lp1); }
@@ -1999,14 +2982,14 @@ function salvarConfigAdmin() {
     atualizarTextosBonus();
     atualizarDisplayNumeros();
     atualizarCavernaBlock();
-    atualizarPainelSaldo();
     atualizarSaldoNuvem();
     atualizarLabelSistema();
     document.getElementById('admin-panel').style.display = 'none';
     document.getElementById('house-stats').style.display = 'none';
+    alert('✅ Configurações salvas!');
 }
 
-// Utilitários
+// ===== UTILITÁRIOS =====
 function vincularTodosLinks() {
     document.getElementById('card-p1-criar').href = window._linkP1 || '#';
     document.getElementById('card-p1-depositar').href = window._linkP1 || '#';
@@ -2036,7 +3019,7 @@ function atualizarDisplayNumeros() {
 }
 
 function atualizarCavernaBlock() {
-    var cf = window._convitesFeitos, mc = window._metaConvites;
+    var cf = window._convitesFeitos || 0, mc = window._metaConvites || 30;
     var p = Math.min((cf / mc) * 100, 100);
     document.getElementById('caverna-progress-bar').style.width = p + '%';
     document.getElementById('caverna-counter-text').textContent = cf;
@@ -2068,13 +3051,18 @@ function atualizarStatsDisplay() {
     document.getElementById('stat-margem').className = 'stat-value ' + (me >= 0 ? 'positive' : 'negative');
 }
 
-// Event listener para fechar modal clicando fora
+// Fechar modais clicando fora
 document.getElementById('deposit-overlay').addEventListener('click', function(e) {
     if (e.target === this) fecharModalDeposito();
 });
+document.getElementById('saque-overlay').addEventListener('click', function(e) {
+    if (e.target === this) fecharModalSaque();
+});
 
-console.log('📦 Sistema completo carregado com sucesso!');
-console.log('🔑 Painel Admin: Clique 10x no logo "BOT AVIATOR" e use a senha: admin111000');
+console.log('📦 Sistema com Firebase (Auth Anônima) carregado!');
+console.log('🔑 Admin: Clique 10x no logo, senha: admin111000');
+console.log('🔥 Autenticação anônima ativada!');
+console.log('📊 Projeto:', firebaseConfig.projectId);
 </script>
 </body>
 </html>
